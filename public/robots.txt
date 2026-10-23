@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# [À COMPLÉTER] remplace par l'URL finale de ton site
+Sitemap: https://[À-COMPLÉTER]/sitemap.xml

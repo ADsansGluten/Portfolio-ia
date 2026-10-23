@@ -52,6 +52,24 @@ export function initTheme() {
     window.dispatchEvent(new Event('themechange'));
   });
   if (saved) window.dispatchEvent(new Event('themechange'));
+
+  // Mode jour / nuit
+  const btn = document.getElementById('mode-toggle');
+  const meta = document.querySelector('meta[name="theme-color"]');
+  const applyMode = (mode, announce) => {
+    root.dataset.mode = mode;
+    const light = mode === 'light';
+    btn.textContent = light ? '☀ jour' : '☾ nuit';
+    btn.setAttribute('aria-pressed', String(light));
+    meta?.setAttribute('content', light ? '#F5F3FB' : '#07070B');
+    if (announce) window.dispatchEvent(new Event('themechange'));
+  };
+  applyMode(root.dataset.mode === 'light' ? 'light' : 'dark', root.dataset.mode === 'light');
+  btn.addEventListener('click', () => {
+    const next = root.dataset.mode === 'light' ? 'dark' : 'light';
+    applyMode(next, true);
+    store.set('mode', next);
+  });
 }
 
 /** Ancres internes → défilement fluide via Lenis (les routes #/projet/... sont ignorées). */

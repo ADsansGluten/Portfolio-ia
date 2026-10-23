@@ -1,5 +1,5 @@
 import { SKILLS, PROJECTS } from '../data/content.js';
-import { reduced, accent, accentGlow } from '../utils/env.js';
+import { reduced, accent, accentGlow, cssVar } from '../utils/env.js';
 
 /**
  * Graphe de compétences (canvas 2D).
@@ -111,7 +111,7 @@ export function initSkills({ onOpenProject }) {
   // --- Rendu ---
   let hover = null, selected = null, dragging = null, t0 = performance.now();
   function draw() {
-    const A = accent(), G = accentGlow();
+    const A = accent(), G = accentGlow(), FG = cssVar('--fg', '#edebf5');
     ctx.clearRect(0, 0, W, H);
     const focus = hover || selected;
     const near = focus ? neighbors.get(focus.id) : null;
@@ -122,7 +122,7 @@ export function initSkills({ onOpenProject }) {
     for (const [ia, ib, kind] of edges) {
       const a = byId.get(ia), b = byId.get(ib);
       const on = focus && (a === focus || b === focus);
-      ctx.strokeStyle = on ? G : 'rgba(255,255,255,0.10)';
+      ctx.strokeStyle = on ? G : `rgba(${cssVar('--fg-rgb', '255,255,255')},0.14)`;
       ctx.globalAlpha = focus && !on ? 0.35 : 1;
       if (kind === 'proj') ctx.setLineDash([4, 4]); else ctx.setLineDash([]);
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
@@ -137,16 +137,16 @@ export function initSkills({ onOpenProject }) {
       if (n.type === 'cat') {
         ctx.fillStyle = A; ctx.shadowColor = A; ctx.shadowBlur = 18;
         ctx.beginPath(); ctx.arc(n.x, n.y, n.r * pulse, 0, 7); ctx.fill(); ctx.shadowBlur = 0;
-        label(n, 12, '#edebf5', true);
+        label(n, 12, FG, true);
       } else if (n.type === 'proj') {
-        ctx.fillStyle = '#07070b'; ctx.strokeStyle = G; ctx.lineWidth = 1.5;
+        ctx.fillStyle = cssVar('--bg', '#07070b'); ctx.strokeStyle = G; ctx.lineWidth = 1.5;
         const s = n.r * 1.6 * pulse;
         ctx.beginPath(); ctx.rect(n.x - s / 2, n.y - s / 2, s, s); ctx.fill(); ctx.stroke();
         label(n, 11, G, false);
       } else {
-        ctx.fillStyle = n === focus ? G : '#edebf5';
+        ctx.fillStyle = n === focus ? G : FG;
         ctx.beginPath(); ctx.arc(n.x, n.y, n.r * pulse, 0, 7); ctx.fill();
-        label(n, 11, 'rgba(237,235,245,0.78)', false);
+        label(n, 11, `rgba(${cssVar('--fg-rgb', '237,235,245')},0.78)`, false);
       }
     }
     ctx.globalAlpha = 1;

@@ -28,3 +28,5 @@ export function toast(msg) {
   requestAnimationFrame(() => { el.style.opacity = 1; el.style.transform = 'translate(-50%, 0)'; });
   setTimeout(() => { el.style.opacity = 0; setTimeout(() => el.remove(), 500); }, 2800);
 }
+export const cssVar = (n, f = '') => getComputedStyle(document.documentElement).getPropertyValue(n).trim() || f;
+export const isLight = () => document.documentElement.dataset.mode === 'light';

@@ -1,11 +1,12 @@
 <!doctype html>
-<html lang="fr" data-theme="violet">
+<html lang="fr" data-theme="violet" data-mode="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Adrien Lavigne — Étudiant Data / IA · Ynov Campus Sophia</title>
   <meta name="description" content="Portfolio d'Adrien Lavigne, étudiant en Bachelor IA / Data à Ynov Campus Sophia. Projets, parcours (droit → IA), compétences, et un terminal interactif pour tout savoir." />
   <meta name="theme-color" content="#07070B" />
+  <script>try{var m=localStorage.getItem("mode");if(m==="light"||m==="dark")document.documentElement.dataset.mode=m;}catch(e){}</script>
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%2307070B%22%2F%3E%3Cg%20fill%3D%22%238B5CFF%22%3E%3Ccircle%20cx%3D%2218%22%20cy%3D%2242%22%20r%3D%224%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2220%22%20r%3D%224%22%2F%3E%3Ccircle%20cx%3D%2246%22%20cy%3D%2242%22%20r%3D%224%22%2F%3E%3C%2Fg%3E%3Cpath%20d%3D%22M18%2042%2032%2020%2046%2042Z%22%20fill%3D%22none%22%20stroke%3D%22%23B79CFF%22%20stroke-width%3D%222%22%2F%3E%3C%2Fsvg%3E" type="image/svg+xml" />
 
   <!-- Open Graph / Twitter -->
@@ -52,6 +53,12 @@
   --accent: #8b5cff;
   --accent-glow: #b79cff;
   --accent-rgb: 139, 92, 255;
+  --bg-rgb: 7, 7, 11;
+  --fg-rgb: 237, 235, 245;
+  --on-accent: #05050a;
+  --glass: rgba(255, 255, 255, 0.03);
+  --field: rgba(0, 0, 0, 0.35);
+  color-scheme: dark;
 
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
@@ -67,6 +74,30 @@
   --accent: #3dff8f;
   --accent-glow: #9dffc5;
   --accent-rgb: 61, 255, 143;
+}
+
+/* ---------- Mode jour (clair) — bascule via le bouton ☀/☾ ---------- */
+:root[data-mode='light'] {
+  --bg: #f5f3fb;
+  --bg-2: #ebe8f6;
+  --fg: #15131f;
+  --fg-dim: rgba(21, 19, 31, 0.66);
+  --line: rgba(21, 19, 31, 0.10);
+  --line-strong: rgba(21, 19, 31, 0.22);
+  --accent: #6a35f0;
+  --accent-glow: #5320d4;
+  --accent-rgb: 106, 53, 240;
+  --bg-rgb: 245, 243, 251;
+  --fg-rgb: 21, 19, 31;
+  --on-accent: #ffffff;
+  --glass: rgba(255, 255, 255, 0.65);
+  --field: rgba(255, 255, 255, 0.8);
+  color-scheme: light;
+}
+:root[data-mode='light'][data-theme='green'] {
+  --accent: #0a9a52;
+  --accent-glow: #067a3f;
+  --accent-rgb: 10, 154, 82;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -88,12 +119,12 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 ul, ol { list-style: none; margin: 0; padding: 0; }
 h1, h2, h3, p, dl, dd, blockquote { margin: 0; }
-::selection { background: var(--accent); color: #000; }
+::selection { background: var(--accent); color: var(--on-accent); }
 .mono { font-family: var(--font-mono); }
 code { font-family: var(--font-mono); color: var(--accent-glow); }
 
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.skip { position: fixed; left: 12px; top: -60px; z-index: 1000; background: var(--accent); color: #000; padding: 10px 14px; border-radius: 8px; font-family: var(--font-mono); }
+.skip { position: fixed; left: 12px; top: -60px; z-index: 1000; background: var(--accent); color: var(--on-accent); padding: 10px 14px; border-radius: 8px; font-family: var(--font-mono); }
 .skip:focus { top: 12px; }
 
 /* Focus visible partout (accessibilité) */
@@ -143,9 +174,11 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
     background: var(--fg); mix-blend-mode: difference;
     transition: width 0.35s var(--ease), height 0.35s var(--ease), margin 0.35s var(--ease), background 0.3s;
   }
-  .cursor.is-link { width: 56px; height: 56px; margin: -28px 0 0 -28px; background: rgba(255, 255, 255, 0.9); }
+  .cursor.is-link { width: 56px; height: 56px; margin: -28px 0 0 -28px; background: rgba(var(--fg-rgb), 0.9); }
+  :root[data-mode='light'] .cursor { mix-blend-mode: normal; }
+  :root[data-mode='light'] .cursor.is-link { mix-blend-mode: normal; opacity: 0.85; }
   .cursor.is-view, .cursor.is-drag { width: 92px; height: 92px; margin: -46px 0 0 -46px; background: var(--accent); mix-blend-mode: normal; }
-  .cursor__label { font-size: 11px; color: #000; letter-spacing: 0.08em; opacity: 0; transition: opacity 0.2s; }
+  .cursor__label { font-size: 11px; color: var(--on-accent); letter-spacing: 0.08em; opacity: 0; transition: opacity 0.2s; }
   .cursor.is-view .cursor__label, .cursor.is-drag .cursor__label { opacity: 1; }
 }
 
@@ -154,7 +187,7 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
   padding: 16px var(--gutter);
-  background: linear-gradient(to bottom, rgba(7, 7, 11, 0.85), transparent);
+  background: linear-gradient(to bottom, rgba(var(--bg-rgb), 0.85), transparent);
   backdrop-filter: blur(6px);
 }
 .nav__logo { font-size: 14px; letter-spacing: 0.06em; }
@@ -180,7 +213,7 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
 
 /* ---------- Sections ---------- */
 .section { position: relative; max-width: var(--maxw); margin: 0 auto; padding: clamp(80px, 14vh, 180px) var(--gutter); }
-.glass { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--line); border-radius: var(--radius); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.glass { background: var(--glass); border: 1px solid var(--line); border-radius: var(--radius); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
 
 /* ---------- Boutons ---------- */
 .btn {
@@ -189,7 +222,7 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
   will-change: transform;
 }
 .btn:hover { border-color: var(--accent); }
-.btn--primary { background: var(--accent); border-color: var(--accent); color: #05050a; }
+.btn--primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 .btn--primary:hover { background: var(--accent-glow); border-color: var(--accent-glow); }
 .btn b { font-weight: 500; transition: transform 0.3s var(--ease); }
 .btn:hover b { transform: translate(3px, 3px); }
@@ -320,7 +353,7 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
 .contact { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(24px, 5vw, 70px); align-items: start; }
 .form { padding: clamp(20px, 3vw, 36px); display: grid; gap: 18px; }
 .form label { display: grid; gap: 8px; font-family: var(--font-mono); font-size: 12px; color: var(--fg-dim); text-transform: uppercase; letter-spacing: 0.08em; }
-.form input, .form textarea { background: rgba(0, 0, 0, 0.35); border: 1px solid var(--line-strong); border-radius: 10px; padding: 14px; color: var(--fg); font: inherit; font-size: 16px; text-transform: none; letter-spacing: 0; transition: border-color 0.2s; }
+.form input, .form textarea { background: var(--field); border: 1px solid var(--line-strong); border-radius: 10px; padding: 14px; color: var(--fg); font: inherit; font-size: 16px; text-transform: none; letter-spacing: 0; transition: border-color 0.2s; }
 .form input:focus, .form textarea:focus { outline: none; border-color: var(--accent); }
 .form .btn { justify-self: start; }
 .form__status { font-size: 12px; color: var(--accent-glow); min-height: 1.4em; }
@@ -365,6 +398,14 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
 @media (prefers-reduced-motion: no-preference) { .hero__portrait { animation: portraitIn 1.4s var(--ease) 0.3s both; } }
 @keyframes portraitIn { from { opacity: 0; transform: translateY(24px) scale(1.03); } to { opacity: 1; transform: none; } }
 
+/* Mode jour : portrait en carte encadrée (la photo a un fond noir) */
+:root[data-mode='light'] .hero__portrait { height: min(48svh, 520px); right: clamp(8px, 3vw, 60px); bottom: 14svh; border-radius: 28px; overflow: hidden; box-shadow: 0 30px 80px -20px rgba(var(--accent-rgb), 0.45), 0 0 0 1px var(--line-strong); }
+:root[data-mode='light'] .hero__portrait img { -webkit-mask-image: none; mask-image: none; }
+:root[data-mode='light'] .grain { opacity: 0.035; mix-blend-mode: multiply; }
+:root[data-mode='light'] .preloader__bar i { box-shadow: none; }
+@media (max-width: 860px) { :root[data-mode='light'] .hero__portrait { opacity: 0.22; height: 56svh; bottom: 2svh; } }
+.chip--mode { padding: 6px 10px; }
+
 </style>
 </head>
 <body>
@@ -397,6 +438,7 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
       </ul>
     </nav>
     <div class="nav__tools mono">
+      <button class="chip chip--mode" id="mode-toggle" type="button" aria-label="Basculer entre mode jour et mode nuit" aria-pressed="false" data-cursor="link">☾ nuit</button>
       <button class="chip" id="theme-toggle" type="button" aria-label="Changer la palette de couleurs" data-cursor="link">◐ palette</button>
       <span class="nav__version">v2026.10</span>
     </div>
@@ -570,6 +612,8 @@ function toast(msg) {
   requestAnimationFrame(() => { el.style.opacity = 1; el.style.transform = 'translate(-50%, 0)'; });
   setTimeout(() => { el.style.opacity = 0; setTimeout(() => el.remove(), 500); }, 2800);
 }
+const cssVar = (n, f = '') => getComputedStyle(document.documentElement).getPropertyValue(n).trim() || f;
+const isLight = () => document.documentElement.dataset.mode === 'light';
 
 /* ───── utils/split ───── */
 /**
@@ -987,6 +1031,24 @@ function initTheme() {
     window.dispatchEvent(new Event('themechange'));
   });
   if (saved) window.dispatchEvent(new Event('themechange'));
+
+  // Mode jour / nuit
+  const btn = document.getElementById('mode-toggle');
+  const meta = document.querySelector('meta[name="theme-color"]');
+  const applyMode = (mode, announce) => {
+    root.dataset.mode = mode;
+    const light = mode === 'light';
+    btn.textContent = light ? '☀ jour' : '☾ nuit';
+    btn.setAttribute('aria-pressed', String(light));
+    meta?.setAttribute('content', light ? '#F5F3FB' : '#07070B');
+    if (announce) window.dispatchEvent(new Event('themechange'));
+  };
+  applyMode(root.dataset.mode === 'light' ? 'light' : 'dark', root.dataset.mode === 'light');
+  btn.addEventListener('click', () => {
+    const next = root.dataset.mode === 'light' ? 'dark' : 'light';
+    applyMode(next, true);
+    store.set('mode', next);
+  });
 }
 
 /** Ancres internes → défilement fluide via Lenis (les routes #/projet/... sont ignorées). */
@@ -1118,7 +1180,7 @@ function initSkills({ onOpenProject }) {
   // --- Rendu ---
   let hover = null, selected = null, dragging = null, t0 = performance.now();
   function draw() {
-    const A = accent(), G = accentGlow();
+    const A = accent(), G = accentGlow(), FG = cssVar('--fg', '#edebf5');
     ctx.clearRect(0, 0, W, H);
     const focus = hover || selected;
     const near = focus ? neighbors.get(focus.id) : null;
@@ -1129,7 +1191,7 @@ function initSkills({ onOpenProject }) {
     for (const [ia, ib, kind] of edges) {
       const a = byId.get(ia), b = byId.get(ib);
       const on = focus && (a === focus || b === focus);
-      ctx.strokeStyle = on ? G : 'rgba(255,255,255,0.10)';
+      ctx.strokeStyle = on ? G : `rgba(${cssVar('--fg-rgb', '255,255,255')},0.14)`;
       ctx.globalAlpha = focus && !on ? 0.35 : 1;
       if (kind === 'proj') ctx.setLineDash([4, 4]); else ctx.setLineDash([]);
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
@@ -1144,16 +1206,16 @@ function initSkills({ onOpenProject }) {
       if (n.type === 'cat') {
         ctx.fillStyle = A; ctx.shadowColor = A; ctx.shadowBlur = 18;
         ctx.beginPath(); ctx.arc(n.x, n.y, n.r * pulse, 0, 7); ctx.fill(); ctx.shadowBlur = 0;
-        label(n, 12, '#edebf5', true);
+        label(n, 12, FG, true);
       } else if (n.type === 'proj') {
-        ctx.fillStyle = '#07070b'; ctx.strokeStyle = G; ctx.lineWidth = 1.5;
+        ctx.fillStyle = cssVar('--bg', '#07070b'); ctx.strokeStyle = G; ctx.lineWidth = 1.5;
         const s = n.r * 1.6 * pulse;
         ctx.beginPath(); ctx.rect(n.x - s / 2, n.y - s / 2, s, s); ctx.fill(); ctx.stroke();
         label(n, 11, G, false);
       } else {
-        ctx.fillStyle = n === focus ? G : '#edebf5';
+        ctx.fillStyle = n === focus ? G : FG;
         ctx.beginPath(); ctx.arc(n.x, n.y, n.r * pulse, 0, 7); ctx.fill();
-        label(n, 11, 'rgba(237,235,245,0.78)', false);
+        label(n, 11, `rgba(${cssVar('--fg-rgb', '237,235,245')},0.78)`, false);
       }
     }
     ctx.globalAlpha = 1;
@@ -1553,7 +1615,7 @@ function toggleMatrix(force) {
   ctx.font = `${size}px "JetBrains Mono", monospace`;
 
   const draw = () => {
-    ctx.fillStyle = 'rgba(7,7,11,0.12)';
+    ctx.fillStyle = `rgba(${cssVar('--bg-rgb', '7,7,11')},0.12)`;
     ctx.fillRect(0, 0, innerWidth, innerHeight);
     ctx.fillStyle = accent();
     drops.forEach((y, i) => {
@@ -1690,7 +1752,7 @@ async function initHero(canvas) {
   geo.setAttribute('aMix', new THREE.BufferAttribute(mixv, 1));
 
   const mat = new THREE.ShaderMaterial({
-    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    transparent: true, depthWrite: false, blending: isLight() ? THREE.NormalBlending : THREE.AdditiveBlending,
     uniforms: {
       uPix: { value: Math.min(window.devicePixelRatio, 1.75) },
       uColor: { value: new THREE.Color(accent()) },
@@ -1720,7 +1782,7 @@ async function initHero(canvas) {
     lineGeo = new THREE.BufferGeometry();
     lineGeo.setAttribute('position', new THREE.BufferAttribute(linePos, 3).setUsage(THREE.DynamicDrawUsage));
     lineGeo.setDrawRange(0, 0);
-    lineMat = new THREE.LineBasicMaterial({ color: new THREE.Color(accentGlow()), transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false });
+    lineMat = new THREE.LineBasicMaterial({ color: new THREE.Color(accentGlow()), transparent: true, opacity: isLight() ? 0.4 : 0.55, blending: isLight() ? THREE.NormalBlending : THREE.AdditiveBlending, depthWrite: false });
     group.add(new THREE.LineSegments(lineGeo, lineMat));
   }
 
@@ -1743,6 +1805,10 @@ async function initHero(canvas) {
     mat.uniforms.uColor.value.set(accent());
     mat.uniforms.uGlow.value.set(accentGlow());
     lineMat?.color.set(accentGlow());
+    const blend = isLight() ? THREE.NormalBlending : THREE.AdditiveBlending;
+    mat.blending = blend; mat.needsUpdate = true;
+    if (lineMat) { lineMat.blending = blend; lineMat.opacity = isLight() ? 0.4 : 0.55; lineMat.needsUpdate = true; }
+    if (reduced) renderer.render(scene, camera);
   });
 
   if (reduced) { renderer.render(scene, camera); return; } // version sobre : image fixe

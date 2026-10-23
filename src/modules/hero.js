@@ -1,4 +1,4 @@
-import { reduced, isMobile, accent, accentGlow } from '../utils/env.js';
+import { reduced, isMobile, accent, accentGlow, isLight } from '../utils/env.js';
 
 /**
  * HERO — champ d'embeddings.
@@ -52,7 +52,7 @@ export async function initHero(canvas) {
   geo.setAttribute('aMix', new THREE.BufferAttribute(mixv, 1));
 
   const mat = new THREE.ShaderMaterial({
-    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    transparent: true, depthWrite: false, blending: isLight() ? THREE.NormalBlending : THREE.AdditiveBlending,
     uniforms: {
       uPix: { value: Math.min(window.devicePixelRatio, 1.75) },
       uColor: { value: new THREE.Color(accent()) },
@@ -82,7 +82,7 @@ export async function initHero(canvas) {
     lineGeo = new THREE.BufferGeometry();
     lineGeo.setAttribute('position', new THREE.BufferAttribute(linePos, 3).setUsage(THREE.DynamicDrawUsage));
     lineGeo.setDrawRange(0, 0);
-    lineMat = new THREE.LineBasicMaterial({ color: new THREE.Color(accentGlow()), transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false });
+    lineMat = new THREE.LineBasicMaterial({ color: new THREE.Color(accentGlow()), transparent: true, opacity: isLight() ? 0.4 : 0.55, blending: isLight() ? THREE.NormalBlending : THREE.AdditiveBlending, depthWrite: false });
     group.add(new THREE.LineSegments(lineGeo, lineMat));
   }
 
@@ -105,6 +105,10 @@ export async function initHero(canvas) {
     mat.uniforms.uColor.value.set(accent());
     mat.uniforms.uGlow.value.set(accentGlow());
     lineMat?.color.set(accentGlow());
+    const blend = isLight() ? THREE.NormalBlending : THREE.AdditiveBlending;
+    mat.blending = blend; mat.needsUpdate = true;
+    if (lineMat) { lineMat.blending = blend; lineMat.opacity = isLight() ? 0.4 : 0.55; lineMat.needsUpdate = true; }
+    if (reduced) renderer.render(scene, camera);
   });
 
   if (reduced) { renderer.render(scene, camera); return; } // version sobre : image fixe

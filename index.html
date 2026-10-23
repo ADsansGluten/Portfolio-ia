@@ -1,11 +1,12 @@
 <!doctype html>
-<html lang="fr" data-theme="violet">
+<html lang="fr" data-theme="violet" data-mode="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Adrien Lavigne — Étudiant Data / IA · Ynov Campus Sophia</title>
   <meta name="description" content="Portfolio d'Adrien Lavigne, étudiant en Bachelor IA / Data à Ynov Campus Sophia. Projets, parcours (droit → IA), compétences, et un terminal interactif pour tout savoir." />
   <meta name="theme-color" content="#07070B" />
+  <script>try{var m=localStorage.getItem("mode");if(m==="light"||m==="dark")document.documentElement.dataset.mode=m;}catch(e){}</script>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 
   <!-- Open Graph / Twitter -->
@@ -68,6 +69,7 @@
       </ul>
     </nav>
     <div class="nav__tools mono">
+      <button class="chip chip--mode" id="mode-toggle" type="button" aria-label="Basculer entre mode jour et mode nuit" aria-pressed="false" data-cursor="link">☾ nuit</button>
       <button class="chip" id="theme-toggle" type="button" aria-label="Changer la palette de couleurs" data-cursor="link">◐ palette</button>
       <span class="nav__version">v2026.10</span>
     </div>

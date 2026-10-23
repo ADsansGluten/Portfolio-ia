@@ -1,4 +1,4 @@
-import { reduced, accent, toast } from '../utils/env.js';
+import { reduced, accent, toast, cssVar } from '../utils/env.js';
 
 /**
  * Easter eggs :
@@ -28,7 +28,7 @@ export function toggleMatrix(force) {
   ctx.font = `${size}px "JetBrains Mono", monospace`;
 
   const draw = () => {
-    ctx.fillStyle = 'rgba(7,7,11,0.12)';
+    ctx.fillStyle = `rgba(${cssVar('--bg-rgb', '7,7,11')},0.12)`;
     ctx.fillRect(0, 0, innerWidth, innerHeight);
     ctx.fillStyle = accent();
     drops.forEach((y, i) => {

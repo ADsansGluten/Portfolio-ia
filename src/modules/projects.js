@@ -37,14 +37,23 @@ export function renderProjects(lenis) {
     const x = gsap.quickTo(prev, 'x', { duration: 0.5, ease: 'power3' });
     const y = gsap.quickTo(prev, 'y', { duration: 0.5, ease: 'power3' });
     list.addEventListener('pointermove', (e) => { x(e.clientX + 30); y(e.clientY - 10); });
+    let shown = false;
+    const show = () => { shown = true; gsap.to(prev, { opacity: 1, scale: 1, duration: 0.45, ease: 'power3.out', overwrite: 'auto' }); };
+    const hide = () => { if (!shown && gsap.getProperty(prev, 'opacity') === 0) return; shown = false; gsap.to(prev, { opacity: 0, scale: 0.85, duration: 0.3, overwrite: 'auto' }); };
     list.querySelectorAll('.project-row').forEach((row) => {
       const p = PROJECTS.find((q) => q.slug === row.dataset.slug);
-      row.addEventListener('pointerenter', () => {
-        img.style.background = previewArt(p) + ' center / cover';
-        gsap.to(prev, { opacity: 1, scale: 1, duration: 0.45, ease: 'power3.out' });
-      });
-      row.addEventListener('pointerleave', () => gsap.to(prev, { opacity: 0, scale: 0.85, duration: 0.3 }));
+      row.addEventListener('pointerenter', () => { img.style.background = previewArt(p) + ' center / cover'; show(); });
+      row.addEventListener('pointerleave', hide);
     });
+    // Filets de sécurité : un défilement rapide peut faire rater pointerleave
+    list.addEventListener('pointerleave', hide);
+    let mx = -1, my = -1;
+    const check = () => { if (shown && !document.elementFromPoint(mx, my)?.closest('.project-row')) hide(); };
+    window.addEventListener('pointermove', (e) => { mx = e.clientX; my = e.clientY; check(); }, { passive: true });
+    window.addEventListener('scroll', check, { passive: true });
+    lenisRef?.on('scroll', check);
+    window.addEventListener('blur', hide);
+    document.addEventListener('mouseleave', hide);
   }
 
   // Routage par l'historique : #/projet/slug

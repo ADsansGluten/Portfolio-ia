@@ -259,7 +259,7 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
 /* ---------- Modale projet ---------- */
 .modal { position: fixed; inset: 0; z-index: 1500; display: grid; }
 .modal[hidden] { display: none; }
-.modal__panel { background: var(--bg-2); overflow-y: auto; padding: clamp(70px, 10vh, 120px) var(--gutter) 80px; clip-path: inset(100% 0 0 0); }
+.modal__panel { background: var(--bg-2); overflow-y: auto; overscroll-behavior: contain; padding: clamp(70px, 10vh, 120px) var(--gutter) 80px; clip-path: inset(100% 0 0 0); }
 .modal__close { position: fixed; top: 18px; right: var(--gutter); z-index: 3; font-size: 12px; border: 1px solid var(--line-strong); border-radius: 999px; padding: 10px 16px; background: var(--bg); }
 .modal__content { max-width: 980px; margin: 0 auto; display: grid; gap: 40px; }
 .modal__title { font-size: clamp(44px, 9vw, 130px); font-weight: 700; letter-spacing: -0.045em; line-height: 0.92; }
@@ -513,7 +513,7 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
   </footer>
 
   <!-- Modale projet -->
-  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+  <div class="modal" id="modal" data-lenis-prevent role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
     <div class="modal__panel" id="modal-panel">
       <button class="modal__close mono" id="modal-close" type="button" data-cursor="link">Fermer ✕</button>
       <div class="modal__content" id="modal-content"></div>
@@ -1256,14 +1256,23 @@ function renderProjects(lenis) {
     const x = gsap.quickTo(prev, 'x', { duration: 0.5, ease: 'power3' });
     const y = gsap.quickTo(prev, 'y', { duration: 0.5, ease: 'power3' });
     list.addEventListener('pointermove', (e) => { x(e.clientX + 30); y(e.clientY - 10); });
+    let shown = false;
+    const show = () => { shown = true; gsap.to(prev, { opacity: 1, scale: 1, duration: 0.45, ease: 'power3.out', overwrite: 'auto' }); };
+    const hide = () => { if (!shown && gsap.getProperty(prev, 'opacity') === 0) return; shown = false; gsap.to(prev, { opacity: 0, scale: 0.85, duration: 0.3, overwrite: 'auto' }); };
     list.querySelectorAll('.project-row').forEach((row) => {
       const p = PROJECTS.find((q) => q.slug === row.dataset.slug);
-      row.addEventListener('pointerenter', () => {
-        img.style.background = previewArt(p) + ' center / cover';
-        gsap.to(prev, { opacity: 1, scale: 1, duration: 0.45, ease: 'power3.out' });
-      });
-      row.addEventListener('pointerleave', () => gsap.to(prev, { opacity: 0, scale: 0.85, duration: 0.3 }));
+      row.addEventListener('pointerenter', () => { img.style.background = previewArt(p) + ' center / cover'; show(); });
+      row.addEventListener('pointerleave', hide);
     });
+    // Filets de sécurité : un défilement rapide peut faire rater pointerleave
+    list.addEventListener('pointerleave', hide);
+    let mx = -1, my = -1;
+    const check = () => { if (shown && !document.elementFromPoint(mx, my)?.closest('.project-row')) hide(); };
+    window.addEventListener('pointermove', (e) => { mx = e.clientX; my = e.clientY; check(); }, { passive: true });
+    window.addEventListener('scroll', check, { passive: true });
+    lenisRef?.on('scroll', check);
+    window.addEventListener('blur', hide);
+    document.addEventListener('mouseleave', hide);
   }
 
   // Routage par l'historique : #/projet/slug

@@ -219,7 +219,7 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
 /* ---------- Modale projet ---------- */
 .modal { position: fixed; inset: 0; z-index: 1500; display: grid; }
 .modal[hidden] { display: none; }
-.modal__panel { background: var(--bg-2); overflow-y: auto; padding: clamp(70px, 10vh, 120px) var(--gutter) 80px; clip-path: inset(100% 0 0 0); }
+.modal__panel { background: var(--bg-2); overflow-y: auto; overscroll-behavior: contain; padding: clamp(70px, 10vh, 120px) var(--gutter) 80px; clip-path: inset(100% 0 0 0); }
 .modal__close { position: fixed; top: 18px; right: var(--gutter); z-index: 3; font-size: 12px; border: 1px solid var(--line-strong); border-radius: 999px; padding: 10px 16px; background: var(--bg); }
 .modal__content { max-width: 980px; margin: 0 auto; display: grid; gap: 40px; }
 .modal__title { font-size: clamp(44px, 9vw, 130px); font-weight: 700; letter-spacing: -0.045em; line-height: 0.92; }

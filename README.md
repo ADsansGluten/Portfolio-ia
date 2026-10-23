@@ -1,6 +1,10 @@
 # Portfolio — Adrien Lavigne (Direction A « Ultraviolet Latent Space »)
 
+**Site en ligne : https://adsansgluten.github.io/Portfolio-ia/**
+
 Vite + JavaScript natif · GSAP (ScrollTrigger) · Lenis · Three.js (hero) · Canvas 2D (compétences).
+
+Points forts : champ d'embeddings WebGL réactif au curseur, typographie cinétique, graphe de compétences interactif, projets en modale (routage `#/projet/slug`), terminal « Ask me anything » local, easter eggs, **mode jour / nuit** (choix mémorisé), palette violet/vert, version sobre si `prefers-reduced-motion`.
 
 ## Lancer en local
 
@@ -14,13 +18,14 @@ npm run preview    # teste le build
 ## Remplacer tes contenus
 
 Presque tout est dans **`src/data/content.js`** : liens, compétences, projets, parcours, base de connaissances du terminal.
-Cherche `[À COMPLÉTER]` (dans `content.js` et `index.html`) : ce sont les infos que tu n'as pas encore fournies.
+Une information non fournie est marquée `[À COMPLÉTER]` plutôt qu'inventée.
 
-| À faire | Où |
+| Sujet | Où |
 |---|---|
-| CV en PDF | dépose `cv-adrien-lavigne.pdf` dans `public/` |
-| Formulaire de contact | crée un formulaire sur formspree.io, colle l'URL dans `LINKS.formEndpoint` |
-| Missions des 2 stages, résultats de Shieldwall | `content.js` (`TIMELINE`, `PROJECTS`) |
+| CV (téléphone et date de naissance floutés) | `public/cv-adrien-lavigne.pdf` |
+| Photo du hero | `public/adrien.jpg` |
+| Formulaire de contact | sans endpoint, ouvre le client mail ; pour un envoi direct, crée un formulaire sur formspree.io et colle l'URL dans `LINKS.formEndpoint` |
+| Missions, projets, compétences | `src/data/content.js` |
 | URL finale du site | `index.html` (og:url, og:image), `public/sitemap.xml`, `public/robots.txt` |
 
 Sans endpoint Formspree, le formulaire ouvre ton client mail (rien n'est perdu).
@@ -38,7 +43,7 @@ Puis Settings → Pages → branche `gh-pages`.
 
 ## Easter eggs
 
-Konami code (↑↑↓↓←→←→ B A), `matrix`, `sudo hire adrien` dans le terminal, 5 clics sur « LAVIGNE » en bas, bouton « palette ».
+Konami code (↑↑↓↓←→←→ B A), `matrix`, `sudo hire adrien` dans le terminal, 5 clics sur « LAVIGNE » en bas, boutons « palette » et ☾/☀.
 
 ## Brancher un vrai LLM (optionnel)
 
@@ -50,11 +55,11 @@ Dans `src/modules/terminal.js`, renseigne `LLM_ENDPOINT = '/api/ask'`, puis cré
 
 ## Idées v2
 
-Bascule FR/EN · vraies captures/vidéos de projets · self-host des polices · page 404 stylée · mode clair · mini-jeu RecrutIA intégré · statistiques GitHub en direct · tests Lighthouse en CI.
+Bascule FR/EN · vraies captures/vidéos de projets · self-host des polices · page 404 stylée · mini-jeu RecrutIA intégré · statistiques GitHub en direct · tests Lighthouse en CI.
 
 ## Version « un seul fichier »
 
-`node scripts/build-single.mjs` génère `dist-single/index.html`, une page autonome (GSAP, Lenis et Three.js chargés depuis des CDN) qu'on peut ouvrir d'un double-clic ou publier telle quelle.
+`node scripts/build-single.mjs` génère `dist-single/index.html`, une page autonome (photo incrustée ; GSAP, Lenis et Three.js chargés depuis des CDN) qu'on peut ouvrir d'un double-clic ou publier telle quelle. La copie publiée sur GitHub Pages est `docs/index.html` (à régénérer après chaque modification).
 
 ## Collaboration
 

@@ -88,14 +88,12 @@ export function initAnchors(lenis) {
   });
 }
 
-/** Bouton LinkedIn : tant qu'il n'a pas été cliqué, un halo + un reflet attirent le regard à intervalle régulier. */
+/** Bouton LinkedIn : un halo + un reflet attirent le regard à intervalle régulier (en continu, même après un clic). */
 export function initLinkedInNudge() {
   const el = document.querySelector('.chip--in');
   if (!el || reduced) return;
-  if (store.get('li-clicked') === '1') return;
-  let timer = 0, off = 0, stopped = false;
-  const stop = () => { stopped = true; clearTimeout(timer); clearTimeout(off); el.classList.remove('is-nudge'); };
-  el.addEventListener('click', () => { store.set('li-clicked', '1'); stop(); });
+  let timer = 0, off = 0;
+  const stopped = false;
   const pulse = () => {
     if (stopped) return;
     // On n'agite le bouton que si l'onglet est visible et que l'utilisateur ne le survole pas déjà

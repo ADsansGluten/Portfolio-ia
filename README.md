@@ -4,7 +4,7 @@
 
 Vite + JavaScript natif · GSAP (ScrollTrigger) · Lenis · Three.js (hero) · Canvas 2D (compétences).
 
-Points forts : champ d'embeddings WebGL réactif au curseur, typographie cinétique, graphe de compétences interactif, projets en modale (routage `#/projet/slug`), terminal « Ask me anything » local, easter eggs, **mode jour / nuit** (choix mémorisé), palette violet/vert, version sobre si `prefers-reduced-motion`.
+Points forts : champ d'embeddings WebGL réactif au curseur, typographie cinétique, graphe de compétences interactif, projets en modale (routage `#/projet/slug`), section LinkedIn (visuels de mon post RecrutIA en coverflow piloté par le scroll), terminal « Ask me anything » local, easter eggs, **mode jour / nuit** (choix mémorisé), palette violet/vert, version sobre si `prefers-reduced-motion`.
 
 ## Lancer en local
 

@@ -14,6 +14,7 @@ import { initTimeline } from './modules/timeline.js';
 import { initTerminal } from './modules/terminal.js';
 import { initEasterEggs, toggleMatrix } from './modules/easter.js';
 import { initContact } from './modules/contact.js';
+import { initLinkedIn } from './modules/linkedin.js';
 
 const noGsap = window.__noGsap === true;
 if (!noGsap) gsap.registerPlugin(ScrollTrigger);
@@ -34,6 +35,7 @@ initTheme();
 initCursor();
 initKinetic();
 renderProjects(lenis);
+initLinkedIn(lenis);
 initTimeline();
 initSkills({ onOpenProject: (slug) => openProject(slug) });
 initTerminal({

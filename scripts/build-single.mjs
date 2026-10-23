@@ -6,7 +6,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 const read = (p) => readFileSync(new URL('../' + p, import.meta.url), 'utf8');
 const ORDER = ['utils/env', 'utils/split', 'data/content', 'modules/preloader', 'modules/cursor', 'modules/kinetic',
   'modules/interactions', 'modules/skills', 'modules/projects', 'modules/timeline', 'modules/terminal',
-  'modules/easter', 'modules/contact', 'modules/hero', 'main'];
+  'modules/easter', 'modules/contact', 'modules/linkedin', 'modules/hero', 'main'];
 
 const THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
 
@@ -37,10 +37,12 @@ ${js}
   </script>`);
 
 // Portrait : incrusté en base64 pour rester un seul fichier
-if (existsSync(new URL('../public/adrien.jpg', import.meta.url))) {
-  const b64 = readFileSync(new URL('../public/adrien.jpg', import.meta.url)).toString('base64');
-  html = html.replace('src="adrien.jpg"', `src="data:image/jpeg;base64,${b64}"`);
-}
+const MIME = { jpg: 'image/jpeg', webp: 'image/webp', png: 'image/png' };
+html = html.replace(/src="((?:li\/)?[\w.-]+\.(?:jpg|webp|png))"/g, (m, f) => {
+  const u = new URL('../public/' + f, import.meta.url);
+  if (!existsSync(u)) return m;
+  return `src="data:${MIME[f.split('.').pop()]};base64,${readFileSync(u).toString('base64')}"`;
+});
 
 mkdirSync(new URL('../dist-single/', import.meta.url), { recursive: true });
 writeFileSync(new URL('../dist-single/index.html', import.meta.url), html);

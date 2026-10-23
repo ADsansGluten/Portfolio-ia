@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="fr" data-theme="violet">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Adrien Lavigne — Étudiant Data / IA · Ynov Campus Sophia</title>
+  <meta name="description" content="Portfolio d'Adrien Lavigne, étudiant en Bachelor IA / Data à Ynov Campus Sophia. Projets, parcours (droit → IA), compétences, et un terminal interactif pour tout savoir." />
+  <meta name="theme-color" content="#07070B" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Adrien Lavigne — Étudiant Data / IA" />
+  <meta property="og:description" content="Du droit à l'IA : projets, parcours et un terminal pour tout savoir sur moi." />
+  <meta property="og:locale" content="fr_FR" />
+  <!-- [À COMPLÉTER] og:url et og:image (1200×630) une fois le site déployé -->
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Données structurées Person -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Adrien Lavigne",
+    "jobTitle": "Étudiant en Bachelor IA / Data",
+    "affiliation": { "@type": "CollegeOrUniversity", "name": "Ynov Campus Sophia" },
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Université Paris 1 Panthéon-Sorbonne" },
+    "email": "mailto:adrien.lavigne@ynov.com",
+    "sameAs": [
+      "https://www.linkedin.com/in/adrien-lavigne-93197a381/",
+      "https://github.com/ADsansGluten"
+    ]
+  }
+  </script>
+
+  <!-- Polices : préconnexion + display=swap -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <a class="skip" href="#main">Aller au contenu</a>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader" role="status" aria-live="polite">
+    <div class="preloader__logs" id="preloader-logs" aria-hidden="true"></div>
+    <div class="preloader__count mono"><span id="preloader-count">000</span><small>%</small></div>
+    <div class="preloader__bar"><i id="preloader-bar"></i></div>
+  </div>
+
+  <!-- Décor global -->
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <canvas class="matrix" id="matrix" aria-hidden="true"></canvas>
+  <div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__label mono"></span></div>
+
+  <!-- Navigation -->
+  <header class="nav">
+    <a href="#top" class="nav__logo mono" data-cursor="link" aria-label="Retour en haut">AL<span>/</span>26</a>
+    <nav aria-label="Navigation principale">
+      <ul class="nav__links mono">
+        <li><a href="#about" data-cursor="link">About</a></li>
+        <li><a href="#skills" data-cursor="link">Skills</a></li>
+        <li><a href="#projects" data-cursor="link">Projects</a></li>
+        <li><a href="#research" data-cursor="link">Research</a></li>
+        <li><a href="#journey" data-cursor="link">Journey</a></li>
+        <li><a href="#ask" data-cursor="link">Ask</a></li>
+        <li><a href="#contact" data-cursor="link">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav__tools mono">
+      <button class="chip" id="theme-toggle" type="button" aria-label="Changer la palette de couleurs" data-cursor="link">◐ palette</button>
+      <span class="nav__version">v2026.10</span>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- 00 HERO -->
+    <section class="hero" id="top" aria-label="Introduction">
+      <canvas id="hero-canvas" class="hero__canvas" aria-hidden="true"></canvas>
+      <div class="hero__inner">
+        <p class="label mono">00 / INDEX <span class="dot"></span> Sophia Antipolis, FR</p>
+        <h1 class="hero__title" id="hero-title" aria-label="Adrien Lavigne">
+          <span class="line" data-kinetic>Adrien</span>
+          <span class="line" data-kinetic>Lavigne</span>
+        </h1>
+        <p class="hero__tag" data-i18n="hero.tag">
+          Étudiant en <em>IA &amp; Data</em>. Je viens du droit, je construis maintenant des systèmes qui apprennent.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#projects" data-magnetic data-cursor="link"><span data-i18n="hero.cta.projects">Voir mes projets</span> <b aria-hidden="true">↘</b></a>
+          <a class="btn" href="#contact" data-magnetic data-cursor="link"><span data-i18n="hero.cta.contact">Me contacter</span></a>
+        </div>
+      </div>
+      <p class="hero__hint mono" aria-hidden="true">// bouge ta souris : elle devient une requête dans l'espace latent</p>
+      <div class="hero__scroll mono" aria-hidden="true">scroll <i></i></div>
+    </section>
+
+    <!-- 01 ABOUT -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <p class="label mono">01 / ABOUT</p>
+      <h2 class="h2" id="about-title" data-kinetic>Du Code civil au code source.</h2>
+      <div class="about">
+        <p class="about__text" data-reveal-words>
+          J'ai passé mon bac au CNED avec les mathématiques expertes, puis une année de droit à Paris 1 Panthéon-Sorbonne. Cette année, j'ai changé de voie : je me forme à l'IA et à la data à Ynov Campus Sophia. Je pars de peu, je le sais, et je le compense par des projets concrets, publiés, que tu peux ouvrir. [À COMPLÉTER] ajoute ici 1 à 2 phrases sur ta motivation personnelle.
+        </p>
+        <aside class="currently glass" aria-label="Actuellement">
+          <p class="label mono">// currently</p>
+          <dl class="currently__list mono">
+            <div><dt>formation</dt><dd>Bachelor 1 IA / Data — Ynov Sophia</dd></div>
+            <div><dt>cible</dt><dd>Mastère « Expert en intelligence artificielle »</dd></div>
+            <div><dt>recherche</dt><dd>stage / alternance</dd></div>
+            <div><dt>j'apprends</dt><dd>Go · web · infra sécurisée</dd></div>
+            <div><dt>langues</dt><dd>FR natif · ES B1+ · EN B1-</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 02 SKILLS -->
+    <section class="section" id="skills" aria-labelledby="skills-title">
+      <p class="label mono">02 / SKILLS</p>
+      <h2 class="h2" id="skills-title" data-kinetic>Carte de mes compétences.</h2>
+      <p class="lead">Clique sur un nœud : il s'illumine avec les projets qui l'utilisent. Les niveaux affichés sont ceux de mon CV, sans gonflette.</p>
+      <div class="skills glass">
+        <canvas id="skills-canvas" class="skills__canvas" role="img" aria-label="Graphe interactif des compétences par catégorie : IA/ML, Data, Dev, Cyber/Infra, Outils"></canvas>
+        <div class="skills__panel mono" id="skills-panel" aria-live="polite">
+          <p class="label">// sélection</p>
+          <p class="skills__name" id="skills-name">Aucun nœud sélectionné</p>
+          <p class="skills__level" id="skills-level">Survole ou clique une techno.</p>
+          <ul class="skills__projects" id="skills-projects"></ul>
+        </div>
+        <ul class="sr-only" id="skills-list"></ul>
+      </div>
+    </section>
+
+    <!-- 03 PROJECTS -->
+    <section class="section" id="projects" aria-labelledby="projects-title">
+      <p class="label mono">03 / PROJECTS</p>
+      <h2 class="h2" id="projects-title" data-kinetic>Projets.</h2>
+      <ul class="projects" id="projects-list"></ul>
+      <div class="preview" id="preview" aria-hidden="true"><div class="preview__img" id="preview-img"></div></div>
+    </section>
+
+    <!-- 04 RESEARCH -->
+    <section class="section" id="research" aria-labelledby="research-title">
+      <p class="label mono">04 / RESEARCH</p>
+      <h2 class="h2" id="research-title" data-kinetic>Mon mémoire.</h2>
+      <article class="research glass">
+        <div class="research__col">
+          <p class="label mono">// problématique</p>
+          <blockquote class="research__q">[À COMPLÉTER] Ta problématique en une question.</blockquote>
+          <p class="label mono">// résumé</p>
+          <p>[À COMPLÉTER] Résumé en 4 à 6 lignes.</p>
+        </div>
+        <div class="research__col">
+          <p class="label mono">// points clés</p>
+          <ol class="research__points">
+            <li>[À COMPLÉTER] Point clé n°1</li>
+            <li>[À COMPLÉTER] Point clé n°2</li>
+            <li>[À COMPLÉTER] Point clé n°3</li>
+          </ol>
+          <a class="btn btn--primary" id="memoire-dl" data-asset href="memoire.pdf" download data-magnetic data-cursor="link">Télécharger le mémoire (PDF) <b aria-hidden="true">↓</b></a>
+        </div>
+      </article>
+    </section>
+
+    <!-- 05 JOURNEY -->
+    <section class="section" id="journey" aria-labelledby="journey-title">
+      <p class="label mono">05 / JOURNEY</p>
+      <h2 class="h2" id="journey-title" data-kinetic>Parcours.</h2>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <!-- 06 ASK -->
+    <section class="section" id="ask" aria-labelledby="ask-title">
+      <p class="label mono">06 / ASK ME ANYTHING</p>
+      <h2 class="h2" id="ask-title" data-kinetic>Pose-moi une question.</h2>
+      <p class="lead">Un mini-assistant qui répond sur mon profil depuis une base locale (sans serveur). Essaie aussi <code class="mono">help</code>… ou cherche les commandes secrètes.</p>
+      <div class="terminal glass" id="terminal">
+        <div class="terminal__bar mono"><i></i><i></i><i></i><span>adrien@latent-space ~ %</span></div>
+        <div class="terminal__out" id="term-out" role="log" aria-live="polite"></div>
+        <div class="terminal__sugg" id="term-sugg"></div>
+        <form class="terminal__form" id="term-form" autocomplete="off">
+          <label for="term-in" class="mono">›</label>
+          <input id="term-in" class="mono" type="text" spellcheck="false" autocapitalize="off" placeholder="Pose ta question…" aria-label="Ta question" />
+        </form>
+      </div>
+    </section>
+
+    <!-- 07 CONTACT -->
+    <section class="section section--contact" id="contact" aria-labelledby="contact-title">
+      <p class="label mono">07 / CONTACT</p>
+      <h2 class="h2" id="contact-title" data-kinetic>Travaillons ensemble.</h2>
+      <p class="lead">Je cherche un stage ou une alternance en IA / data. Écris-moi.</p>
+      <div class="contact">
+        <form class="form glass" id="contact-form" novalidate>
+          <label>Nom<input name="name" type="text" required autocomplete="name" /></label>
+          <label>Email<input name="email" type="email" required autocomplete="email" /></label>
+          <label>Message<textarea name="message" rows="5" required></textarea></label>
+          <button class="btn btn--primary" type="submit" data-magnetic data-cursor="link">Envoyer <b aria-hidden="true">→</b></button>
+          <p class="form__status mono" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+        <ul class="socials">
+          <li><a class="social" href="https://www.linkedin.com/in/adrien-lavigne-93197a381/" target="_blank" rel="noopener" data-magnetic data-cursor="link"><span class="mono">LinkedIn</span><b>↗</b></a></li>
+          <li><a class="social" href="https://github.com/ADsansGluten" target="_blank" rel="noopener" data-magnetic data-cursor="link"><span class="mono">GitHub</span><b>↗</b></a></li>
+          <li><a class="social" href="mailto:adrien.lavigne@ynov.com" data-magnetic data-cursor="link"><span class="mono">adrien.lavigne@ynov.com</span><b>↗</b></a></li>
+          <li><a class="social" data-asset data-asset-hide href="cv-adrien-lavigne.pdf" download data-magnetic data-cursor="link"><span class="mono">Télécharger mon CV</span><b>↓</b></a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <button class="footer__big" id="footer-big" type="button" aria-label="Lavigne — easter egg : clique plusieurs fois" data-cursor="link">LAVIGNE</button>
+    <p class="footer__row mono"><span>© 2026 Adrien Lavigne</span><span id="footer-egg">compile avec ❤ et un peu de GPU</span><a href="#top" data-cursor="link">↑ top</a></p>
+  </footer>
+
+  <!-- Modale projet -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal__panel" id="modal-panel">
+      <button class="modal__close mono" id="modal-close" type="button" data-cursor="link">Fermer ✕</button>
+      <div class="modal__content" id="modal-content"></div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

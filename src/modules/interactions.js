@@ -102,7 +102,7 @@ export function initLinkedInNudge() {
       el.classList.add('is-nudge');
       off = setTimeout(() => el.classList.remove('is-nudge'), 2200);
     }
-    timer = setTimeout(pulse, 6500);
+    timer = setTimeout(pulse, 4000);
   };
   timer = setTimeout(pulse, 4500); // après l'intro du hero
 }

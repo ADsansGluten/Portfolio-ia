@@ -411,6 +411,19 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
 .chip--in:hover { background: var(--accent-glow); border-color: var(--accent-glow); color: var(--on-accent); }
 @media (max-width: 700px) { .chip--in { padding: 6px 10px; font-size: 0; gap: 0; } .chip--in b { font-size: 12px; } .chip--in span { display: none; } .nav__version { display: none; } }
 
+/* Effet d'attention : halo qui pulse + reflet qui traverse + petit rebond */
+.chip--in { position: relative; overflow: visible; isolation: isolate; }
+.chip--in::before { content: ''; position: absolute; inset: -2px; border-radius: inherit; z-index: -1; box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.65); opacity: 0; pointer-events: none; }
+.chip--in::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%); background-size: 250% 100%; background-position: 150% 0; }
+.chip--in.is-nudge { animation: liHop 0.9s var(--ease) 0.1s 1; }
+.chip--in.is-nudge::before { animation: liRing 1.1s ease-out 0s 2; }
+.chip--in.is-nudge::after { animation: liShine 1.1s ease-in-out 0.15s 1; }
+@keyframes liRing { 0% { opacity: 0.9; box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.65); } 100% { opacity: 0; box-shadow: 0 0 0 16px rgba(var(--accent-rgb), 0); } }
+@keyframes liShine { 0% { opacity: 1; background-position: 150% 0; } 100% { opacity: 1; background-position: -50% 0; } }
+@keyframes liHop { 0%, 100% { transform: translateY(0) scale(1); } 30% { transform: translateY(-3px) scale(1.07); } 55% { transform: translateY(0) scale(0.98); } 75% { transform: translateY(-1px) scale(1.02); } }
+@media (prefers-reduced-motion: reduce) { .chip--in.is-nudge, .chip--in.is-nudge::before, .chip--in.is-nudge::after { animation: none; } }
+
 </style>
 </head>
 <body>
@@ -1088,6 +1101,27 @@ function initAnchors(lenis) {
     else target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
     history.replaceState(null, '', href);
   });
+}
+
+/** Bouton LinkedIn : tant qu'il n'a pas été cliqué, un halo + un reflet attirent le regard à intervalle régulier. */
+function initLinkedInNudge() {
+  const el = document.querySelector('.chip--in');
+  if (!el || reduced) return;
+  if (store.get('li-clicked') === '1') return;
+  let timer = 0, off = 0, stopped = false;
+  const stop = () => { stopped = true; clearTimeout(timer); clearTimeout(off); el.classList.remove('is-nudge'); };
+  el.addEventListener('click', () => { store.set('li-clicked', '1'); stop(); });
+  const pulse = () => {
+    if (stopped) return;
+    // On n'agite le bouton que si l'onglet est visible et que l'utilisateur ne le survole pas déjà
+    if (document.visibilityState === 'visible' && !el.matches(':hover, :focus-visible') && !document.body.classList.contains('is-loading')) {
+      el.classList.remove('is-nudge'); void el.offsetWidth; // relance l'animation
+      el.classList.add('is-nudge');
+      off = setTimeout(() => el.classList.remove('is-nudge'), 2200);
+    }
+    timer = setTimeout(pulse, 6500);
+  };
+  timer = setTimeout(pulse, 4500); // après l'intro du hero
 }
 
 /* ───── modules/skills ───── */
@@ -1972,6 +2006,7 @@ initContact();
 initMagnetic();
 initSurfaces();
 initAnchors(lenis);
+initLinkedInNudge();
 
 // Le WebGL est chargé en différé : il n'entre pas dans le chemin critique
 const loadHero = () => initHero(document.getElementById('hero-canvas'));

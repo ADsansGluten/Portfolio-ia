@@ -7,7 +7,7 @@ import { reduced } from './utils/env.js';
 import { runPreloader } from './modules/preloader.js';
 import { initCursor } from './modules/cursor.js';
 import { initKinetic, heroIntro, heroPrep } from './modules/kinetic.js';
-import { initMagnetic, initSurfaces, initTheme, initAnchors } from './modules/interactions.js';
+import { initMagnetic, initSurfaces, initTheme, initAnchors, initLinkedInNudge } from './modules/interactions.js';
 import { initSkills } from './modules/skills.js';
 import { renderProjects, openProject, syncFromHash } from './modules/projects.js';
 import { initTimeline } from './modules/timeline.js';
@@ -45,6 +45,7 @@ initContact();
 initMagnetic();
 initSurfaces();
 initAnchors(lenis);
+initLinkedInNudge();
 
 // Le WebGL est chargé en différé : il n'entre pas dans le chemin critique
 const loadHero = () => import('./modules/hero.js').then((m) => m.initHero(document.getElementById('hero-canvas')));

@@ -87,3 +87,24 @@ export function initAnchors(lenis) {
     history.replaceState(null, '', href);
   });
 }
+
+/** Bouton LinkedIn : tant qu'il n'a pas été cliqué, un halo + un reflet attirent le regard à intervalle régulier. */
+export function initLinkedInNudge() {
+  const el = document.querySelector('.chip--in');
+  if (!el || reduced) return;
+  if (store.get('li-clicked') === '1') return;
+  let timer = 0, off = 0, stopped = false;
+  const stop = () => { stopped = true; clearTimeout(timer); clearTimeout(off); el.classList.remove('is-nudge'); };
+  el.addEventListener('click', () => { store.set('li-clicked', '1'); stop(); });
+  const pulse = () => {
+    if (stopped) return;
+    // On n'agite le bouton que si l'onglet est visible et que l'utilisateur ne le survole pas déjà
+    if (document.visibilityState === 'visible' && !el.matches(':hover, :focus-visible') && !document.body.classList.contains('is-loading')) {
+      el.classList.remove('is-nudge'); void el.offsetWidth; // relance l'animation
+      el.classList.add('is-nudge');
+      off = setTimeout(() => el.classList.remove('is-nudge'), 2200);
+    }
+    timer = setTimeout(pulse, 6500);
+  };
+  timer = setTimeout(pulse, 4500); // après l'intro du hero
+}

@@ -127,14 +127,22 @@
     <section class="section" id="skills" aria-labelledby="skills-title">
       <p class="label mono">02 / SKILLS</p>
       <h2 class="h2" id="skills-title" data-kinetic>Carte de mes compétences.</h2>
-      <p class="lead">Clique sur un nœud : il s'illumine avec les projets qui l'utilisent. Les niveaux affichés sont ceux de mon CV, sans gonflette.</p>
+      <p class="lead">Survole ou clique un nœud : le réseau s'illumine avec les projets qui l'utilisent. La taille d'un point reflète le niveau (indicatif), tel que je le décris dans mon CV, sans gonflette. Les pastilles filtrent par catégorie.</p>
       <div class="skills glass">
-        <canvas id="skills-canvas" class="skills__canvas" role="img" aria-label="Graphe interactif des compétences par catégorie : IA/ML, Data, Dev, Cyber/Infra, Outils"></canvas>
+        <div class="skills__stage">
+          <div class="skills__filters mono" id="skills-filters" role="group" aria-label="Filtrer par catégorie"></div>
+          <canvas id="skills-canvas" class="skills__canvas" role="img" aria-label="Graphe interactif des compétences par catégorie : IA/ML, Data, Dev, Cyber/Infra, Outils"></canvas>
+        </div>
         <div class="skills__panel mono" id="skills-panel" aria-live="polite">
           <p class="label">// sélection</p>
           <p class="skills__name" id="skills-name">Aucun nœud sélectionné</p>
+          <p class="skills__cat" id="skills-cat" hidden></p>
           <p class="skills__level" id="skills-level">Survole ou clique une techno.</p>
+          <div class="skills__pips" id="skills-pips" aria-hidden="true" hidden></div>
+          <p class="skills__sub label" id="skills-projects-title" hidden>// projets</p>
           <ul class="skills__projects" id="skills-projects"></ul>
+          <p class="skills__sub label" id="skills-rel-title" hidden>// relié à</p>
+          <ul class="skills__rel" id="skills-rel"></ul>
         </div>
         <ul class="sr-only" id="skills-list"></ul>
       </div>

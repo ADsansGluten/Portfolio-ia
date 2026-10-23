@@ -1,6 +1,6 @@
 import { LINKS } from '../data/content.js';
 
-/** Formulaire (Formspree) + vérification de la présence du PDF mémoire. */
+/** Formulaire (Formspree) + vérification de la présence des PDF. */
 export function initContact() {
   const form = document.getElementById('contact-form');
   const status = document.getElementById('form-status');
@@ -33,7 +33,8 @@ export function initContact() {
     }
   });
 
-  // PDF (CV, mémoire) : s'ils sont absents, on masque ou désactive proprement le lien
+  // PDF (CV) : s'ils sont absents, on masque ou désactive proprement le lien
+  if (location.protocol === 'file:') return; // en ouverture locale, fetch() est bloqué : on laisse le lien tel quel
   document.querySelectorAll('[data-asset]').forEach((a) => {
     fetch(a.getAttribute('href'), { method: 'HEAD' }).then((r) => {
       if (!r.ok || !(r.headers.get('content-type') || '').includes('pdf')) throw new Error();

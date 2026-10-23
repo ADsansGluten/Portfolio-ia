@@ -113,6 +113,7 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
 
 /* ---------- Preloader ---------- */
 .preloader {
+  will-change: transform;
   position: fixed; inset: 0; z-index: 2000; background: var(--bg);
   display: grid; align-content: end; padding: var(--gutter); gap: 14px;
 }
@@ -354,8 +355,6 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
   -webkit-mask-image: radial-gradient(ellipse 58% 64% at 50% 44%, #000 50%, transparent 98%); mask-image: radial-gradient(ellipse 58% 64% at 50% 44%, #000 50%, transparent 98%); }
 .hero__portrait::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 45% at 55% 40%, rgba(var(--accent-rgb), 0.28), transparent 70%); mix-blend-mode: screen; pointer-events: none; }
 @media (max-width: 860px) { .hero__portrait { right: -14vw; bottom: -4svh; height: 50svh; opacity: 0.5; } }
-@media (prefers-reduced-motion: no-preference) { .hero__portrait { animation: portraitIn 1.4s var(--ease) 0.3s both; } }
-@keyframes portraitIn { from { opacity: 0; transform: translateY(24px) scale(1.03); } to { opacity: 1; transform: none; } }
 
 /* Mode jour : portrait en carte encadrée (la photo a un fond noir) */
 :root[data-mode='light'] .hero__portrait { height: min(48svh, 520px); right: clamp(8px, 3vw, 60px); bottom: 14svh; border-radius: 28px; overflow: hidden; box-shadow: 0 30px 80px -20px rgba(var(--accent-rgb), 0.45), 0 0 0 1px var(--line-strong); }
@@ -364,3 +363,9 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
 :root[data-mode='light'] .preloader__bar i { box-shadow: none; }
 @media (max-width: 860px) { :root[data-mode='light'] .hero__portrait { opacity: 0.22; height: 56svh; bottom: 2svh; } }
 .chip--mode { padding: 6px 10px; }
+
+/* Bouton LinkedIn dans l'en-tête */
+.chip--in { display: inline-flex; align-items: center; gap: 6px; background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.chip--in b { font-weight: 700; letter-spacing: -0.02em; }
+.chip--in:hover { background: var(--accent-glow); border-color: var(--accent-glow); color: var(--on-accent); }
+@media (max-width: 700px) { .chip--in { padding: 6px 10px; font-size: 0; gap: 0; } .chip--in b { font-size: 12px; } .chip--in span { display: none; } .nav__version { display: none; } }

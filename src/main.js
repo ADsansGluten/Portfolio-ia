@@ -6,7 +6,7 @@ import Lenis from 'lenis';
 import { reduced } from './utils/env.js';
 import { runPreloader } from './modules/preloader.js';
 import { initCursor } from './modules/cursor.js';
-import { initKinetic, heroIntro } from './modules/kinetic.js';
+import { initKinetic, heroIntro, heroPrep } from './modules/kinetic.js';
 import { initMagnetic, initSurfaces, initTheme, initAnchors } from './modules/interactions.js';
 import { initSkills } from './modules/skills.js';
 import { renderProjects, openProject, syncFromHash } from './modules/projects.js';
@@ -49,12 +49,18 @@ initAnchors(lenis);
 // Le WebGL est chargé en différé : il n'entre pas dans le chemin critique
 const loadHero = () => import('./modules/hero.js').then((m) => m.initHero(document.getElementById('hero-canvas')));
 
+// Le champ WebGL est construit PENDANT le preloader (derrière le rideau) : plus de saccade à la révélation.
+// Garde-fou : on n'attend jamais plus de 2,5 s.
+if (!noGsap) heroPrep();
+const heroReady = Promise.race([
+  loadHero().catch(() => {}),
+  new Promise((r) => setTimeout(r, 2500)),
+]);
 const ready = noGsap
   ? Promise.resolve().then(() => document.getElementById('preloader')?.remove())
-  : runPreloader();
+  : Promise.all([runPreloader(), heroReady]);
 ready.then(() => {
   document.body.classList.remove('is-loading');
-  loadHero();
   if (!noGsap) heroIntro();
   syncFromHash(); // si l'URL pointe directement vers #/projet/xxx
   if (!noGsap) ScrollTrigger.refresh();

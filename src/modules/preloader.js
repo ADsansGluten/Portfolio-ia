@@ -36,9 +36,11 @@ export function runPreloader() {
       },
       onComplete() {
         root.setAttribute('aria-busy', 'false');
+        // Le rideau se lève ; l'intro du hero démarre pendant la montée (enchaînement continu)
+        gsap.delayedCall(reduced ? 0 : 0.55, resolve);
         gsap.to(root, {
           yPercent: -100, duration: reduced ? 0.01 : 0.9, ease: 'expo.inOut', delay: 0.15,
-          onComplete() { root.remove(); resolve(); },
+          force3D: true, onComplete() { root.remove(); },
         });
       },
     });

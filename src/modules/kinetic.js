@@ -65,14 +65,29 @@ function attachRepel(el) {
 }
 
 /** Intro du hero après le preloader. */
-export function heroIntro() {
-  const chars = [...document.querySelectorAll('.hero [data-kinetic]')].flatMap((el) => el._chars || []);
+const HERO_SEL = '.hero .label, .hero__tag, .hero__cta .btn, .hero__hint, .hero__scroll, .nav, .hero__portrait img, #hero-canvas';
+
+/** Pose l'état « caché » du hero AVANT la fin du preloader : aucun flash du nom en position finale. */
+export function heroPrep() {
   if (reduced) return;
-  const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
-  tl.from(chars, { yPercent: 120, rotate: 12, opacity: 0, duration: 1.3, stagger: 0.045 })
-    .from('.hero .label', { y: 16, opacity: 0, duration: 0.8 }, 0.1)
-    .from('.hero__tag', { y: 24, opacity: 0, duration: 1 }, 0.5)
-    .from('.hero__cta .btn', { y: 24, opacity: 0, duration: 0.9, stagger: 0.1 }, 0.7)
-    .from('.hero__hint, .hero__scroll, .nav', { opacity: 0, duration: 1.2 }, 1);
-  ScrollTrigger.refresh();
+  const chars = [...document.querySelectorAll('.hero [data-kinetic]')].flatMap((el) => el._chars || []);
+  gsap.set(chars, { yPercent: 120, rotate: 12, opacity: 0, willChange: 'transform, opacity' });
+  gsap.set('.hero .label', { y: 16, opacity: 0 });
+  gsap.set('.hero__tag', { y: 24, opacity: 0 });
+  gsap.set('.hero__cta .btn', { y: 24, opacity: 0 });
+  gsap.set('.hero__hint, .hero__scroll, .nav, #hero-canvas', { opacity: 0 });
+  gsap.set('.hero__portrait img', { y: 36, scale: 1.04, opacity: 0, transformOrigin: '50% 100%' });
+}
+
+export function heroIntro() {
+  if (reduced) return;
+  const chars = [...document.querySelectorAll('.hero [data-kinetic]')].flatMap((el) => el._chars || []);
+  const tl = gsap.timeline({ defaults: { ease: 'expo.out' }, onComplete: () => { gsap.set(chars, { clearProps: 'willChange' }); ScrollTrigger.refresh(); } });
+  tl.to(chars, { yPercent: 0, rotate: 0, opacity: 1, duration: 1.3, stagger: 0.045 }, 0)
+    .to('.hero .label', { y: 0, opacity: 1, duration: 0.8 }, 0.1)
+    .to('.hero__portrait img', { y: 0, scale: 1, opacity: 1, duration: 1.6 }, 0.15)
+    .to('.hero__tag', { y: 0, opacity: 1, duration: 1 }, 0.5)
+    .to('.hero__cta .btn', { y: 0, opacity: 1, duration: 0.9, stagger: 0.1 }, 0.7)
+    .to('.hero__hint, .hero__scroll, .nav', { opacity: 1, duration: 1.2, ease: 'power2.out' }, 0.6)
+    .to('#hero-canvas', { opacity: 1, duration: 1.8, ease: 'power2.out' }, 0.3);
 }

@@ -18,8 +18,7 @@ Cherche `[À COMPLÉTER]` (dans `content.js` et `index.html`) : ce sont les info
 
 | À faire | Où |
 |---|---|
-| Phrase de motivation, problématique/résumé/points clés du mémoire | `index.html` (sections About et Research) |
-| CV et mémoire en PDF | dépose `cv-adrien-lavigne.pdf` et `memoire.pdf` dans `public/` |
+| CV en PDF | dépose `cv-adrien-lavigne.pdf` dans `public/` |
 | Formulaire de contact | crée un formulaire sur formspree.io, colle l'URL dans `LINKS.formEndpoint` |
 | Missions des 2 stages, résultats de Shieldwall | `content.js` (`TIMELINE`, `PROJECTS`) |
 | URL finale du site | `index.html` (og:url, og:image), `public/sitemap.xml`, `public/robots.txt` |

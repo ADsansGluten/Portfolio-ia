@@ -382,7 +382,6 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
         <li><a href="#about" data-cursor="link">About</a></li>
         <li><a href="#skills" data-cursor="link">Skills</a></li>
         <li><a href="#projects" data-cursor="link">Projects</a></li>
-        <li><a href="#research" data-cursor="link">Research</a></li>
         <li><a href="#journey" data-cursor="link">Journey</a></li>
         <li><a href="#ask" data-cursor="link">Ask</a></li>
         <li><a href="#contact" data-cursor="link">Contact</a></li>
@@ -422,7 +421,7 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
       <h2 class="h2" id="about-title" data-kinetic>Du Code civil au code source.</h2>
       <div class="about">
         <p class="about__text" data-reveal-words>
-          J'ai passé mon bac au CNED avec les mathématiques expertes, puis une année de droit à Paris 1 Panthéon-Sorbonne. Cette année, j'ai changé de voie : je me forme à l'IA et à la data à Ynov Campus Sophia. Je pars de peu, je le sais, et je le compense par des projets concrets, publiés, que tu peux ouvrir. [À COMPLÉTER] ajoute ici 1 à 2 phrases sur ta motivation personnelle.
+          J'ai passé mon bac au CNED avec les mathématiques expertes, puis une année de droit à Paris 1 Panthéon-Sorbonne. Cette année, j'ai changé de voie : je me forme à l'IA et à la data à Ynov Campus Sophia. Je pars de peu, je le sais, et je le compense par des projets concrets, publiés, que tu peux ouvrir. J'ai fait ce choix par vision d'avenir : je me suis projeté, j'ai estimé ce qui correspondait à mon idéal, et c'est l'IA et la data.
         </p>
         <aside class="currently glass" aria-label="Actuellement">
           <p class="label mono">// currently</p>
@@ -462,39 +461,16 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
       <div class="preview" id="preview" aria-hidden="true"><div class="preview__img" id="preview-img"></div></div>
     </section>
 
-    <!-- 04 RESEARCH -->
-    <section class="section" id="research" aria-labelledby="research-title">
-      <p class="label mono">04 / RESEARCH</p>
-      <h2 class="h2" id="research-title" data-kinetic>Mon mémoire.</h2>
-      <article class="research glass">
-        <div class="research__col">
-          <p class="label mono">// problématique</p>
-          <blockquote class="research__q">[À COMPLÉTER] Ta problématique en une question.</blockquote>
-          <p class="label mono">// résumé</p>
-          <p>[À COMPLÉTER] Résumé en 4 à 6 lignes.</p>
-        </div>
-        <div class="research__col">
-          <p class="label mono">// points clés</p>
-          <ol class="research__points">
-            <li>[À COMPLÉTER] Point clé n°1</li>
-            <li>[À COMPLÉTER] Point clé n°2</li>
-            <li>[À COMPLÉTER] Point clé n°3</li>
-          </ol>
-          <a class="btn btn--primary" id="memoire-dl" data-asset href="memoire.pdf" download data-magnetic data-cursor="link">Télécharger le mémoire (PDF) <b aria-hidden="true">↓</b></a>
-        </div>
-      </article>
-    </section>
-
     <!-- 05 JOURNEY -->
     <section class="section" id="journey" aria-labelledby="journey-title">
-      <p class="label mono">05 / JOURNEY</p>
+      <p class="label mono">04 / JOURNEY</p>
       <h2 class="h2" id="journey-title" data-kinetic>Parcours.</h2>
       <ol class="timeline" id="timeline"></ol>
     </section>
 
     <!-- 06 ASK -->
     <section class="section" id="ask" aria-labelledby="ask-title">
-      <p class="label mono">06 / ASK ME ANYTHING</p>
+      <p class="label mono">05 / ASK ME ANYTHING</p>
       <h2 class="h2" id="ask-title" data-kinetic>Pose-moi une question.</h2>
       <p class="lead">Un mini-assistant qui répond sur mon profil depuis une base locale (sans serveur). Essaie aussi <code class="mono">help</code>… ou cherche les commandes secrètes.</p>
       <div class="terminal glass" id="terminal">
@@ -510,7 +486,7 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
 
     <!-- 07 CONTACT -->
     <section class="section section--contact" id="contact" aria-labelledby="contact-title">
-      <p class="label mono">07 / CONTACT</p>
+      <p class="label mono">06 / CONTACT</p>
       <h2 class="h2" id="contact-title" data-kinetic>Travaillons ensemble.</h2>
       <p class="lead">Je cherche un stage ou une alternance en IA / data. Écris-moi.</p>
       <div class="contact">
@@ -636,7 +612,6 @@ const LINKS = {
   github: 'https://github.com/ADsansGluten',
   email: 'adrien.lavigne@ynov.com',
   cv: 'cv-adrien-lavigne.pdf', // [À COMPLÉTER] dépose ton CV dans /public avec ce nom
-  memoire: 'memoire.pdf', // [À COMPLÉTER] dépose ton mémoire dans /public avec ce nom
   // [À COMPLÉTER] crée un formulaire sur formspree.io puis colle l'URL ici (ex: https://formspree.io/f/xxxxxxx)
   formEndpoint: '',
 };
@@ -716,7 +691,7 @@ const PROJECTS = [
       "Je partais sans connaissances en réseau : il fallait monter une infrastructure cohérente et la défendre (approche Blue Team).",
     solution:
       "Hyperviseur VMware Workstation pour la partie Windows, maquette Packet Tracer pour la segmentation (cœur de réseau, pare-feu, un switch par zone, VLAN). Dépôt GitHub privé structuré (docs, configs, scripts, preuves) et roadmap suivie case par case.",
-    result: 'Projet en cours : [À COMPLÉTER] à la fin du projet (résultats, retours).',
+    result: 'Projet en cours : je travaille actuellement sur la maquette.',
     stack: ['Active Directory', 'VMware Workstation', 'Packet Tracer', 'VLAN', 'GitHub'],
     links: [{ label: 'Dépôt privé — accès sur demande', href: '' }],
     hue: 200,
@@ -750,15 +725,15 @@ const TIMELINE = [
   { date: 'Sep – Nov 2025', kind: 'work', title: 'Défourneur (intérim)', place: 'Maison Menissez — Maubeuge', text: "Responsable du défournement principal sur des commandes importantes (CROUS notamment), 5 fours rotatifs." },
   { date: 'Juil – Août 2025', kind: 'work', title: 'Barman / Cuisinier', place: 'Station du Val Joly — Camping', text: "Prise de commande, caisse, gestion de la salle ; cuisinier autonome dans un foodtruck." },
   { date: 'Fév 2024 – Juil 2025', kind: 'study', title: 'Baccalauréat Général (mention)', place: 'CNED — Rennes', text: "Spécialités Mathématiques et SES, option Mathématiques Expertes." },
-  { date: 'Juil 2023', kind: 'intern', title: 'Stage en agence immobilière', place: 'HOME-IMMO — Antibes', text: '[À COMPLÉTER] missions.' },
-  { date: 'Juin 2023', kind: 'intern', title: 'Stage en gestion de patrimoine privé', place: 'Olifan Group — Cannes', text: '[À COMPLÉTER] missions.' },
+  { date: 'Juil 2023', kind: 'intern', title: 'Stage en agence immobilière', place: 'HOME-IMMO — Antibes', text: 'Réalisation de deux rendez-vous pour une visite.' },
+  { date: 'Juin 2023', kind: 'intern', title: 'Stage en gestion de patrimoine privé', place: 'Olifan Group — Cannes', text: "Accompagnement d'un rendez-vous client pour un nouveau produit structuré." },
   { date: 'Sep 2021 – Juin 2023', kind: 'work', title: 'Arbitre national UNSS / départemental FFBB', place: 'Basketball — Paris', text: "Application rigoureuse des règlements, gestion des situations conflictuelles pendant les matchs." },
 ];
 
 /** Base de connaissances du terminal. `k` = mots-clés (sans accents, minuscules). */
 const KB = [
   { id: 'about', k: ['qui', 'about', 'presente', 'presentation', 'adrien', 'toi', 'profil'], a: "Adrien Lavigne. Étudiant en Bachelor 1 IA / Data à Ynov Campus Sophia depuis septembre 2026. Je viens du droit (Paris 1 Panthéon-Sorbonne) et je me reconvertis vers l'IA et la data. Mastère visé : Expert en intelligence artificielle." },
-  { id: 'path', k: ['parcours', 'droit', 'reconversion', 'pourquoi', 'histoire', 'bac', 'cned'], a: "Bac général au CNED (maths expertes, SES, mention), puis une L1 de droit à Paris 1. Cette année, je me réoriente vers l'IA et la data. [À COMPLÉTER] ta motivation en une phrase." },
+  { id: 'path', k: ['parcours', 'droit', 'reconversion', 'pourquoi', 'histoire', 'bac', 'cned'], a: "Bac général au CNED (maths expertes, SES, mention), puis une L1 de droit à Paris 1. Cette année, je me réoriente vers l'IA et la data, par vision d'avenir : je me suis projeté et j'ai estimé que c'était ce domaine qui correspondait à mon idéal." },
   { id: 'now', k: ['actuellement', 'currently', 'now', 'formation', 'etudes', 'ynov', 'ecole'], a: "En formation à Ynov Campus Sophia (B1 IA / Data). Je suis à la recherche d'un stage ou d'une alternance, et j'apprends en parallèle Go, le développement web et les bases de l'infrastructure sécurisée." },
   { id: 'skills', k: ['competences', 'skills', 'techno', 'stack', 'langage', 'savoir'], a: "Je suis encore en début de parcours, donc voici mon niveau réel : Canva (avancé), Word/Excel (intermédiaire), HTML/CSS, JavaScript, Go et algorithmique (débutant), Active Directory et réseau (en cours via Shieldwall). Pas de baratin : j'apprends vite et je le montre en projet." },
   { id: 'projects', k: ['projet', 'projets', 'projects', 'realise', 'portfolio', 'github', 'code'], a: "Trois projets à voir : RecrutIA (jeu narratif sur les biais d'une IA de tri de CV, en ligne), Opération Shieldwall (infra & cybersécurité, en cours) et ce portfolio. Tape « recrutia » ou « shieldwall » pour le détail." },
@@ -1592,7 +1567,7 @@ function initEasterEggs() {
 
 /* ───── modules/contact ───── */
 
-/** Formulaire (Formspree) + vérification de la présence du PDF mémoire. */
+/** Formulaire (Formspree) + vérification de la présence des PDF. */
 function initContact() {
   const form = document.getElementById('contact-form');
   const status = document.getElementById('form-status');
@@ -1625,7 +1600,8 @@ function initContact() {
     }
   });
 
-  // PDF (CV, mémoire) : s'ils sont absents, on masque ou désactive proprement le lien
+  // PDF (CV) : s'ils sont absents, on masque ou désactive proprement le lien
+  if (location.protocol === 'file:') return; // en ouverture locale, fetch() est bloqué : on laisse le lien tel quel
   document.querySelectorAll('[data-asset]').forEach((a) => {
     fetch(a.getAttribute('href'), { method: 'HEAD' }).then((r) => {
       if (!r.ok || !(r.headers.get('content-type') || '').includes('pdf')) throw new Error();

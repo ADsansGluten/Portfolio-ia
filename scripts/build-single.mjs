@@ -1,7 +1,7 @@
 // Génère un portfolio en UN SEUL fichier HTML (sans npm ni serveur) à partir des sources.
 // Usage : node scripts/build-single.mjs   →   dist-single/index.html
 // GSAP, Lenis et Three.js sont chargés depuis des CDN au moment de l'ouverture de la page.
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 
 const read = (p) => readFileSync(new URL('../' + p, import.meta.url), 'utf8');
 const ORDER = ['utils/env', 'utils/split', 'data/content', 'modules/preloader', 'modules/cursor', 'modules/kinetic',
@@ -35,6 +35,12 @@ let html = read('index.html')
   <script type="module">
 ${js}
   </script>`);
+
+// Portrait : incrusté en base64 pour rester un seul fichier
+if (existsSync(new URL('../public/adrien.jpg', import.meta.url))) {
+  const b64 = readFileSync(new URL('../public/adrien.jpg', import.meta.url)).toString('base64');
+  html = html.replace('src="adrien.jpg"', `src="data:image/jpeg;base64,${b64}"`);
+}
 
 mkdirSync(new URL('../dist-single/', import.meta.url), { recursive: true });
 writeFileSync(new URL('../dist-single/index.html', import.meta.url), html);

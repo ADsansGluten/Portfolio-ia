@@ -17,15 +17,15 @@ function previewArt(p) {
   return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
 }
 
-const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const escPv = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 function previewHTML(p) {
   return `<div class="pv" style="--h:${p.hue}">
     <div class="pv__art" style="background:${previewArt(p)} center / cover"><span class="pv__open mono">Ouvrir <b>↗</b></span></div>
     <div class="pv__body">
-      <div class="pv__top mono"><span>${esc(p.index)} / ${esc(p.year)}</span><span class="pv__status${p.status === 'En ligne' ? ' live' : ''}">${esc(p.status)}</span></div>
-      <p class="pv__title">${esc(p.title)}</p>
-      <p class="pv__kicker mono">${esc(p.kicker)}</p>
-      <ul class="pv__stack mono">${p.stack.slice(0, 4).map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+      <div class="pv__top mono"><span>${escPv(p.index)} / ${escPv(p.year)}</span><span class="pv__status${p.status === 'En ligne' ? ' live' : ''}">${escPv(p.status)}</span></div>
+      <p class="pv__title">${escPv(p.title)}</p>
+      <p class="pv__kicker mono">${escPv(p.kicker)}</p>
+      <ul class="pv__stack mono">${p.stack.slice(0, 4).map((t) => `<li>${escPv(t)}</li>`).join('')}</ul>
     </div>
   </div>`;
 }

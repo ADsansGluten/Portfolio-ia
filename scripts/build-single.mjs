@@ -1,7 +1,8 @@
 // Génère un portfolio en UN SEUL fichier HTML (sans npm ni serveur) à partir des sources.
 // Usage : node scripts/build-single.mjs   →   dist-single/index.html
 // GSAP, Lenis et Three.js sont chargés depuis des CDN au moment de l'ouverture de la page.
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 
 const read = (p) => readFileSync(new URL('../' + p, import.meta.url), 'utf8');
 const ORDER = ['utils/env', 'utils/split', 'data/content', 'modules/preloader', 'modules/cursor', 'modules/kinetic',
@@ -46,4 +47,13 @@ html = html.replace(/src="((?:li\/)?[\w.-]+\.(?:jpg|webp|png))"/g, (m, f) => {
 
 mkdirSync(new URL('../dist-single/', import.meta.url), { recursive: true });
 writeFileSync(new URL('../dist-single/index.html', import.meta.url), html);
+// Garde-fou : le script concaténé doit être un module valide (détecte les doublons d'identifiants entre fichiers)
+{
+  const m = html.match(/<script type="module">([\s\S]*?)<\/script>/);
+  const tmp = new URL('../dist-single/_check.mjs', import.meta.url);
+  writeFileSync(tmp, m[1].replace(/import\('https:[^']+'\)/g, 'null'));
+  const r = spawnSync(process.execPath, ['--check', tmp.pathname], { encoding: 'utf8' });
+  if (r.status !== 0) { console.error('ERREUR : le script unique est invalide\n' + r.stderr); process.exit(1); }
+  rmSync(tmp);
+}
 console.log('OK dist-single/index.html', (html.length / 1024).toFixed(0) + ' Ko');

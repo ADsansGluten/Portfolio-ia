@@ -525,3 +525,6 @@ body.has-cursor .ybot button, body.has-cursor .ybot a { cursor: pointer; }
 .modal__shot { margin: 0; display: grid; gap: 10px; }
 .modal__shot img { width: 100%; height: auto; border-radius: 14px; border: 1px solid rgba(var(--accent-rgb), 0.4); box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 50px rgba(var(--accent-rgb), 0.15); }
 .modal__shot figcaption { font-size: 11px; color: var(--fg-dim); }
+.modal__content { grid-template-columns: minmax(0, 1fr); }
+.modal__shot { min-width: 0; }
+.modal__shot img { max-width: 100%; }

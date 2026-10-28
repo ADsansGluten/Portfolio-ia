@@ -33,9 +33,12 @@ export function applyLang() {
     btn.setAttribute('lang', isEn ? 'fr' : 'en');
     btn.addEventListener('click', () => {
       try { localStorage.setItem('lang', isEn ? 'fr' : 'en'); } catch {}
+      // On retire ?lang= (il l'emporterait sur le choix mémorisé) puis on recharge pour de bon :
+      // assigner la même URL avec un #ancre ne ferait que défiler jusqu'à la section.
       const u = new URL(location.href);
       u.searchParams.delete('lang');
-      location.href = u.toString();
+      history.replaceState(null, '', u.toString());
+      location.reload();
     });
   }
   if (!isEn) return;

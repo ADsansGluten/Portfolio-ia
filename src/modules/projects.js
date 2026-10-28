@@ -5,16 +5,29 @@ import { reduced, finePointer } from '../utils/env.js';
 let lenisRef = null;
 let lastFocus = null;
 
-/** Visuel génératif (SVG) pour la preview au survol — aucune image externe à fournir. */
+/** Visuel génératif (SVG) : nuage de points relié façon « espace latent », teinte propre à chaque projet. */
 function previewArt(p) {
-  const h = p.hue;
-  const dots = Array.from({ length: 46 }, (_, i) => {
-    const x = (Math.sin(i * 12.9898 + h) * 43758.5453 % 1 + 1) % 1;
-    const y = (Math.sin(i * 78.233 + h) * 12345.678 % 1 + 1) % 1;
-    return `<circle cx="${(x * 340).toFixed(0)}" cy="${(y * 220).toFixed(0)}" r="${(1 + (i % 4)).toFixed(0)}" fill="hsl(${h} 90% 75%)" opacity="${(0.25 + (i % 5) * 0.12).toFixed(2)}"/>`;
-  }).join('');
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 220"><defs><radialGradient id="g" cx="30%" cy="30%" r="90%"><stop offset="0" stop-color="hsl(${h} 90% 55%)"/><stop offset="1" stop-color="#07070b"/></radialGradient></defs><rect width="340" height="220" fill="url(#g)"/>${dots}<text x="18" y="200" font-family="monospace" font-size="13" fill="white" opacity=".85">${p.index} / ${p.title}</text></svg>`;
+  const h = p.hue, W = 320, H = 156;
+  const rnd = (i, k) => { const v = Math.sin(i * 12.9898 + k * 78.233 + h) * 43758.5453; return v - Math.floor(v); };
+  const pts = Array.from({ length: 34 }, (_, i) => ({ x: 14 + rnd(i, 1) * (W - 28), y: 12 + rnd(i, 2) * (H - 24), r: 1.2 + rnd(i, 3) * 2.6 }));
+  let lines = '';
+  pts.forEach((a, i) => pts.forEach((b, j) => { if (j > i) { const d = Math.hypot(a.x - b.x, a.y - b.y); if (d < 62) lines += `<line x1="${a.x.toFixed(0)}" y1="${a.y.toFixed(0)}" x2="${b.x.toFixed(0)}" y2="${b.y.toFixed(0)}" stroke="hsl(${h} 90% 78%)" stroke-opacity="${(0.32 * (1 - d / 62)).toFixed(2)}"/>`; } }));
+  const dots = pts.map((q) => `<circle cx="${q.x.toFixed(0)}" cy="${q.y.toFixed(0)}" r="${q.r.toFixed(1)}" fill="hsl(${h} 95% 82%)" opacity="${(0.45 + q.r / 8).toFixed(2)}"/>`).join('');
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="g" cx="25%" cy="20%" r="95%"><stop offset="0" stop-color="hsl(${h} 90% 52%)"/><stop offset="0.55" stop-color="hsl(${h} 70% 18%)"/><stop offset="1" stop-color="#07070b"/></radialGradient></defs><rect width="${W}" height="${H}" fill="url(#g)"/>${lines}${dots}</svg>`;
   return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
+}
+
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function previewHTML(p) {
+  return `<div class="pv" style="--h:${p.hue}">
+    <div class="pv__art" style="background:${previewArt(p)} center / cover"><span class="pv__open mono">Ouvrir <b>↗</b></span></div>
+    <div class="pv__body">
+      <div class="pv__top mono"><span>${esc(p.index)} / ${esc(p.year)}</span><span class="pv__status${p.status === 'En ligne' ? ' live' : ''}">${esc(p.status)}</span></div>
+      <p class="pv__title">${esc(p.title)}</p>
+      <p class="pv__kicker mono">${esc(p.kicker)}</p>
+      <ul class="pv__stack mono">${p.stack.slice(0, 4).map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+    </div>
+  </div>`;
 }
 
 export function renderProjects(lenis) {
@@ -32,17 +45,35 @@ export function renderProjects(lenis) {
 
   // Preview qui suit le curseur
   const prev = document.getElementById('preview');
-  const img = document.getElementById('preview-img');
   if (finePointer && !reduced) {
-    const x = gsap.quickTo(prev, 'x', { duration: 0.5, ease: 'power3' });
-    const y = gsap.quickTo(prev, 'y', { duration: 0.5, ease: 'power3' });
-    list.addEventListener('pointermove', (e) => { x(e.clientX + 30); y(e.clientY - 10); });
-    let shown = false;
-    const show = () => { shown = true; gsap.to(prev, { opacity: 1, scale: 1, duration: 0.45, ease: 'power3.out', overwrite: 'auto' }); };
-    const hide = () => { if (!shown && gsap.getProperty(prev, 'opacity') === 0) return; shown = false; gsap.to(prev, { opacity: 0, scale: 0.85, duration: 0.3, overwrite: 'auto' }); };
+    const CARD_W = 320;
+    gsap.set(prev, { xPercent: 0, yPercent: 0, rotation: 0, scale: 0.9, opacity: 0 });
+    const x = gsap.quickTo(prev, 'x', { duration: 0.55, ease: 'power3' });
+    const y = gsap.quickTo(prev, 'y', { duration: 0.55, ease: 'power3' });
+    const rot = gsap.quickTo(prev, 'rotation', { duration: 0.7, ease: 'power3' });
+    let lastX = 0, settle = 0;
+    list.addEventListener('pointermove', (e) => {
+      // La carte passe à gauche du curseur près du bord droit de l'écran
+      const flip = e.clientX + 36 + CARD_W > innerWidth - 12;
+      x(flip ? e.clientX - 36 - CARD_W : e.clientX + 36);
+      y(Math.min(innerHeight - prev.offsetHeight - 12, Math.max(12, e.clientY - prev.offsetHeight * 0.35)));
+      // Légère inclinaison selon la vitesse horizontale, qui se redresse à l'arrêt
+      rot(Math.max(-5, Math.min(5, (e.clientX - lastX) * 0.25))); lastX = e.clientX;
+      clearTimeout(settle); settle = setTimeout(() => rot(0), 90);
+    });
+    let shown = false, current = null;
+    const show = () => { shown = true; gsap.to(prev, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.6)', overwrite: 'auto' }); };
+    const hide = () => { if (!shown && gsap.getProperty(prev, 'opacity') === 0) return; shown = false; gsap.to(prev, { opacity: 0, scale: 0.92, duration: 0.25, ease: 'power2.in', overwrite: 'auto' }); };
     list.querySelectorAll('.project-row').forEach((row) => {
       const p = PROJECTS.find((q) => q.slug === row.dataset.slug);
-      row.addEventListener('pointerenter', () => { img.style.background = previewArt(p) + ' center / cover'; show(); });
+      row.addEventListener('pointerenter', () => {
+        if (current !== p.slug) {
+          current = p.slug; prev.innerHTML = previewHTML(p);
+          gsap.fromTo(prev.querySelectorAll('.pv__body > *'), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, stagger: 0.05, ease: 'power3.out' });
+          gsap.fromTo(prev.querySelector('.pv__art'), { scale: 1.08 }, { scale: 1, duration: 0.7, ease: 'power3.out' });
+        }
+        show();
+      });
       row.addEventListener('pointerleave', hide);
     });
     // Filets de sécurité : un défilement rapide peut faire rater pointerleave

@@ -246,8 +246,22 @@ code { font-family: var(--font-mono); color: var(--accent-glow); }
   .project-row { grid-template-columns: 40px 1fr; gap: 10px 16px; }
   .project-row__kicker, .project-row__status { grid-column: 2; justify-self: start; }
 }
-.preview { position: fixed; left: 0; top: 0; width: 340px; height: 220px; z-index: 400; pointer-events: none; opacity: 0; transform: translate(-50%, -50%) scale(0.85); overflow: hidden; border-radius: 12px; border: 1px solid var(--line-strong); }
-.preview__img { width: 100%; height: 100%; }
+.preview { position: fixed; left: 0; top: 0; width: 320px; z-index: 400; pointer-events: none; opacity: 0; will-change: transform, opacity; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.45)); }
+.pv { --h: 268; border-radius: 20px; overflow: hidden; background: var(--bg-2); border: 1px solid var(--line-strong); box-shadow: 0 0 0 1px hsla(var(--h), 90%, 65%, 0.16), 0 0 60px -12px hsla(var(--h), 90%, 60%, 0.5); }
+.pv__art { position: relative; height: 150px; overflow: hidden; }
+.pv__art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.13) 50%, transparent 62%); background-size: 260% 100%; animation: pvShine 2.6s ease-in-out infinite; }
+@keyframes pvShine { 0% { background-position: 160% 0; } 60%, 100% { background-position: -60% 0; } }
+.pv__open { position: absolute; z-index: 2; right: 12px; bottom: 12px; display: inline-flex; gap: 6px; align-items: center; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; background: rgba(7, 7, 11, 0.55); border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 999px; padding: 5px 11px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.pv__body { padding: 14px 16px 16px; display: grid; gap: 6px; }
+.pv__top { display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-dim); }
+.pv__status { display: inline-flex; align-items: center; gap: 6px; }
+.pv__status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--fg-dim); }
+.pv__status.live { color: var(--accent-glow); }
+.pv__status.live::before { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.pv__title { font-size: 24px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; color: var(--fg); }
+.pv__kicker { font-size: 11.5px; color: var(--fg-dim); }
+.pv__stack { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+.pv__stack li { font-size: 10.5px; border: 1px solid var(--line-strong); border-radius: 999px; padding: 3px 9px; color: var(--fg-dim); }
 @media (hover: none) { .preview { display: none; } }
 
 /* ---------- Modale projet ---------- */

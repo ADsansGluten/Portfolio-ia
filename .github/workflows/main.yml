@@ -1,0 +1,62 @@
+name: Déployer le portfolio
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['README.md', 'docs/**']
+  workflow_dispatch:
+  schedule:
+    - cron: '17 5 * * *'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Minification (esbuild)
+        run: npm install --no-save esbuild
+
+      - name: Lire les compétences dans Supabase
+        run: node scripts/fetch-skills.mjs
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+
+      - name: Construire le site
+        run: node scripts/build-single.mjs --web
+
+      - name: Assembler le dossier publié
+        run: |
+          mkdir _site
+          cp -r dist-web/. _site/
+          cp public/cv-adrien-lavigne.pdf _site/ 2>/dev/null || true
+          touch _site/.nojekyll
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

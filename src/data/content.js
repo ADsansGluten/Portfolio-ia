@@ -8,6 +8,9 @@
  *    toute clé absente de `en` retombe automatiquement sur `fr`.
  */
 
+import { isEn } from '../utils/i18n.js';
+import { EN_DATA } from './en.js';
+
 export const LINKS = {
   linkedin: 'https://www.linkedin.com/in/adrien-lavigne-93197a381/',
   github: 'https://github.com/ADsansGluten',
@@ -179,12 +182,29 @@ export const SUGGESTIONS = ['Qui es-tu ?', 'Tes projets', 'Tes compétences', 'P
 export const FALLBACK =
   "Je n'ai pas cette info dans ma base locale. Essaie : parcours, projets, compétences, contact, ou tape « help ».";
 
-/** Dictionnaire i18n pour le HTML statique (attributs data-i18n). `fr` est dans index.html. */
-export const I18N = {
-  fr: {},
-  en: {
-    // Exemple — décommente et complète pour activer l'anglais :
-    // 'hero.cta.projects': 'See my projects',
-    // 'hero.cta.contact': 'Get in touch',
-  },
-};
+/* ───── Version anglaise : on superpose les traductions (par clé stable) aux données françaises ───── */
+SKILLS.nodes.forEach((n) => { n.levelFr = n.level; }); // le calcul des niveaux s'appuie sur le français
+PROJECTS.forEach((p) => { p.live = p.status === 'En ligne'; });
+
+if (isEn) {
+  const { projects, skills, timeline, kb, suggestions, fallback } = EN_DATA;
+  Object.entries(skills.categories).forEach(([k, v]) => { SKILLS.categories[k].label = v; });
+  SKILLS.nodes.forEach((n) => Object.assign(n, skills.nodes[n.id] || {}));
+  PROJECTS.forEach((p) => {
+    const { links, ...rest } = projects[p.slug] || {};
+    Object.assign(p, rest);
+    if (links) p.links.forEach((l, i) => { if (links[i]) l.label = links[i]; });
+  });
+  TIMELINE.forEach((t, i) => Object.assign(t, timeline[i] || {}));
+  KB.forEach((item) => {
+    const e = kb[item.id];
+    if (!e) return;
+    item.k = [...item.k, ...e.k];
+    item.a = item.id === 'linkedin' ? `${e.a} ${LINKS.linkedin}`
+      : item.id === 'contact' ? `${e.a} ${LINKS.email} or LinkedIn (${LINKS.linkedin}). You can also use the form below.`
+      : e.a;
+  });
+  SUGGESTIONS.splice(0, SUGGESTIONS.length, ...suggestions);
+}
+export const FALLBACK_TEXT = isEn ? EN_DATA.fallback : FALLBACK;
+

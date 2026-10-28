@@ -1,3 +1,4 @@
+import { tr } from '../utils/i18n.js';
 import gsap from 'gsap';
 import { reduced, finePointer, store } from '../utils/env.js';
 
@@ -59,7 +60,7 @@ export function initTheme() {
   const applyMode = (mode, announce) => {
     root.dataset.mode = mode;
     const light = mode === 'light';
-    btn.textContent = light ? '☀ jour' : '☾ nuit';
+    btn.textContent = light ? tr('☀ jour') : tr('☾ nuit');
     btn.setAttribute('aria-pressed', String(light));
     meta?.setAttribute('content', light ? '#F5F3FB' : '#07070B');
     if (announce) window.dispatchEvent(new Event('themechange'));

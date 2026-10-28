@@ -607,6 +607,7 @@ a.ybot__btn { text-decoration: none; display: inline-block; }
     </nav>
     <div class="nav__tools mono">
       <a class="chip chip--in" href="https://www.linkedin.com/in/adrien-lavigne-93197a381/" target="_blank" rel="noopener" aria-label="Mon profil LinkedIn (nouvel onglet)" data-cursor="link"><b aria-hidden="true">in</b> LinkedIn <span aria-hidden="true">↗</span></a>
+      <button class="chip chip--lang" id="lang-toggle" type="button" aria-label="Switch the site to English" lang="en" data-cursor="link">EN</button>
       <button class="chip chip--mode" id="mode-toggle" type="button" aria-label="Basculer entre mode jour et mode nuit" aria-pressed="false" data-cursor="link">☾ nuit</button>
       <button class="chip" id="theme-toggle" type="button" aria-label="Changer la palette de couleurs" data-cursor="link">◐ palette</button>
       <span class="nav__version">v2026.10</span>
@@ -881,6 +882,369 @@ function wrap(el, perChar) {
 const splitChars = (el) => wrap(el, true);
 const splitWords = (el) => wrap(el, false);
 
+/* ───── data/en ───── */
+/**
+ * Traductions anglaises. `EN_UI` : texte français exact → anglais (HTML statique + textes des modules).
+ * `EN_DATA` : contenu dynamique (projets, parcours, compétences, terminal), rangé par clé stable.
+ * Une clé absente retombe sur le français (jamais de texte vide).
+ */
+const EN_UI = {
+  // ── Méta
+  'Adrien Lavigne — Étudiant Data / IA · Ynov Campus Sophia': 'Adrien Lavigne — Data / AI Student · Ynov Campus Sophia',
+  "Portfolio d'Adrien Lavigne, étudiant en Bachelor IA / Data à Ynov Campus Sophia. Projets, parcours (droit → IA), compétences, et un terminal interactif pour tout savoir.":
+    "Portfolio of Adrien Lavigne, Bachelor student in AI / Data at Ynov Campus Sophia. Projects, journey (law → AI), skills, and an interactive terminal to find out more.",
+  'Adrien Lavigne — Étudiant Data / IA': 'Adrien Lavigne — Data / AI Student',
+  "Du droit à l'IA : projets, parcours et un terminal pour tout savoir sur moi.": 'From law to AI: projects, journey and a terminal to learn everything about me.',
+
+  // ── Navigation & en-tête
+  'Aller au contenu': 'Skip to content',
+  'Retour en haut': 'Back to top',
+  'Navigation principale': 'Main navigation',
+  'Mon profil LinkedIn (nouvel onglet)': 'My LinkedIn profile (new tab)',
+  'Basculer entre mode jour et mode nuit': 'Switch between day and night mode',
+  '☾ nuit': '☾ night',
+  '☀ jour': '☀ day',
+  'Changer la palette de couleurs': 'Change the colour palette',
+  '◐ palette': '◐ palette',
+  'Changer de langue': 'Change language',
+
+  // ── Hero
+  'Introduction': 'Introduction',
+  "Portrait d'Adrien Lavigne": 'Portrait of Adrien Lavigne',
+  'Étudiant en': 'Student in',
+  'IA & Data': 'AI & Data',
+  '. Je viens du droit, je construis maintenant des systèmes qui apprennent.': '. I come from law, and now I build systems that learn.',
+  'Voir mes projets': 'See my projects',
+  'Me contacter': 'Get in touch',
+  "// bouge ta souris : elle devient une requête dans l'espace latent": '// move your mouse: it becomes a query in latent space',
+
+  // ── About
+  'Du Code civil au code source.': 'From the Civil Code to source code.',
+  "J'ai passé mon bac au CNED avec les mathématiques expertes, puis une année de droit à Paris 1 Panthéon-Sorbonne. Cette année, j'ai changé de voie : je me forme à l'IA et à la data à Ynov Campus Sophia. Je pars de peu, je le sais, et je le compense par des projets concrets, publiés, que tu peux ouvrir. J'ai fait ce choix par vision d'avenir : je me suis projeté, j'ai estimé ce qui correspondait à mon idéal, et c'est l'IA et la data.":
+    "I took my baccalauréat through CNED with advanced maths, then spent a year studying law at Paris 1 Panthéon-Sorbonne. This year I changed paths: I'm training in AI and data at Ynov Campus Sophia. I'm starting from little, I know that, and I make up for it with concrete, published projects you can open. I made this choice with the future in mind: I pictured myself in it, weighed what matched my ideal, and it is AI and data.",
+  'Actuellement': 'Currently',
+  'formation': 'training',
+  'Bachelor 1 IA / Data — Ynov Sophia': 'Bachelor 1 AI / Data — Ynov Sophia',
+  'cible': 'goal',
+  'Mastère « Expert en intelligence artificielle »': 'Master’s “Expert in Artificial Intelligence”',
+  'recherche': 'looking for',
+  'stage / alternance': 'internship / work-study',
+  "j'apprends": 'learning',
+  'Go · web · infra sécurisée': 'Go · web · secure infrastructure',
+  'langues': 'languages',
+  'FR natif · ES B1+ · EN B1-': 'FR native · ES B1+ · EN B1-',
+
+  // ── Skills
+  'Carte de mes compétences.': 'My skills map.',
+  "Survole ou clique un nœud : le réseau s'illumine avec les projets qui l'utilisent. La taille d'un point reflète le niveau (indicatif), tel que je le décris dans mon CV, sans gonflette. Les pastilles filtrent par catégorie.":
+    "Hover or click a node: the network lights up with the projects that use it. A dot's size reflects the level (indicative), as I describe it in my CV, no inflating. The chips filter by category.",
+  'Filtrer par catégorie': 'Filter by category',
+  'Graphe interactif des compétences par catégorie : IA/ML, Data, Dev, Cyber/Infra, Outils': 'Interactive skills graph by category: AI/ML, Data, Dev, Cyber/Infra, Tools',
+  '// sélection': '// selection',
+  'Aucun nœud sélectionné': 'No node selected',
+  'Survole ou clique une techno.': 'Hover or click a technology.',
+  '// projets': '// projects',
+  '// relié à': '// linked to',
+  'Tout': 'All',
+  'Pas encore relié à un projet publié.': 'Not linked to a published project yet.',
+  'Catégorie': 'Category',
+  'Niveau :': 'Level:',
+  'compétences': 'skills',
+  'Projet': 'Project',
+  'Ouvre la fiche détaillée.': 'Opens the detailed page.',
+
+  // ── Projects
+  'Projets.': 'Projects.',
+  'Ouvrir': 'Open',
+  'Contexte': 'Context',
+  'Problème': 'Problem',
+  'Solution': 'Solution',
+  'Résultat': 'Result',
+  '▶ Tester le jeu ici': '▶ Play the game here',
+  'Fermer ✕': 'Close ✕',
+  'capture :': 'screenshot:',
+
+  // ── LinkedIn
+  'Publier dès la B1.': 'Publishing from year one.',
+  "Je n'attends pas d'être diplômé pour montrer ce que je construis. Chaque projet publié est une preuve : on peut l'ouvrir, le tester, le critiquer. C'est comme ça qu'on progresse, et qu'on se fait repérer, dès la première année.":
+    "I don't wait to graduate to show what I build. Every published project is proof: you can open it, test it, criticise it. That's how you improve, and how you get noticed, from the very first year.",
+  'Montrer plutôt que dire': 'Show, don’t tell',
+  'Publier tôt, itérer ensuite': 'Publish early, iterate later',
+  'Un projet = une preuve': 'One project = one proof',
+  'Mon profil LinkedIn': 'My LinkedIn profile',
+  'Ma bannière LinkedIn : Adrien Lavigne, étudiant en Data et IA, Ynov Campus et Panthéon Sorbonne': 'My LinkedIn banner: Adrien Lavigne, Data and AI student, Ynov Campus and Panthéon Sorbonne',
+  'Étudiant en Data & IA · Ynov Campus Sophia': 'Data & AI student · Ynov Campus Sophia',
+  'Voir mon profil': 'View my profile',
+  '// extrait de mon post': '// from my post',
+  'Ouverture': 'Opening',
+  "Entraîne une IA de recrutement… sans qu'elle devienne injuste.": 'Train a hiring AI… without it becoming unfair.',
+  'Choisir un visuel': 'Choose a visual',
+  'Aller au visuel 1 sur 6': 'Go to visual 1 of 6',
+  'Aller au visuel 2 sur 6': 'Go to visual 2 of 6',
+  'Aller au visuel 3 sur 6': 'Go to visual 3 of 6',
+  'Aller au visuel 4 sur 6': 'Go to visual 4 of 6',
+  'Aller au visuel 5 sur 6': 'Go to visual 5 of 6',
+  'Aller au visuel 6 sur 6': 'Go to visual 6 of 6',
+
+  'Jouer à RecrutIA': 'Play RecrutIA',
+  'Visuels du post LinkedIn RecrutIA': 'Visuals of the RecrutIA LinkedIn post',
+  'Post LinkedIn · RecrutIA': 'LinkedIn post · RecrutIA',
+  "Chaque choix a des conséquences sur l'IA, et sur les candidats.": 'Every choice has consequences for the AI, and for the candidates.',
+  "L'accueil": 'The welcome page',
+  'Genre, hobbies, trou de CV… que fais-tu avec ça ?': 'Gender, hobbies, CV gap… what do you do with that?',
+  'Le jeu de données': 'The dataset',
+  'Perdre un peu de précision pour gagner en équité.': 'Lose a little accuracy to gain fairness.',
+  'Rééquilibrer': 'Rebalancing',
+  'Une IA juste se construit à chaque étape.': 'A fair AI is built at every step.',
+  'La fin': 'The ending',
+  'Pourras-tu livrer une IA juste ?': 'Will you be able to deliver a fair AI?',
+  'À toi de jouer': 'Your turn',
+  'Mini-jeu · 15 pages · HTML/CSS : page de titre du post RecrutIA': 'Mini-game · 15 pages · HTML/CSS: title page of the RecrutIA post',
+  "L'accueil du jeu RecrutIA": 'The RecrutIA game welcome page',
+  'Étape 2 sur 9 : le jeu de données': 'Step 2 of 9: the dataset',
+  'Étape 8 sur 9 : rééquilibrer les données': 'Step 8 of 9: rebalancing the data',
+  'Fin 3 : une IA plus juste': 'Ending 3: a fairer AI',
+  'À toi de jouer : lien vers le jeu et le code': 'Your turn: link to the game and the code',
+
+  // ── Journey / Ask / Contact / footer
+  'Parcours.': 'Journey.',
+  'Pose-moi une question.': 'Ask me a question.',
+  'Un mini-assistant qui répond sur mon profil depuis une base locale (sans serveur). Essaie aussi': 'A mini assistant that answers about my profile from a local knowledge base (no server). Also try',
+  '… ou cherche les commandes secrètes.': '… or look for the secret commands.',
+  'Pose ta question…': 'Ask your question…',
+  'Ta question': 'Your question',
+  'Travaillons ensemble.': 'Let’s work together.',
+  'Je cherche un stage ou une alternance en IA / data. Écris-moi.': "I'm looking for an internship or work-study position in AI / data. Write to me.",
+  'Nom': 'Name',
+  'Envoyer': 'Send',
+  'Télécharger mon CV': 'Download my CV',
+  'Lavigne — easter egg : clique plusieurs fois': 'Lavigne — easter egg: click several times',
+  'compile avec ❤ et un peu de GPU': 'compiled with ❤ and a bit of GPU',
+  '↑ top': '↑ top',
+
+  // ── Terminal « Ask me anything »
+  'Qui es-tu ?': 'Who are you?',
+  'Tes projets': 'Your projects',
+  'Tes compétences': 'Your skills',
+  'Parcours': 'Journey',
+  'Contact': 'Contact',
+  "Je n'ai pas cette info dans ma base locale. Essaie : parcours, projets, compétences, contact, ou tape « help ».":
+    "I don't have that in my local knowledge base. Try: journey, projects, skills, contact, or type “help”.",
+  "Salut, je suis la version locale d'Adrien. Pose une question ou clique une suggestion. Tape « help » pour les commandes.":
+    "Hi, I'm the local version of Adrien. Ask a question or click a suggestion. Type “help” for the commands.",
+  "Commandes : help · clear · projets · competences · parcours · contact · linkedin · matrix · theme · whoami\nOu pose-moi une question en français. Il y a aussi quelques commandes secrètes…":
+    "Commands: help · clear · projects · skills · journey · contact · linkedin · matrix · theme · whoami\nOr just ask me a question in English. There are a few secret commands too…",
+  "visiteur@latent-space — bienvenue. Moi, c'est Adrien.": "visitor@latent-space — welcome. I'm Adrien.",
+  'about.txt  skills.json  projects/  parcours.log  contact.sh': 'about.txt  skills.json  projects/  journey.log  contact.sh',
+  'Data rain togglé. (Échap pour arrêter)': 'Data rain toggled. (Esc to stop)',
+  'Palette changée.': 'Palette changed.',
+  '[sudo] password for recruteur: ********': '[sudo] password for recruiter: ********',
+  "Bien tenté, mais tu n'as pas les droits. Essaie « sudo hire adrien » 😉": 'Nice try, but you don’t have the rights. Try “sudo hire adrien” 😉',
+  'Permission refusée. Ce portfolio est protégé par mon amour-propre.': 'Permission denied. This portfolio is protected by my pride.',
+  'Excellente décision. Écris-moi :': 'Excellent decision. Write to me:',
+  ' — ou ': ' — or ',
+
+  // ── Easter eggs
+  'Mode sobre actif : pluie de données désactivée.': 'Reduced-motion mode on: data rain disabled.',
+  '↑↑↓↓←→←→BA — data rain activée (Échap pour couper)': '↑↑↓↓←→←→BA — data rain on (Esc to stop)',
+  'Data rain coupée': 'Data rain off',
+  '404 : bug introuvable. Embauche-moi plutôt ;)': '404: bug not found. Hire me instead ;)',
+  'Easter egg #2 trouvé': 'Easter egg #2 found',
+
+  // ── Formulaire
+  'Merci de remplir les trois champs avec un email valide.': 'Please fill in all three fields with a valid email.',
+  'Formulaire non branché : ouverture de ton client mail.': 'Form not connected yet: opening your email app.',
+  'Message envoyé. Merci !': 'Message sent. Thank you!',
+  "Échec de l'envoi. Écris-moi directement :": 'Sending failed. Write to me directly:',
+  'PDF bientôt disponible': 'PDF coming soon',
+  'Contact via portfolio — ': 'Contact via portfolio — ',
+
+  // ── Terminal « Tester le jeu » (Mr Ybot)
+  'mr-ybot — projet-red · go (wasm)': 'mr-ybot — projet-red · go (wasm)',
+  'Redémarrer ↺': 'Restart ↺',
+  'Terminal : Mr Ybot': 'Terminal: Mr Ybot',
+  'Saisie du jeu (Entrée pour envoyer)': 'Game input (press Enter to send)',
+  '> chargement du module…': '> loading module…',
+  '[!] Impossible de charger le jeu dans ce navigateur.': '[!] Could not load the game in this browser.',
+  'Tu peux le lancer chez toi avec « go run . » depuis le dépôt GitHub.': 'You can run it at home with “go run .” from the GitHub repository.',
+  '[!] Erreur :': '[!] Error:',
+  '— session terminée —': '— session ended —',
+  '(« Redémarrer ↺ » pour rejouer)': '(“Restart ↺” to play again)',
+  'Jeu réalisé en équipe de 3 (Ynov, Ymmersion) · ma part : combat, actions, compétences, ennemis ·': 'Game built by a team of 3 (Ynov, Ymmersion) · my part: combat, actions, skills, enemies ·',
+  'code source ↗': 'source code ↗',
+};
+
+const EN_PROJECTS = {
+  recrutia: {
+    kicker: 'Narrative game · HTML / CSS / JS',
+    status: 'Live',
+    summary: 'A 15-page decision game where you play a data scientist training an AI that sorts CVs.',
+    context: "HTML/CSS project built at Ynov Campus. The idea of steering the game towards training a language model is mine, with the help of my mentor Firas.",
+    problem: 'How do you explain, without jargon, that a hiring AI can reproduce bias if its training data is biased?',
+    solution: "HTML/CSS pages linked like a “choose your own adventure” book: each player choice shapes the data, and therefore the behaviour of the fictional AI of the company RecrutIA. Three possible endings. Two themes: v1 light with a day/night button (small JS script), v2 dark “data console”.",
+    result: 'Game published on GitHub Pages. Next step considered: a Go port, playable in the terminal.',
+    links: ['Play', 'Source code'],
+    imageCaption: 'the “The dataset” step (night mode)',
+    imageAlt: 'RecrutIA screenshot: the dataset step, with a table of candidates and two choices',
+  },
+  shieldwall: {
+    title: 'Operation Shieldwall',
+    kicker: 'Infrastructure & cybersecurity · Ynov B1',
+    status: 'In progress',
+    summary: "Securing the infrastructure of a fictional SME (Azuria): directory, file server, network segmentation.",
+    context: 'Ynov B1 cybersecurity project, done solo. Track A — Windows (Active Directory + file server).',
+    problem: 'I started with no networking knowledge: I had to build a coherent infrastructure and defend it (Blue Team approach).',
+    solution: 'VMware Workstation hypervisor for the Windows side, Packet Tracer mock-up for segmentation (network core, firewall, one switch per zone, VLANs). Structured private GitHub repository (docs, configs, scripts, evidence) and a roadmap tracked item by item.',
+    result: "Project in progress: I'm currently working on the mock-up.",
+    links: ['Private repository — access on request'],
+  },
+  portfolio: {
+    title: 'This portfolio',
+    kicker: 'Creative dev · Vite · WebGL',
+    status: 'Live',
+    summary: 'The site you are browsing: a WebGL embedding field, an “Ask me anything” terminal and far too many easter eggs.',
+    context: 'Built to present my career change towards AI and data.',
+    problem: 'Standing out with a portfolio that tells the story of the job I am aiming for rather than just listing it.',
+    solution: 'Vite + vanilla JavaScript, GSAP and Lenis for motion, Three.js for the hero, 2D canvas for the skills graph. Built with the help of Claude.',
+    result: 'See the Contact section to tell me what you think.',
+    links: ['Source code'],
+  },
+  'projet-red-ybot': {
+    kicker: 'Terminal game · Go',
+    status: 'Completed',
+    summary: 'A command-line role-playing game with a cybersecurity theme: create your operator, equip them, craft gear and fight malware turn by turn.',
+    context: "Final project of the 3 weeks of Ymmersion at Ynov Sophia, in my first year: a development project built by a team of 3, Projet RED. My part: the combat system, the actions, the skills and the enemies. The code is hosted on a teammate's GitHub (ItsForTheVibes).",
+    problem: 'Designing, as a team and in three weeks, a complete game playable in the terminal, inspired by hacking and cyberpunk.',
+    solution: 'Operator creation with affiliation and hit points, inventory (capacity 10, expandable), Ethereum merchant, crafting lab (Neural Visor, Firewall Jacket, Proxy Boots), skills (Packet Punch, Zero-Day Blast), consumables and turn-based combat against malware. Code split into packages: character, combat, economy, items, utils. My scope: turn-based combat, player actions, skills (Packet Punch, Zero-Day Blast) and enemies (malware with their own behaviour).',
+    result: "Mr Ybot runs with “go run .” (about 1,500 lines of Go). An experience that let me put my programming basics into practice and discover teamwork on a real project.",
+    links: ['Source code'],
+    imageCaption: 'a fight in Mr Ybot',
+    imageAlt: 'Mr Ybot screenshot: a turn-based fight against a Training Malware, in the terminal',
+  },
+};
+
+const EN_SKILLS = {
+  categories: { tools: 'Tools' },
+  nodes: {
+    llm: { level: 'learning' },
+    biais: { label: 'Algorithmic bias', level: 'awareness (RecrutIA project)' },
+    algo: { label: 'Algorithms', level: 'beginner' },
+    excel: { level: 'intermediate' },
+    backtest: { level: 'personal practice' },
+    html: { level: 'beginner' },
+    js: { level: 'beginner' },
+    go: { level: 'beginner' },
+    git: { level: 'hands-on' },
+    ad: { level: 'in progress (Shieldwall)' },
+    vmware: { level: 'in progress (Shieldwall)' },
+    ptracer: { level: 'in progress (Shieldwall)' },
+    canva: { level: 'advanced' },
+    office: { level: 'intermediate' },
+    pix: { level: 'certified' },
+    claude: { label: 'Claude (AI assistant)', level: 'daily use' },
+  },
+};
+
+/** Même ordre que TIMELINE dans content.js. */
+const EN_TIMELINE = [
+  { date: 'Sep 2026 →', title: 'Bachelor 1 AI / Data', place: 'Ynov Campus Sophia — Sophia Antipolis', text: 'I join the Data Engineer / AI Development programme. Target Master’s: Expert in Artificial Intelligence.' },
+  { date: 'Oct 2025 – Sep 2026', title: 'Social Media Video Creator', place: 'El Nacho — Station du Val Joly', text: "The restaurant's media channel, to improve click-through rate; filming and editing videos for events." },
+  { date: 'Feb – Jun 2026', title: 'Sales Assistant (fixed-term)', place: 'MR.Bricolage / MY INVEST — Le Rouret', text: 'Restocking through the inter-franchise stock, selling across the whole shop floor, revenue targets.' },
+  { date: 'Sep 2025 – Jun 2026', title: 'Law degree, year 1', place: 'Paris 1 Panthéon-Sorbonne', text: 'One year of law, not continued, before changing path towards AI and data.' },
+  { date: 'Sep – Nov 2025', title: 'Oven operator (temp work)', place: 'Maison Menissez — Maubeuge', text: 'In charge of the main baking line on large orders (CROUS in particular), 5 rotary ovens.' },
+  { date: 'Jul – Aug 2025', title: 'Bartender / Cook', place: 'Station du Val Joly — Campsite', text: 'Taking orders, till, running the dining room; independent cook in a food truck.' },
+  { date: 'Feb 2024 – Jul 2025', title: 'General Baccalauréat (with honours)', place: 'CNED — Rennes', text: 'Specialities Mathematics and Economics & Social Sciences, Advanced Mathematics option.' },
+  { date: 'Jul 2023', title: 'Estate agency internship', place: 'HOME-IMMO — Antibes', text: 'Ran two appointments for a viewing.' },
+  { date: 'Jun 2023', title: 'Private wealth management internship', place: 'Olifan Group — Cannes', text: 'Supported a client meeting about a new structured product.' },
+  { date: 'Sep 2021 – Jun 2023', title: 'National UNSS / departmental FFBB referee', place: 'Basketball — Paris', text: 'Strict application of the rules, handling conflict situations during matches.' },
+];
+
+const EN_KB = {
+  about: { k: ['who', 'about', 'yourself', 'introduce', 'introduction', 'profile', 'you'], a: "Adrien Lavigne. Bachelor 1 AI / Data student at Ynov Campus Sophia since September 2026. I come from law (Paris 1 Panthéon-Sorbonne) and I'm changing career towards AI and data. Target Master's: Expert in Artificial Intelligence." },
+  path: { k: ['journey', 'background', 'law', 'career', 'change', 'why', 'story', 'baccalaureat', 'bac', 'cned'], a: "General baccalauréat through CNED (advanced maths, economics & social sciences, with honours), then a first year of law at Paris 1. This year I'm switching to AI and data, with the future in mind: I pictured myself in it and judged that this field matched my ideal." },
+  now: { k: ['currently', 'now', 'training', 'education', 'studies', 'study', 'school', 'ynov'], a: "Studying at Ynov Campus Sophia (B1 AI / Data). I'm looking for an internship or work-study position, and meanwhile learning Go, web development and the basics of secure infrastructure." },
+  skills: { k: ['skills', 'skill', 'tech', 'technologies', 'stack', 'language', 'know'], a: "I'm still early in my journey, so here is my real level: Canva (advanced), Word/Excel (intermediate), HTML/CSS, JavaScript, Go and algorithms (beginner), Active Directory and networking (in progress through Shieldwall). No fluff: I learn fast and I show it through projects." },
+  projects: { k: ['projects', 'project', 'built', 'portfolio', 'github', 'code', 'work'], a: "Four projects to see: RecrutIA (narrative game about the bias of a CV-sorting AI, live), Operation Shieldwall (infrastructure & cybersecurity, in progress), Projet RED – Mr Ybot (terminal game in Go) and this portfolio. Type “recrutia” or “shieldwall” for details." },
+  recrutia: { k: ['recrutia', 'game', 'bias', 'biases', 'hiring', 'recruitment'], a: "RecrutIA: a 15-page HTML/CSS/JS game where you're a data scientist training a CV-sorting AI. Three endings, two themes. Playable on GitHub Pages. The idea: show how biased data produces a biased AI." },
+  shieldwall: { k: ['shieldwall', 'cyber', 'cybersecurity', 'security', 'azuria', 'network', 'networking', 'infrastructure', 'active', 'directory'], a: "Operation Shieldwall: B1 cybersecurity project, done solo. Active Directory + file server on VMware Workstation, Packet Tracer mock-up with VLANs. I started from zero in networking. Still in progress." },
+  exp: { k: ['experience', 'experiences', 'jobs', 'job', 'internship', 'internships', 'work-study', 'alternance'], a: "Experience: video creation for the restaurant El Nacho, fixed-term sales assistant at MR.Bricolage, oven operator through temp work, bartender/cook, national UNSS referee, and two discovery internships (estate agency in Antibes, wealth management in Cannes)." },
+  lang: { k: ['languages', 'english', 'spanish', 'french', 'speak'], a: 'French (native), Spanish (B1+), English (B1-).' },
+  hobby: { k: ['hobbies', 'hobby', 'interests', 'interest', 'chess', 'sport', 'gym', 'trading', 'free'], a: 'Weight training, chess (1400 elo), trading back-testing on XAUUSD, perfumery and watchmaking.' },
+  linkedin: { k: ['linkedin', 'social'], a: 'My LinkedIn:' },
+  contact: { k: ['contact', 'email', 'mail', 'reach', 'hire', 'recruit'], a: 'Easiest way:' },
+};
+
+const EN_DATA = {
+  projects: EN_PROJECTS,
+  skills: EN_SKILLS,
+  timeline: EN_TIMELINE,
+  kb: EN_KB,
+  suggestions: ['Who are you?', 'Your projects', 'Your skills', 'Journey', 'Contact'],
+  fallback: "I don't have that in my local knowledge base. Try: journey, projects, skills, contact, or type “help”.",
+};
+
+/* ───── utils/i18n ───── */
+
+/**
+ * Langue du site : choix mémorisé > ?lang=fr|en > langue du navigateur (fr → français, sinon anglais).
+ * Le bouton FR/EN enregistre le choix puis recharge la page : tout (textes, projets, terminal) est reconstruit proprement.
+ */
+function detect() {
+  try {
+    const q = new URLSearchParams(location.search).get('lang');
+    if (q === 'fr' || q === 'en') { try { localStorage.setItem('lang', q); } catch {} return q; }
+    const s = localStorage.getItem('lang');
+    if (s === 'fr' || s === 'en') return s;
+  } catch {}
+  return (navigator.language || 'fr').toLowerCase().startsWith('fr') ? 'fr' : 'en';
+}
+
+const LANG = detect();
+const isEn = LANG === 'en';
+
+/** Traduit un texte français exact (inchangé en français ou si la traduction manque). */
+const tr = (s) => (isEn && EN_UI[s]) || s;
+
+const ATTRS = ['aria-label', 'alt', 'placeholder', 'title', 'data-quote', 'data-name'];
+
+/** À appeler avant tout autre module : traduit le HTML statique et branche le bouton FR/EN. */
+function applyLang() {
+  const root = document.documentElement;
+  root.lang = LANG;
+  const btn = document.getElementById('lang-toggle');
+  if (btn) {
+    btn.textContent = isEn ? 'FR' : 'EN';
+    btn.setAttribute('aria-label', isEn ? 'Passer le site en français' : 'Switch the site to English');
+    btn.setAttribute('lang', isEn ? 'fr' : 'en');
+    btn.addEventListener('click', () => {
+      try { localStorage.setItem('lang', isEn ? 'fr' : 'en'); } catch {}
+      const u = new URL(location.href);
+      u.searchParams.delete('lang');
+      location.href = u.toString();
+    });
+  }
+  if (!isEn) return;
+
+  document.title = tr(document.title);
+  document.querySelector('meta[name="description"]')?.setAttribute('content', tr(document.querySelector('meta[name="description"]').content));
+  document.querySelectorAll('meta[property="og:title"], meta[property="og:description"]').forEach((m) => m.setAttribute('content', tr(m.content)));
+  document.querySelector('meta[property="og:locale"]')?.setAttribute('content', 'en_US');
+
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode: (n) => (n.parentElement && !/^(SCRIPT|STYLE|NOSCRIPT)$/.test(n.parentElement.tagName) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT),
+  });
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach((n) => {
+    const t = n.nodeValue.trim();
+    const en = t && EN_UI[t];
+    if (en) n.nodeValue = n.nodeValue.replace(t, en);
+  });
+  document.querySelectorAll(ATTRS.map((a) => `[${a}]`).join(',')).forEach((el) => {
+    ATTRS.forEach((a) => { const v = el.getAttribute(a); if (v && EN_UI[v]) el.setAttribute(a, EN_UI[v]); });
+  });
+}
+
 /* ───── data/content ───── */
 /**
  * ============================================================
@@ -891,6 +1255,8 @@ const splitWords = (el) => wrap(el, false);
  *  - i18n : `fr` est complet. Copie la structure dans `en` pour ajouter l'anglais ;
  *    toute clé absente de `en` retombe automatiquement sur `fr`.
  */
+
+
 
 const LINKS = {
   linkedin: 'https://www.linkedin.com/in/adrien-lavigne-93197a381/',
@@ -1063,15 +1429,32 @@ const SUGGESTIONS = ['Qui es-tu ?', 'Tes projets', 'Tes compétences', 'Parcours
 const FALLBACK =
   "Je n'ai pas cette info dans ma base locale. Essaie : parcours, projets, compétences, contact, ou tape « help ».";
 
-/** Dictionnaire i18n pour le HTML statique (attributs data-i18n). `fr` est dans index.html. */
-const I18N = {
-  fr: {},
-  en: {
-    // Exemple — décommente et complète pour activer l'anglais :
-    // 'hero.cta.projects': 'See my projects',
-    // 'hero.cta.contact': 'Get in touch',
-  },
-};
+/* ───── Version anglaise : on superpose les traductions (par clé stable) aux données françaises ───── */
+SKILLS.nodes.forEach((n) => { n.levelFr = n.level; }); // le calcul des niveaux s'appuie sur le français
+PROJECTS.forEach((p) => { p.live = p.status === 'En ligne'; });
+
+if (isEn) {
+  const { projects, skills, timeline, kb, suggestions, fallback } = EN_DATA;
+  Object.entries(skills.categories).forEach(([k, v]) => { SKILLS.categories[k].label = v; });
+  SKILLS.nodes.forEach((n) => Object.assign(n, skills.nodes[n.id] || {}));
+  PROJECTS.forEach((p) => {
+    const { links, ...rest } = projects[p.slug] || {};
+    Object.assign(p, rest);
+    if (links) p.links.forEach((l, i) => { if (links[i]) l.label = links[i]; });
+  });
+  TIMELINE.forEach((t, i) => Object.assign(t, timeline[i] || {}));
+  KB.forEach((item) => {
+    const e = kb[item.id];
+    if (!e) return;
+    item.k = [...item.k, ...e.k];
+    item.a = item.id === 'linkedin' ? `${e.a} ${LINKS.linkedin}`
+      : item.id === 'contact' ? `${e.a} ${LINKS.email} or LinkedIn (${LINKS.linkedin}). You can also use the form below.`
+      : e.a;
+  });
+  SUGGESTIONS.splice(0, SUGGESTIONS.length, ...suggestions);
+}
+const FALLBACK_TEXT = isEn ? EN_DATA.fallback : FALLBACK;
+
 
 /* ───── modules/preloader ───── */
 
@@ -1253,6 +1636,7 @@ function heroIntro() {
 /* ───── modules/interactions ───── */
 
 
+
 /** Boutons magnétiques : l'élément est attiré par le curseur dans un rayon autour de lui. */
 function initMagnetic() {
   if (!finePointer || reduced) return;
@@ -1311,7 +1695,7 @@ function initTheme() {
   const applyMode = (mode, announce) => {
     root.dataset.mode = mode;
     const light = mode === 'light';
-    btn.textContent = light ? '☀ jour' : '☾ nuit';
+    btn.textContent = light ? tr('☀ jour') : tr('☾ nuit');
     btn.setAttribute('aria-pressed', String(light));
     meta?.setAttribute('content', light ? '#F5F3FB' : '#07070B');
     if (announce) window.dispatchEvent(new Event('themechange'));
@@ -1362,6 +1746,7 @@ function initLinkedInNudge() {
 /* ───── modules/skills ───── */
 
 
+
 /**
  * Carte de compétences — constellation interactive (canvas 2D).
  *  - au centre : moi ; autour : 5 catégories ; autour de chaque catégorie : ses technos
@@ -1400,7 +1785,7 @@ function initSkills({ onOpenProject }) {
   const center = add({ id: 'me', type: 'me', label: 'AL', r: 24 });
   Object.entries(SKILLS.categories).forEach(([key, c]) => add({ id: 'cat:' + key, type: 'cat', cat: key, label: c.label, r: 13 }));
   PROJECTS.forEach((p) => add({ id: 'proj:' + p.slug, type: 'proj', label: p.title, slug: p.slug, r: 10 }));
-  SKILLS.nodes.forEach((s) => add({ id: s.id, type: 'skill', label: s.label, cat: s.cat, level: s.level, score: levelScore(s.level), projects: s.projects, r: 4.5 + levelScore(s.level) * 1.5 }));
+  SKILLS.nodes.forEach((s) => add({ id: s.id, type: 'skill', label: s.label, cat: s.cat, level: s.level, score: levelScore(s.levelFr), projects: s.projects, r: 4.5 + levelScore(s.levelFr) * 1.5 }));
   nodes.forEach((n, i) => { n.phase = i * 1.7; n.delay = n.type === 'me' ? 0 : n.type === 'cat' ? 120 : n.type === 'proj' ? 420 : 280 + (i % 9) * 55; });
 
   const edges = []; // [a, b, kind]
@@ -1429,7 +1814,7 @@ function initSkills({ onOpenProject }) {
 
   // ---------- Filtres ----------
   let filter = null;
-  const chips = [{ key: null, label: 'Tout' }, ...Object.entries(SKILLS.categories).map(([k, c]) => ({ key: k, label: c.label }))];
+  const chips = [{ key: null, label: tr('Tout') }, ...Object.entries(SKILLS.categories).map(([k, c]) => ({ key: k, label: c.label }))];
   filtersEl.innerHTML = chips.map((c) => `<button type="button" class="sk-chip${c.key === null ? ' is-on' : ''}" data-cat="${c.key ?? ''}" aria-pressed="${c.key === null}"><i></i>${c.label}</button>`).join('');
   filtersEl.addEventListener('click', (e) => {
     const b = e.target.closest('.sk-chip'); if (!b) return;
@@ -1644,24 +2029,24 @@ function initSkills({ onOpenProject }) {
   function select(n) {
     selected = n;
     projEl.innerHTML = ''; relEl.innerHTML = ''; projTitle.hidden = relTitle.hidden = true; pipsEl.hidden = true; catEl.hidden = true;
-    if (!n) { nameEl.textContent = 'Aucun nœud sélectionné'; levelEl.textContent = 'Survole ou clique une techno.'; redraw(); return; }
+    if (!n) { nameEl.textContent = tr('Aucun nœud sélectionné'); levelEl.textContent = tr('Survole ou clique une techno.'); redraw(); return; }
     nameEl.textContent = n.label;
     const col = colorOf(n);
     if (n.type === 'skill') {
       catEl.hidden = false; catEl.textContent = SKILLS.categories[n.cat].label; catEl.style.setProperty('--c', col);
-      levelEl.textContent = `Niveau : ${n.level}`;
+      levelEl.textContent = `${tr('Niveau :')} ${n.level}`;
       pips(n.score, col);
       projTitle.hidden = false;
       n.projects.forEach((slug) => projEl.appendChild(chipBtn(PROJECTS.find((x) => x.slug === slug).title, slug)));
-      if (!n.projects.length) { const li = document.createElement('li'); li.className = 'dim'; li.textContent = 'Pas encore relié à un projet publié.'; projEl.appendChild(li); }
+      if (!n.projects.length) { const li = document.createElement('li'); li.className = 'dim'; li.textContent = tr('Pas encore relié à un projet publié.'); projEl.appendChild(li); }
     } else if (n.type === 'cat') {
       const kids = nodes.filter((x) => x.type === 'skill' && x.cat === n.cat);
-      catEl.hidden = false; catEl.textContent = 'Catégorie'; catEl.style.setProperty('--c', col);
-      levelEl.textContent = `${kids.length} compétences`;
+      catEl.hidden = false; catEl.textContent = tr('Catégorie'); catEl.style.setProperty('--c', col);
+      levelEl.textContent = `${kids.length} ${tr('compétences')}`;
       relTitle.hidden = false; kids.forEach((k) => relEl.appendChild(chipBtn(k.label, null, k.id)));
     } else {
-      catEl.hidden = false; catEl.textContent = 'Projet'; catEl.style.setProperty('--c', accentGlow());
-      levelEl.textContent = 'Ouvre la fiche détaillée.';
+      catEl.hidden = false; catEl.textContent = tr('Projet'); catEl.style.setProperty('--c', accentGlow());
+      levelEl.textContent = tr('Ouvre la fiche détaillée.');
       projTitle.hidden = false; projEl.appendChild(chipBtn(n.label, n.slug));
       const used = SKILLS.nodes.filter((s) => s.projects.includes(n.slug));
       if (used.length) { relTitle.hidden = false; used.forEach((s) => relEl.appendChild(chipBtn(s.label, null, s.id))); }
@@ -1706,6 +2091,7 @@ function initSkills({ onOpenProject }) {
  * Chargé à la demande : le .wasm (≈0,8 Mo compressé) n'est téléchargé qu'au clic.
  */
 const YB_COLORS = { 30: '#6b7280', 31: '#ff5c7a', 32: '#4ade80', 33: '#facc15', 34: '#60a5fa', 35: '#c084fc', 36: '#22d3ee', 37: '#e5e7eb' };
+
 
 let ybRoot = null;
 let ybSession = 0;
@@ -1826,23 +2212,23 @@ function ybBuild() {
   el.hidden = true;
   el.setAttribute('role', 'dialog');
   el.setAttribute('aria-modal', 'true');
-  el.setAttribute('aria-label', 'Terminal : Mr Ybot');
+  el.setAttribute('aria-label', tr('Terminal : Mr Ybot'));
   el.dataset.lenisPrevent = '';
   el.innerHTML = `
     <div class="ybot__win">
       <div class="ybot__bar mono">
         <span class="ybot__dots" aria-hidden="true"><i></i><i></i><i></i></span>
         <span class="ybot__title">mr-ybot — projet-red · go (wasm)</span>
-        <button class="ybot__btn" type="button" data-yb="restart">Redémarrer ↺</button>
-        <button class="ybot__btn" type="button" data-yb="close">Fermer ✕</button>
+        <button class="ybot__btn" type="button" data-yb="restart">${tr('Redémarrer ↺')}</button>
+        <button class="ybot__btn" type="button" data-yb="close">${tr('Fermer ✕')}</button>
       </div>
       <pre class="ybot__screen mono" id="ybot-screen" tabindex="-1" aria-live="off"></pre>
       <form class="ybot__form mono" autocomplete="off">
         <label for="ybot-in">›</label>
-        <input id="ybot-in" type="text" enterkeyhint="send" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Saisie du jeu (Entrée pour envoyer)" />
+        <input id="ybot-in" type="text" enterkeyhint="send" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="${tr('Saisie du jeu (Entrée pour envoyer)')}" />
         <button class="ybot__send" type="submit">Envoyer</button>
       </form>
-      <p class="ybot__foot mono">Jeu réalisé en équipe de 3 (Ynov, Ymmersion) · ma part : combat, actions, compétences, ennemis · <a href="https://github.com/ItsForTheVibes/Projet-Red-Mr-Ybot" target="_blank" rel="noopener">code source ↗</a></p>
+      <p class="ybot__foot mono">${tr('Jeu réalisé en équipe de 3 (Ynov, Ymmersion) · ma part : combat, actions, compétences, ennemis ·')} <a href="https://github.com/ItsForTheVibes/Projet-Red-Mr-Ybot" target="_blank" rel="noopener">${tr('code source ↗')}</a></p>
     </div>`;
   document.body.appendChild(el);
   return el;
@@ -1857,11 +2243,11 @@ async function ybStart() {
   const say = (t) => screen.write(new TextEncoder().encode(t));
   const toBottom = () => { pre.scrollTop = pre.scrollHeight; };
   pre.textContent = '';
-  say('\x1b[36m> chargement du module…\x1b[0m\n');
+  say('\x1b[36m' + tr('> chargement du module…') + '\x1b[0m\n');
   let mod;
   try { mod = await ybLoadRuntime(); }
   catch (err) {
-    say('\x1b[31m[!] Impossible de charger le jeu dans ce navigateur.\x1b[0m\nTu peux le lancer chez toi avec « go run . » depuis le dépôt GitHub.\n');
+    say('\x1b[31m' + tr('[!] Impossible de charger le jeu dans ce navigateur.') + '\x1b[0m\n' + tr('Tu peux le lancer chez toi avec « go run . » depuis le dépôt GitHub.') + '\n');
     return;
   }
   if (my !== ybSession) return;
@@ -1878,10 +2264,10 @@ async function ybStart() {
     const done = go.run(instance);
     done.then(() => {
       if (my !== ybSession) return;
-      say('\n\x1b[33m— session terminée —\x1b[0m  (« Redémarrer ↺ » pour rejouer)\n'); toBottom();
+      say('\n\x1b[33m' + tr('— session terminée —') + '\x1b[0m  ' + tr('(« Redémarrer ↺ » pour rejouer)') + '\n'); toBottom();
     });
   } catch (err) {
-    say('\n\x1b[31m[!] Erreur : ' + (err && err.message ? err.message : err) + '\x1b[0m\n');
+    say('\n\x1b[31m' + tr('[!] Erreur :') + ' ' + (err && err.message ? err.message : err) + '\x1b[0m\n');
   }
   form.onsubmit = (e) => {
     e.preventDefault();
@@ -1928,63 +2314,8 @@ function closeYbot() {
   ybLastFocus?.focus?.();
 }
 
-/* ─────────── Jeux web hébergés (RecrutIA) : fenêtre avec le jeu intégré ─────────── */
-const YB_FRAMES = {
-  recrutia: { title: 'recrutia — jeu narratif · html/css/js', url: 'https://adsansgluten.github.io/Jeu-LLM-Projet-HTML/', src: 'https://github.com/ADsansGluten/Jeu-LLM-Projet-HTML',
-    foot: 'Mon projet de TP web (Ynov) · idée du jeu : entraîner une IA de tri de CV · ' },
-};
-let ybFrameRoot = null;
-
-function openGameFrame(key, lenis) {
-  const g = YB_FRAMES[key];
-  if (!g) return;
-  if (!ybFrameRoot) {
-    const el = document.createElement('div');
-    el.className = 'ybot ybot--frame';
-    el.hidden = true;
-    el.setAttribute('role', 'dialog');
-    el.setAttribute('aria-modal', 'true');
-    el.innerHTML = `
-      <div class="ybot__win">
-        <div class="ybot__bar mono">
-          <span class="ybot__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="ybot__title"></span>
-          <a class="ybot__btn" data-fr="open" target="_blank" rel="noopener">Nouvel onglet ↗</a>
-          <button class="ybot__btn" type="button" data-fr="close">Fermer ✕</button>
-        </div>
-        <iframe class="ybot__frame" title="Jeu intégré" loading="lazy" referrerpolicy="no-referrer"></iframe>
-        <p class="ybot__foot mono"></p>
-      </div>`;
-    document.body.appendChild(el);
-    el.addEventListener('click', (e) => { if (e.target.closest('[data-fr="close"]')) closeGameFrame(); });
-    document.addEventListener('keydown', (e) => {
-      if (!el.hidden && e.key === 'Escape') { e.stopImmediatePropagation(); closeGameFrame(); }
-    }, true);
-    ybFrameRoot = el;
-  }
-  if (lenis) ybLenis = lenis;
-  const r = ybFrameRoot;
-  r.querySelector('.ybot__title').textContent = g.title;
-  r.querySelector('[data-fr="open"]').href = g.url;
-  r.querySelector('.ybot__foot').innerHTML = `${g.foot}<a href="${g.src}" target="_blank" rel="noopener">code source ↗</a>`;
-  r.querySelector('iframe').src = g.url;
-  ybLastFocus = document.activeElement;
-  r.hidden = false;
-  document.body.style.overflow = 'hidden';
-  ybLenis?.stop();
-  r.querySelector('[data-fr="close"]').focus({ preventScroll: true });
-}
-
-function closeGameFrame() {
-  if (!ybFrameRoot || ybFrameRoot.hidden) return;
-  ybFrameRoot.hidden = true;
-  ybFrameRoot.querySelector('iframe').src = 'about:blank';
-  const modal = document.getElementById('modal');
-  if (!modal || modal.hidden) { document.body.style.overflow = ''; ybLenis?.start(); }
-  ybLastFocus?.focus?.();
-}
-
 /* ───── modules/projects ───── */
+
 
 
 
@@ -2007,9 +2338,9 @@ function previewArt(p) {
 const escPv = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 function previewHTML(p) {
   return `<div class="pv" style="--h:${p.hue}">
-    <div class="pv__art" style="background:${previewArt(p)} center / cover"><span class="pv__open mono">Ouvrir <b>↗</b></span></div>
+    <div class="pv__art" style="background:${previewArt(p)} center / cover"><span class="pv__open mono">${tr('Ouvrir')} <b>↗</b></span></div>
     <div class="pv__body">
-      <div class="pv__top mono"><span>${escPv(p.index)} / ${escPv(p.year)}</span><span class="pv__status${p.status === 'En ligne' ? ' live' : ''}">${escPv(p.status)}</span></div>
+      <div class="pv__top mono"><span>${escPv(p.index)} / ${escPv(p.year)}</span><span class="pv__status${p.live ? ' live' : ''}">${escPv(p.status)}</span></div>
       <p class="pv__title">${escPv(p.title)}</p>
       <p class="pv__kicker mono">${escPv(p.kicker)}</p>
       <ul class="pv__stack mono">${p.stack.slice(0, 4).map((t) => `<li>${escPv(t)}</li>`).join('')}</ul>
@@ -2026,7 +2357,7 @@ function renderProjects(lenis) {
         <span class="project-row__idx mono">${p.index}</span>
         <span class="project-row__title">${p.title}</span>
         <span class="project-row__kicker">${p.kicker}<br><span class="mono">${p.summary}</span></span>
-        <span class="project-row__status mono ${p.status === 'En ligne' ? 'live' : ''}">${p.status}</span>
+        <span class="project-row__status mono ${p.live ? 'live' : ''}">${p.status}</span>
       </a>
     </li>`).join('');
 
@@ -2103,7 +2434,7 @@ function syncFromHash() {
 }
 
 function fill(p) {
-  const play = p.play ? `<button class="btn btn--primary" type="button" data-play="${p.play}" data-cursor="link">▶ Tester le jeu ici <b>↘</b></button>` : '';
+  const play = p.play ? `<button class="btn btn--primary" type="button" data-play="${p.play}" data-cursor="link">${tr('▶ Tester le jeu ici')} <b>↘</b></button>` : '';
   const links = play + p.links.map((l) => l.href
     ? `<a class="btn btn--primary" href="${l.href}" target="_blank" rel="noopener">${l.label} <b>↗</b></a>`
     : `<span class="btn mono">${l.label}</span>`).join('');
@@ -2111,12 +2442,12 @@ function fill(p) {
     <div><p class="label mono">${p.index} / ${p.kicker} <span class="dot"></span> ${p.year} · ${p.status}</p></div>
     <h2 class="modal__title" id="modal-title">${p.title}</h2>
     <p class="modal__lede">${p.summary}</p>
-    ${p.image ? `<figure class="modal__shot"><img src="${p.image}" alt="${p.imageAlt || ''}" loading="lazy" decoding="async" /><figcaption class="mono">// capture : ${p.imageCaption || 'le jeu'}</figcaption></figure>` : ''}
+    ${p.image ? `<figure class="modal__shot"><img src="${p.image}" alt="${p.imageAlt || ''}" loading="lazy" decoding="async" /><figcaption class="mono">// ${tr('capture :')} ${p.imageCaption || ''}</figcaption></figure>` : ''}
     <div class="modal__grid">
-      <div><h3>Contexte</h3><p>${p.context}</p></div>
-      <div><h3>Problème</h3><p>${p.problem}</p></div>
-      <div><h3>Solution</h3><p>${p.solution}</p></div>
-      <div><h3>Résultat</h3><p>${p.result}</p></div>
+      <div><h3>${tr('Contexte')}</h3><p>${p.context}</p></div>
+      <div><h3>${tr('Problème')}</h3><p>${p.problem}</p></div>
+      <div><h3>${tr('Solution')}</h3><p>${p.solution}</p></div>
+      <div><h3>${tr('Résultat')}</h3><p>${p.result}</p></div>
     </div>
     <div><h3 class="mono label">// stack</h3><ul class="modal__stack">${p.stack.map((s) => `<li>${s}</li>`).join('')}</ul></div>
     <div class="modal__links">${links}</div>`;
@@ -2124,7 +2455,7 @@ function fill(p) {
 
 document.addEventListener('click', (e) => {
   const b = e.target.closest?.('[data-play]');
-  if (b) (b.dataset.play === 'ybot' ? openYbot(lenisRef) : openGameFrame(b.dataset.play, lenisRef));
+  if (b) openYbot(lenisRef);
 });
 
 function openProject(slug, push = true) {
@@ -2169,7 +2500,10 @@ function closeProject(push = true) {
 
 
 
-const KIND = { study: 'formation', work: 'expérience', intern: 'stage', project: 'projet' };
+
+const KIND = isEn
+  ? { study: 'education', work: 'work', intern: 'internship', project: 'project' }
+  : { study: 'formation', work: 'expérience', intern: 'stage', project: 'projet' };
 
 /** Timeline verticale : la ligne se remplit au scroll, chaque étape entre en cascade. */
 function initTimeline() {
@@ -2197,6 +2531,7 @@ function initTimeline() {
 }
 
 /* ───── modules/terminal ───── */
+
 
 
 /**
@@ -2253,22 +2588,22 @@ function initTerminal({ toggleMatrix, toggleTheme }) {
       for (const k of item.k) if (words.includes(k) || (k.length > 4 && n.includes(k))) s += k.length > 4 ? 2 : 1;
       if (s > bestScore) { best = item; bestScore = s; }
     }
-    return best ? best.a : FALLBACK;
+    return best ? best.a : FALLBACK_TEXT;
   }
 
   const COMMANDS = {
-    help: () => stream("Commandes : help · clear · projets · competences · parcours · contact · linkedin · matrix · theme · whoami\nOu pose-moi une question en français. Il y a aussi quelques commandes secrètes…", 't-sys'),
-    whoami: () => stream('visiteur@latent-space — bienvenue. Moi, c\'est Adrien.', 't-sys'),
-    ls: () => stream('about.txt  skills.json  projects/  parcours.log  contact.sh', 't-sys'),
+    help: () => stream(tr("Commandes : help · clear · projets · competences · parcours · contact · linkedin · matrix · theme · whoami\nOu pose-moi une question en français. Il y a aussi quelques commandes secrètes…"), 't-sys'),
+    whoami: () => stream(tr("visiteur@latent-space — bienvenue. Moi, c'est Adrien."), 't-sys'),
+    ls: () => stream(tr('about.txt  skills.json  projects/  parcours.log  contact.sh'), 't-sys'),
     clear: () => { out.innerHTML = ''; },
-    matrix: () => { toggleMatrix(); return stream('Data rain togglé. (Échap pour arrêter)', 't-sys'); },
-    theme: () => { toggleTheme(); return stream('Palette changée.', 't-sys'); },
+    matrix: () => { toggleMatrix(); return stream(tr('Data rain togglé. (Échap pour arrêter)'), 't-sys'); },
+    theme: () => { toggleTheme(); return stream(tr('Palette changée.'), 't-sys'); },
     'cat cv': () => stream(`CV : ${location.origin}${LINKS.cv}`, 't-sys'),
   };
 
   async function hire() {
     const steps = [
-      '[sudo] password for recruteur: ********',
+      tr('[sudo] password for recruteur: ********'),
       'authenticating ............. ok',
       'checking motivation ........ 100%',
       'checking curiosity ......... overflow',
@@ -2276,7 +2611,7 @@ function initTerminal({ toggleMatrix, toggleTheme }) {
     ];
     for (const s of steps) { line('t-sys', esc(s)); await sleep(reduced ? 0 : 420); }
     toggleMatrix(true);
-    await stream(`Excellente décision. Écris-moi : ${LINKS.email} — ou ${LINKS.linkedin}`);
+    await stream(`${tr('Excellente décision. Écris-moi :')} ${LINKS.email}${tr(' — ou ')}${LINKS.linkedin}`);
     setTimeout(() => toggleMatrix(false), 4000);
     setTimeout(() => document.getElementById('contact').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }), 1200);
   }
@@ -2290,8 +2625,8 @@ function initTerminal({ toggleMatrix, toggleTheme }) {
     const n = norm(q);
     try {
       if (/^sudo\s+hire\s+adrien\b/.test(n)) await hire();
-      else if (n.startsWith('sudo')) await stream("Bien tenté, mais tu n'as pas les droits. Essaie « sudo hire adrien » 😉", 't-sys');
-      else if (/^(rm|rm -rf|exit|shutdown|reboot)/.test(n)) await stream('Permission refusée. Ce portfolio est protégé par mon amour-propre.', 't-sys');
+      else if (n.startsWith('sudo')) await stream(tr("Bien tenté, mais tu n'as pas les droits. Essaie « sudo hire adrien » 😉"), 't-sys');
+      else if (/^(rm|rm -rf|exit|shutdown|reboot)/.test(n)) await stream(tr('Permission refusée. Ce portfolio est protégé par mon amour-propre.'), 't-sys');
       else if (COMMANDS[n]) await COMMANDS[n]();
       else if (LLM_ENDPOINT) {
         try {
@@ -2314,10 +2649,11 @@ function initTerminal({ toggleMatrix, toggleTheme }) {
   });
 
   // Message d'accueil
-  stream("Salut, je suis la version locale d'Adrien. Pose une question ou clique une suggestion. Tape « help » pour les commandes.", 't-sys');
+  stream(tr("Salut, je suis la version locale d'Adrien. Pose une question ou clique une suggestion. Tape « help » pour les commandes."), 't-sys');
 }
 
 /* ───── modules/easter ───── */
+
 
 /**
  * Easter eggs :
@@ -2334,7 +2670,7 @@ function toggleMatrix(force) {
   on = typeof force === 'boolean' ? force : !on;
   canvas.classList.toggle('on', on);
   if (!on) { cancelAnimationFrame(raf); return; }
-  if (reduced) { on = false; canvas.classList.remove('on'); toast('Mode sobre actif : pluie de données désactivée.'); return; }
+  if (reduced) { on = false; canvas.classList.remove('on'); toast(tr('Mode sobre actif : pluie de données désactivée.')); return; }
 
   const ctx = canvas.getContext('2d');
   const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -2367,7 +2703,7 @@ function initEasterEggs() {
     if (e.key === 'Escape' && on) { toggleMatrix(false); return; }
     const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
     i = k === code[i] ? i + 1 : k === code[0] ? 1 : 0;
-    if (i === code.length) { i = 0; toggleMatrix(); toast(on ? '↑↑↓↓←→←→BA — data rain activée (Échap pour couper)' : 'Data rain coupée'); }
+    if (i === code.length) { i = 0; toggleMatrix(); toast(on ? tr('↑↑↓↓←→←→BA — data rain activée (Échap pour couper)') : tr('Data rain coupée')); }
   });
 
   // Footer : 5 clics
@@ -2376,11 +2712,12 @@ function initEasterEggs() {
   let clicks = 0;
   big.addEventListener('click', () => {
     clicks++;
-    if (clicks === 5) { clicks = 0; egg.textContent = '404 : bug introuvable. Embauche-moi plutôt ;)'; toggleMatrix(true); setTimeout(() => toggleMatrix(false), 3500); toast('Easter egg #2 trouvé'); }
+    if (clicks === 5) { clicks = 0; egg.textContent = tr('404 : bug introuvable. Embauche-moi plutôt ;)'); toggleMatrix(true); setTimeout(() => toggleMatrix(false), 3500); toast(tr('Easter egg #2 trouvé')); }
   });
 }
 
 /* ───── modules/contact ───── */
+
 
 /** Formulaire (Formspree) + vérification de la présence des PDF. */
 function initContact() {
@@ -2394,14 +2731,14 @@ function initContact() {
     const email = String(data.get('email') || '').trim();
     const message = String(data.get('message') || '').trim();
     if (!name || !/^\S+@\S+\.\S+$/.test(email) || !message) {
-      status.textContent = 'Merci de remplir les trois champs avec un email valide.';
+      status.textContent = tr('Merci de remplir les trois champs avec un email valide.');
       return;
     }
     // Pas d'endpoint configuré → on ouvre le client mail (aucune donnée perdue)
     if (!LINKS.formEndpoint) {
       const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
       location.href = `mailto:${LINKS.email}?subject=${encodeURIComponent('Contact via portfolio — ' + name)}&body=${body}`;
-      status.textContent = 'Formulaire non branché : ouverture de ton client mail.';
+      status.textContent = tr('Formulaire non branché : ouverture de ton client mail.');
       return;
     }
     status.textContent = 'Envoi…';
@@ -2409,9 +2746,9 @@ function initContact() {
       const r = await fetch(LINKS.formEndpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
       if (!r.ok) throw new Error();
       form.reset();
-      status.textContent = 'Message envoyé. Merci !';
+      status.textContent = tr('Message envoyé. Merci !');
     } catch {
-      status.textContent = `Échec de l'envoi. Écris-moi directement : ${LINKS.email}`;
+      status.textContent = `${tr("Échec de l'envoi. Écris-moi directement :")} ${LINKS.email}`;
     }
   });
 
@@ -2423,7 +2760,7 @@ function initContact() {
     }).catch(() => {
       if (a.hasAttribute('data-asset-hide')) { (a.closest('li') || a).hidden = true; return; }
       a.removeAttribute('href'); a.removeAttribute('download');
-      a.textContent = 'PDF bientôt disponible';
+      a.textContent = tr('PDF bientôt disponible');
       a.setAttribute('aria-disabled', 'true');
       a.style.opacity = 0.5;
     });
@@ -2743,10 +3080,12 @@ async function initHero(canvas) {
 
 
 
+
 const noGsap = window.__noGsap === true;
 if (!noGsap) gsap.registerPlugin(ScrollTrigger);
 if (reduced) document.documentElement.classList.add('reduced');
 document.body.classList.add('is-loading');
+applyLang(); // traduit le HTML statique (si anglais) AVANT que les animations ne découpent les textes
 
 // --- Smooth scroll (Lenis) branché sur le ticker GSAP ---
 let lenis = null;

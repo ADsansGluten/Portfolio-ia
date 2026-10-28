@@ -1,3 +1,4 @@
+import { tr } from '../utils/i18n.js';
 import { SKILLS, PROJECTS } from '../data/content.js';
 import { reduced, accent, accentGlow, cssVar, isLight } from '../utils/env.js';
 
@@ -39,7 +40,7 @@ export function initSkills({ onOpenProject }) {
   const center = add({ id: 'me', type: 'me', label: 'AL', r: 24 });
   Object.entries(SKILLS.categories).forEach(([key, c]) => add({ id: 'cat:' + key, type: 'cat', cat: key, label: c.label, r: 13 }));
   PROJECTS.forEach((p) => add({ id: 'proj:' + p.slug, type: 'proj', label: p.title, slug: p.slug, r: 10 }));
-  SKILLS.nodes.forEach((s) => add({ id: s.id, type: 'skill', label: s.label, cat: s.cat, level: s.level, score: levelScore(s.level), projects: s.projects, r: 4.5 + levelScore(s.level) * 1.5 }));
+  SKILLS.nodes.forEach((s) => add({ id: s.id, type: 'skill', label: s.label, cat: s.cat, level: s.level, score: levelScore(s.levelFr), projects: s.projects, r: 4.5 + levelScore(s.levelFr) * 1.5 }));
   nodes.forEach((n, i) => { n.phase = i * 1.7; n.delay = n.type === 'me' ? 0 : n.type === 'cat' ? 120 : n.type === 'proj' ? 420 : 280 + (i % 9) * 55; });
 
   const edges = []; // [a, b, kind]
@@ -68,7 +69,7 @@ export function initSkills({ onOpenProject }) {
 
   // ---------- Filtres ----------
   let filter = null;
-  const chips = [{ key: null, label: 'Tout' }, ...Object.entries(SKILLS.categories).map(([k, c]) => ({ key: k, label: c.label }))];
+  const chips = [{ key: null, label: tr('Tout') }, ...Object.entries(SKILLS.categories).map(([k, c]) => ({ key: k, label: c.label }))];
   filtersEl.innerHTML = chips.map((c) => `<button type="button" class="sk-chip${c.key === null ? ' is-on' : ''}" data-cat="${c.key ?? ''}" aria-pressed="${c.key === null}"><i></i>${c.label}</button>`).join('');
   filtersEl.addEventListener('click', (e) => {
     const b = e.target.closest('.sk-chip'); if (!b) return;
@@ -283,24 +284,24 @@ export function initSkills({ onOpenProject }) {
   function select(n) {
     selected = n;
     projEl.innerHTML = ''; relEl.innerHTML = ''; projTitle.hidden = relTitle.hidden = true; pipsEl.hidden = true; catEl.hidden = true;
-    if (!n) { nameEl.textContent = 'Aucun nœud sélectionné'; levelEl.textContent = 'Survole ou clique une techno.'; redraw(); return; }
+    if (!n) { nameEl.textContent = tr('Aucun nœud sélectionné'); levelEl.textContent = tr('Survole ou clique une techno.'); redraw(); return; }
     nameEl.textContent = n.label;
     const col = colorOf(n);
     if (n.type === 'skill') {
       catEl.hidden = false; catEl.textContent = SKILLS.categories[n.cat].label; catEl.style.setProperty('--c', col);
-      levelEl.textContent = `Niveau : ${n.level}`;
+      levelEl.textContent = `${tr('Niveau :')} ${n.level}`;
       pips(n.score, col);
       projTitle.hidden = false;
       n.projects.forEach((slug) => projEl.appendChild(chipBtn(PROJECTS.find((x) => x.slug === slug).title, slug)));
-      if (!n.projects.length) { const li = document.createElement('li'); li.className = 'dim'; li.textContent = 'Pas encore relié à un projet publié.'; projEl.appendChild(li); }
+      if (!n.projects.length) { const li = document.createElement('li'); li.className = 'dim'; li.textContent = tr('Pas encore relié à un projet publié.'); projEl.appendChild(li); }
     } else if (n.type === 'cat') {
       const kids = nodes.filter((x) => x.type === 'skill' && x.cat === n.cat);
-      catEl.hidden = false; catEl.textContent = 'Catégorie'; catEl.style.setProperty('--c', col);
-      levelEl.textContent = `${kids.length} compétences`;
+      catEl.hidden = false; catEl.textContent = tr('Catégorie'); catEl.style.setProperty('--c', col);
+      levelEl.textContent = `${kids.length} ${tr('compétences')}`;
       relTitle.hidden = false; kids.forEach((k) => relEl.appendChild(chipBtn(k.label, null, k.id)));
     } else {
-      catEl.hidden = false; catEl.textContent = 'Projet'; catEl.style.setProperty('--c', accentGlow());
-      levelEl.textContent = 'Ouvre la fiche détaillée.';
+      catEl.hidden = false; catEl.textContent = tr('Projet'); catEl.style.setProperty('--c', accentGlow());
+      levelEl.textContent = tr('Ouvre la fiche détaillée.');
       projTitle.hidden = false; projEl.appendChild(chipBtn(n.label, n.slug));
       const used = SKILLS.nodes.filter((s) => s.projects.includes(n.slug));
       if (used.length) { relTitle.hidden = false; used.forEach((s) => relEl.appendChild(chipBtn(s.label, null, s.id))); }

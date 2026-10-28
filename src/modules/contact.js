@@ -1,3 +1,4 @@
+import { tr } from '../utils/i18n.js';
 import { LINKS } from '../data/content.js';
 
 /** Formulaire (Formspree) + vérification de la présence des PDF. */
@@ -12,14 +13,14 @@ export function initContact() {
     const email = String(data.get('email') || '').trim();
     const message = String(data.get('message') || '').trim();
     if (!name || !/^\S+@\S+\.\S+$/.test(email) || !message) {
-      status.textContent = 'Merci de remplir les trois champs avec un email valide.';
+      status.textContent = tr('Merci de remplir les trois champs avec un email valide.');
       return;
     }
     // Pas d'endpoint configuré → on ouvre le client mail (aucune donnée perdue)
     if (!LINKS.formEndpoint) {
       const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
       location.href = `mailto:${LINKS.email}?subject=${encodeURIComponent('Contact via portfolio — ' + name)}&body=${body}`;
-      status.textContent = 'Formulaire non branché : ouverture de ton client mail.';
+      status.textContent = tr('Formulaire non branché : ouverture de ton client mail.');
       return;
     }
     status.textContent = 'Envoi…';
@@ -27,9 +28,9 @@ export function initContact() {
       const r = await fetch(LINKS.formEndpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
       if (!r.ok) throw new Error();
       form.reset();
-      status.textContent = 'Message envoyé. Merci !';
+      status.textContent = tr('Message envoyé. Merci !');
     } catch {
-      status.textContent = `Échec de l'envoi. Écris-moi directement : ${LINKS.email}`;
+      status.textContent = `${tr("Échec de l'envoi. Écris-moi directement :")} ${LINKS.email}`;
     }
   });
 
@@ -41,7 +42,7 @@ export function initContact() {
     }).catch(() => {
       if (a.hasAttribute('data-asset-hide')) { (a.closest('li') || a).hidden = true; return; }
       a.removeAttribute('href'); a.removeAttribute('download');
-      a.textContent = 'PDF bientôt disponible';
+      a.textContent = tr('PDF bientôt disponible');
       a.setAttribute('aria-disabled', 'true');
       a.style.opacity = 0.5;
     });

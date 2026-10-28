@@ -1,4 +1,5 @@
-import { KB, SUGGESTIONS, FALLBACK, LINKS } from '../data/content.js';
+import { KB, SUGGESTIONS, FALLBACK_TEXT, LINKS } from '../data/content.js';
+import { tr } from '../utils/i18n.js';
 import { reduced } from '../utils/env.js';
 
 /**
@@ -55,22 +56,22 @@ export function initTerminal({ toggleMatrix, toggleTheme }) {
       for (const k of item.k) if (words.includes(k) || (k.length > 4 && n.includes(k))) s += k.length > 4 ? 2 : 1;
       if (s > bestScore) { best = item; bestScore = s; }
     }
-    return best ? best.a : FALLBACK;
+    return best ? best.a : FALLBACK_TEXT;
   }
 
   const COMMANDS = {
-    help: () => stream("Commandes : help · clear · projets · competences · parcours · contact · linkedin · matrix · theme · whoami\nOu pose-moi une question en français. Il y a aussi quelques commandes secrètes…", 't-sys'),
-    whoami: () => stream('visiteur@latent-space — bienvenue. Moi, c\'est Adrien.', 't-sys'),
-    ls: () => stream('about.txt  skills.json  projects/  parcours.log  contact.sh', 't-sys'),
+    help: () => stream(tr("Commandes : help · clear · projets · competences · parcours · contact · linkedin · matrix · theme · whoami\nOu pose-moi une question en français. Il y a aussi quelques commandes secrètes…"), 't-sys'),
+    whoami: () => stream(tr("visiteur@latent-space — bienvenue. Moi, c'est Adrien."), 't-sys'),
+    ls: () => stream(tr('about.txt  skills.json  projects/  parcours.log  contact.sh'), 't-sys'),
     clear: () => { out.innerHTML = ''; },
-    matrix: () => { toggleMatrix(); return stream('Data rain togglé. (Échap pour arrêter)', 't-sys'); },
-    theme: () => { toggleTheme(); return stream('Palette changée.', 't-sys'); },
+    matrix: () => { toggleMatrix(); return stream(tr('Data rain togglé. (Échap pour arrêter)'), 't-sys'); },
+    theme: () => { toggleTheme(); return stream(tr('Palette changée.'), 't-sys'); },
     'cat cv': () => stream(`CV : ${location.origin}${LINKS.cv}`, 't-sys'),
   };
 
   async function hire() {
     const steps = [
-      '[sudo] password for recruteur: ********',
+      tr('[sudo] password for recruteur: ********'),
       'authenticating ............. ok',
       'checking motivation ........ 100%',
       'checking curiosity ......... overflow',
@@ -78,7 +79,7 @@ export function initTerminal({ toggleMatrix, toggleTheme }) {
     ];
     for (const s of steps) { line('t-sys', esc(s)); await sleep(reduced ? 0 : 420); }
     toggleMatrix(true);
-    await stream(`Excellente décision. Écris-moi : ${LINKS.email} — ou ${LINKS.linkedin}`);
+    await stream(`${tr('Excellente décision. Écris-moi :')} ${LINKS.email}${tr(' — ou ')}${LINKS.linkedin}`);
     setTimeout(() => toggleMatrix(false), 4000);
     setTimeout(() => document.getElementById('contact').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }), 1200);
   }
@@ -92,8 +93,8 @@ export function initTerminal({ toggleMatrix, toggleTheme }) {
     const n = norm(q);
     try {
       if (/^sudo\s+hire\s+adrien\b/.test(n)) await hire();
-      else if (n.startsWith('sudo')) await stream("Bien tenté, mais tu n'as pas les droits. Essaie « sudo hire adrien » 😉", 't-sys');
-      else if (/^(rm|rm -rf|exit|shutdown|reboot)/.test(n)) await stream('Permission refusée. Ce portfolio est protégé par mon amour-propre.', 't-sys');
+      else if (n.startsWith('sudo')) await stream(tr("Bien tenté, mais tu n'as pas les droits. Essaie « sudo hire adrien » 😉"), 't-sys');
+      else if (/^(rm|rm -rf|exit|shutdown|reboot)/.test(n)) await stream(tr('Permission refusée. Ce portfolio est protégé par mon amour-propre.'), 't-sys');
       else if (COMMANDS[n]) await COMMANDS[n]();
       else if (LLM_ENDPOINT) {
         try {
@@ -116,5 +117,5 @@ export function initTerminal({ toggleMatrix, toggleTheme }) {
   });
 
   // Message d'accueil
-  stream("Salut, je suis la version locale d'Adrien. Pose une question ou clique une suggestion. Tape « help » pour les commandes.", 't-sys');
+  stream(tr("Salut, je suis la version locale d'Adrien. Pose une question ou clique une suggestion. Tape « help » pour les commandes."), 't-sys');
 }

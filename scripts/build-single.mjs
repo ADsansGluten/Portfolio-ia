@@ -6,7 +6,7 @@ import { spawnSync } from 'node:child_process';
 import { gzipSync } from 'node:zlib';
 
 const read = (p) => readFileSync(new URL('../' + p, import.meta.url), 'utf8');
-const ORDER = ['utils/env', 'utils/split', 'data/content', 'modules/preloader', 'modules/cursor', 'modules/kinetic',
+const ORDER = ['utils/env', 'utils/split', 'data/en', 'utils/i18n', 'data/content', 'modules/preloader', 'modules/cursor', 'modules/kinetic',
   'modules/interactions', 'modules/skills', 'modules/ybot', 'modules/projects', 'modules/timeline', 'modules/terminal',
   'modules/easter', 'modules/contact', 'modules/linkedin', 'modules/hero', 'main'];
 

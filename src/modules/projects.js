@@ -1,5 +1,6 @@
-import { openYbot, openGameFrame } from './ybot.js';
+import { openYbot } from './ybot.js';
 import gsap from 'gsap';
+import { tr } from '../utils/i18n.js';
 import { PROJECTS } from '../data/content.js';
 import { reduced, finePointer } from '../utils/env.js';
 
@@ -21,9 +22,9 @@ function previewArt(p) {
 const escPv = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 function previewHTML(p) {
   return `<div class="pv" style="--h:${p.hue}">
-    <div class="pv__art" style="background:${previewArt(p)} center / cover"><span class="pv__open mono">Ouvrir <b>↗</b></span></div>
+    <div class="pv__art" style="background:${previewArt(p)} center / cover"><span class="pv__open mono">${tr('Ouvrir')} <b>↗</b></span></div>
     <div class="pv__body">
-      <div class="pv__top mono"><span>${escPv(p.index)} / ${escPv(p.year)}</span><span class="pv__status${p.status === 'En ligne' ? ' live' : ''}">${escPv(p.status)}</span></div>
+      <div class="pv__top mono"><span>${escPv(p.index)} / ${escPv(p.year)}</span><span class="pv__status${p.live ? ' live' : ''}">${escPv(p.status)}</span></div>
       <p class="pv__title">${escPv(p.title)}</p>
       <p class="pv__kicker mono">${escPv(p.kicker)}</p>
       <ul class="pv__stack mono">${p.stack.slice(0, 4).map((t) => `<li>${escPv(t)}</li>`).join('')}</ul>
@@ -40,7 +41,7 @@ export function renderProjects(lenis) {
         <span class="project-row__idx mono">${p.index}</span>
         <span class="project-row__title">${p.title}</span>
         <span class="project-row__kicker">${p.kicker}<br><span class="mono">${p.summary}</span></span>
-        <span class="project-row__status mono ${p.status === 'En ligne' ? 'live' : ''}">${p.status}</span>
+        <span class="project-row__status mono ${p.live ? 'live' : ''}">${p.status}</span>
       </a>
     </li>`).join('');
 
@@ -117,7 +118,7 @@ export function syncFromHash() {
 }
 
 function fill(p) {
-  const play = p.play ? `<button class="btn btn--primary" type="button" data-play="${p.play}" data-cursor="link">▶ Tester le jeu ici <b>↘</b></button>` : '';
+  const play = p.play ? `<button class="btn btn--primary" type="button" data-play="${p.play}" data-cursor="link">${tr('▶ Tester le jeu ici')} <b>↘</b></button>` : '';
   const links = play + p.links.map((l) => l.href
     ? `<a class="btn btn--primary" href="${l.href}" target="_blank" rel="noopener">${l.label} <b>↗</b></a>`
     : `<span class="btn mono">${l.label}</span>`).join('');
@@ -125,12 +126,12 @@ function fill(p) {
     <div><p class="label mono">${p.index} / ${p.kicker} <span class="dot"></span> ${p.year} · ${p.status}</p></div>
     <h2 class="modal__title" id="modal-title">${p.title}</h2>
     <p class="modal__lede">${p.summary}</p>
-    ${p.image ? `<figure class="modal__shot"><img src="${p.image}" alt="${p.imageAlt || ''}" loading="lazy" decoding="async" /><figcaption class="mono">// capture : ${p.imageCaption || 'le jeu'}</figcaption></figure>` : ''}
+    ${p.image ? `<figure class="modal__shot"><img src="${p.image}" alt="${p.imageAlt || ''}" loading="lazy" decoding="async" /><figcaption class="mono">// ${tr('capture :')} ${p.imageCaption || ''}</figcaption></figure>` : ''}
     <div class="modal__grid">
-      <div><h3>Contexte</h3><p>${p.context}</p></div>
-      <div><h3>Problème</h3><p>${p.problem}</p></div>
-      <div><h3>Solution</h3><p>${p.solution}</p></div>
-      <div><h3>Résultat</h3><p>${p.result}</p></div>
+      <div><h3>${tr('Contexte')}</h3><p>${p.context}</p></div>
+      <div><h3>${tr('Problème')}</h3><p>${p.problem}</p></div>
+      <div><h3>${tr('Solution')}</h3><p>${p.solution}</p></div>
+      <div><h3>${tr('Résultat')}</h3><p>${p.result}</p></div>
     </div>
     <div><h3 class="mono label">// stack</h3><ul class="modal__stack">${p.stack.map((s) => `<li>${s}</li>`).join('')}</ul></div>
     <div class="modal__links">${links}</div>`;
@@ -138,7 +139,7 @@ function fill(p) {
 
 document.addEventListener('click', (e) => {
   const b = e.target.closest?.('[data-play]');
-  if (b) (b.dataset.play === 'ybot' ? openYbot(lenisRef) : openGameFrame(b.dataset.play, lenisRef));
+  if (b) openYbot(lenisRef);
 });
 
 export function openProject(slug, push = true) {

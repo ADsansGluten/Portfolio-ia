@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 
 import { reduced } from './utils/env.js';
+import { applyLang } from './utils/i18n.js';
 import { runPreloader } from './modules/preloader.js';
 import { initCursor } from './modules/cursor.js';
 import { initKinetic, heroIntro, heroPrep } from './modules/kinetic.js';
@@ -20,6 +21,7 @@ const noGsap = window.__noGsap === true;
 if (!noGsap) gsap.registerPlugin(ScrollTrigger);
 if (reduced) document.documentElement.classList.add('reduced');
 document.body.classList.add('is-loading');
+applyLang(); // traduit le HTML statique (si anglais) AVANT que les animations ne découpent les textes
 
 // --- Smooth scroll (Lenis) branché sur le ticker GSAP ---
 let lenis = null;

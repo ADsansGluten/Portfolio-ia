@@ -1,4 +1,5 @@
 import { reduced, accent, toast, cssVar } from '../utils/env.js';
+import { tr } from '../utils/i18n.js';
 
 /**
  * Easter eggs :
@@ -15,7 +16,7 @@ export function toggleMatrix(force) {
   on = typeof force === 'boolean' ? force : !on;
   canvas.classList.toggle('on', on);
   if (!on) { cancelAnimationFrame(raf); return; }
-  if (reduced) { on = false; canvas.classList.remove('on'); toast('Mode sobre actif : pluie de données désactivée.'); return; }
+  if (reduced) { on = false; canvas.classList.remove('on'); toast(tr('Mode sobre actif : pluie de données désactivée.')); return; }
 
   const ctx = canvas.getContext('2d');
   const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -48,7 +49,7 @@ export function initEasterEggs() {
     if (e.key === 'Escape' && on) { toggleMatrix(false); return; }
     const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
     i = k === code[i] ? i + 1 : k === code[0] ? 1 : 0;
-    if (i === code.length) { i = 0; toggleMatrix(); toast(on ? '↑↑↓↓←→←→BA — data rain activée (Échap pour couper)' : 'Data rain coupée'); }
+    if (i === code.length) { i = 0; toggleMatrix(); toast(on ? tr('↑↑↓↓←→←→BA — data rain activée (Échap pour couper)') : tr('Data rain coupée')); }
   });
 
   // Footer : 5 clics
@@ -57,6 +58,6 @@ export function initEasterEggs() {
   let clicks = 0;
   big.addEventListener('click', () => {
     clicks++;
-    if (clicks === 5) { clicks = 0; egg.textContent = '404 : bug introuvable. Embauche-moi plutôt ;)'; toggleMatrix(true); setTimeout(() => toggleMatrix(false), 3500); toast('Easter egg #2 trouvé'); }
+    if (clicks === 5) { clicks = 0; egg.textContent = tr('404 : bug introuvable. Embauche-moi plutôt ;)'); toggleMatrix(true); setTimeout(() => toggleMatrix(false), 3500); toast(tr('Easter egg #2 trouvé')); }
   });
 }

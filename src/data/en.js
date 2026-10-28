@@ -1,0 +1,299 @@
+/**
+ * Traductions anglaises. `EN_UI` : texte français exact → anglais (HTML statique + textes des modules).
+ * `EN_DATA` : contenu dynamique (projets, parcours, compétences, terminal), rangé par clé stable.
+ * Une clé absente retombe sur le français (jamais de texte vide).
+ */
+export const EN_UI = {
+  // ── Méta
+  'Adrien Lavigne — Étudiant Data / IA · Ynov Campus Sophia': 'Adrien Lavigne — Data / AI Student · Ynov Campus Sophia',
+  "Portfolio d'Adrien Lavigne, étudiant en Bachelor IA / Data à Ynov Campus Sophia. Projets, parcours (droit → IA), compétences, et un terminal interactif pour tout savoir.":
+    "Portfolio of Adrien Lavigne, Bachelor student in AI / Data at Ynov Campus Sophia. Projects, journey (law → AI), skills, and an interactive terminal to find out more.",
+  'Adrien Lavigne — Étudiant Data / IA': 'Adrien Lavigne — Data / AI Student',
+  "Du droit à l'IA : projets, parcours et un terminal pour tout savoir sur moi.": 'From law to AI: projects, journey and a terminal to learn everything about me.',
+
+  // ── Navigation & en-tête
+  'Aller au contenu': 'Skip to content',
+  'Retour en haut': 'Back to top',
+  'Navigation principale': 'Main navigation',
+  'Mon profil LinkedIn (nouvel onglet)': 'My LinkedIn profile (new tab)',
+  'Basculer entre mode jour et mode nuit': 'Switch between day and night mode',
+  '☾ nuit': '☾ night',
+  '☀ jour': '☀ day',
+  'Changer la palette de couleurs': 'Change the colour palette',
+  '◐ palette': '◐ palette',
+  'Changer de langue': 'Change language',
+
+  // ── Hero
+  'Introduction': 'Introduction',
+  "Portrait d'Adrien Lavigne": 'Portrait of Adrien Lavigne',
+  'Étudiant en': 'Student in',
+  'IA & Data': 'AI & Data',
+  '. Je viens du droit, je construis maintenant des systèmes qui apprennent.': '. I come from law, and now I build systems that learn.',
+  'Voir mes projets': 'See my projects',
+  'Me contacter': 'Get in touch',
+  "// bouge ta souris : elle devient une requête dans l'espace latent": '// move your mouse: it becomes a query in latent space',
+
+  // ── About
+  'Du Code civil au code source.': 'From the Civil Code to source code.',
+  "J'ai passé mon bac au CNED avec les mathématiques expertes, puis une année de droit à Paris 1 Panthéon-Sorbonne. Cette année, j'ai changé de voie : je me forme à l'IA et à la data à Ynov Campus Sophia. Je pars de peu, je le sais, et je le compense par des projets concrets, publiés, que tu peux ouvrir. J'ai fait ce choix par vision d'avenir : je me suis projeté, j'ai estimé ce qui correspondait à mon idéal, et c'est l'IA et la data.":
+    "I took my baccalauréat through CNED with advanced maths, then spent a year studying law at Paris 1 Panthéon-Sorbonne. This year I changed paths: I'm training in AI and data at Ynov Campus Sophia. I'm starting from little, I know that, and I make up for it with concrete, published projects you can open. I made this choice with the future in mind: I pictured myself in it, weighed what matched my ideal, and it is AI and data.",
+  'Actuellement': 'Currently',
+  'formation': 'training',
+  'Bachelor 1 IA / Data — Ynov Sophia': 'Bachelor 1 AI / Data — Ynov Sophia',
+  'cible': 'goal',
+  'Mastère « Expert en intelligence artificielle »': 'Master’s “Expert in Artificial Intelligence”',
+  'recherche': 'looking for',
+  'stage / alternance': 'internship / work-study',
+  "j'apprends": 'learning',
+  'Go · web · infra sécurisée': 'Go · web · secure infrastructure',
+  'langues': 'languages',
+  'FR natif · ES B1+ · EN B1-': 'FR native · ES B1+ · EN B1-',
+
+  // ── Skills
+  'Carte de mes compétences.': 'My skills map.',
+  "Survole ou clique un nœud : le réseau s'illumine avec les projets qui l'utilisent. La taille d'un point reflète le niveau (indicatif), tel que je le décris dans mon CV, sans gonflette. Les pastilles filtrent par catégorie.":
+    "Hover or click a node: the network lights up with the projects that use it. A dot's size reflects the level (indicative), as I describe it in my CV, no inflating. The chips filter by category.",
+  'Filtrer par catégorie': 'Filter by category',
+  'Graphe interactif des compétences par catégorie : IA/ML, Data, Dev, Cyber/Infra, Outils': 'Interactive skills graph by category: AI/ML, Data, Dev, Cyber/Infra, Tools',
+  '// sélection': '// selection',
+  'Aucun nœud sélectionné': 'No node selected',
+  'Survole ou clique une techno.': 'Hover or click a technology.',
+  '// projets': '// projects',
+  '// relié à': '// linked to',
+  'Tout': 'All',
+  'Pas encore relié à un projet publié.': 'Not linked to a published project yet.',
+  'Catégorie': 'Category',
+  'Niveau :': 'Level:',
+  'compétences': 'skills',
+  'Projet': 'Project',
+  'Ouvre la fiche détaillée.': 'Opens the detailed page.',
+
+  // ── Projects
+  'Projets.': 'Projects.',
+  'Ouvrir': 'Open',
+  'Contexte': 'Context',
+  'Problème': 'Problem',
+  'Solution': 'Solution',
+  'Résultat': 'Result',
+  '▶ Tester le jeu ici': '▶ Play the game here',
+  'Fermer ✕': 'Close ✕',
+  'capture :': 'screenshot:',
+
+  // ── LinkedIn
+  'Publier dès la B1.': 'Publishing from year one.',
+  "Je n'attends pas d'être diplômé pour montrer ce que je construis. Chaque projet publié est une preuve : on peut l'ouvrir, le tester, le critiquer. C'est comme ça qu'on progresse, et qu'on se fait repérer, dès la première année.":
+    "I don't wait to graduate to show what I build. Every published project is proof: you can open it, test it, criticise it. That's how you improve, and how you get noticed, from the very first year.",
+  'Montrer plutôt que dire': 'Show, don’t tell',
+  'Publier tôt, itérer ensuite': 'Publish early, iterate later',
+  'Un projet = une preuve': 'One project = one proof',
+  'Mon profil LinkedIn': 'My LinkedIn profile',
+  'Ma bannière LinkedIn : Adrien Lavigne, étudiant en Data et IA, Ynov Campus et Panthéon Sorbonne': 'My LinkedIn banner: Adrien Lavigne, Data and AI student, Ynov Campus and Panthéon Sorbonne',
+  'Étudiant en Data & IA · Ynov Campus Sophia': 'Data & AI student · Ynov Campus Sophia',
+  'Voir mon profil': 'View my profile',
+  '// extrait de mon post': '// from my post',
+  'Ouverture': 'Opening',
+  "Entraîne une IA de recrutement… sans qu'elle devienne injuste.": 'Train a hiring AI… without it becoming unfair.',
+  'Choisir un visuel': 'Choose a visual',
+  'Aller au visuel 1 sur 6': 'Go to visual 1 of 6',
+  'Aller au visuel 2 sur 6': 'Go to visual 2 of 6',
+  'Aller au visuel 3 sur 6': 'Go to visual 3 of 6',
+  'Aller au visuel 4 sur 6': 'Go to visual 4 of 6',
+  'Aller au visuel 5 sur 6': 'Go to visual 5 of 6',
+  'Aller au visuel 6 sur 6': 'Go to visual 6 of 6',
+
+  'Jouer à RecrutIA': 'Play RecrutIA',
+  'Visuels du post LinkedIn RecrutIA': 'Visuals of the RecrutIA LinkedIn post',
+  'Post LinkedIn · RecrutIA': 'LinkedIn post · RecrutIA',
+  "Chaque choix a des conséquences sur l'IA, et sur les candidats.": 'Every choice has consequences for the AI, and for the candidates.',
+  "L'accueil": 'The welcome page',
+  'Genre, hobbies, trou de CV… que fais-tu avec ça ?': 'Gender, hobbies, CV gap… what do you do with that?',
+  'Le jeu de données': 'The dataset',
+  'Perdre un peu de précision pour gagner en équité.': 'Lose a little accuracy to gain fairness.',
+  'Rééquilibrer': 'Rebalancing',
+  'Une IA juste se construit à chaque étape.': 'A fair AI is built at every step.',
+  'La fin': 'The ending',
+  'Pourras-tu livrer une IA juste ?': 'Will you be able to deliver a fair AI?',
+  'À toi de jouer': 'Your turn',
+  'Mini-jeu · 15 pages · HTML/CSS : page de titre du post RecrutIA': 'Mini-game · 15 pages · HTML/CSS: title page of the RecrutIA post',
+  "L'accueil du jeu RecrutIA": 'The RecrutIA game welcome page',
+  'Étape 2 sur 9 : le jeu de données': 'Step 2 of 9: the dataset',
+  'Étape 8 sur 9 : rééquilibrer les données': 'Step 8 of 9: rebalancing the data',
+  'Fin 3 : une IA plus juste': 'Ending 3: a fairer AI',
+  'À toi de jouer : lien vers le jeu et le code': 'Your turn: link to the game and the code',
+
+  // ── Journey / Ask / Contact / footer
+  'Parcours.': 'Journey.',
+  'Pose-moi une question.': 'Ask me a question.',
+  'Un mini-assistant qui répond sur mon profil depuis une base locale (sans serveur). Essaie aussi': 'A mini assistant that answers about my profile from a local knowledge base (no server). Also try',
+  '… ou cherche les commandes secrètes.': '… or look for the secret commands.',
+  'Pose ta question…': 'Ask your question…',
+  'Ta question': 'Your question',
+  'Travaillons ensemble.': 'Let’s work together.',
+  'Je cherche un stage ou une alternance en IA / data. Écris-moi.': "I'm looking for an internship or work-study position in AI / data. Write to me.",
+  'Nom': 'Name',
+  'Envoyer': 'Send',
+  'Télécharger mon CV': 'Download my CV',
+  'Lavigne — easter egg : clique plusieurs fois': 'Lavigne — easter egg: click several times',
+  'compile avec ❤ et un peu de GPU': 'compiled with ❤ and a bit of GPU',
+  '↑ top': '↑ top',
+
+  // ── Terminal « Ask me anything »
+  'Qui es-tu ?': 'Who are you?',
+  'Tes projets': 'Your projects',
+  'Tes compétences': 'Your skills',
+  'Parcours': 'Journey',
+  'Contact': 'Contact',
+  "Je n'ai pas cette info dans ma base locale. Essaie : parcours, projets, compétences, contact, ou tape « help ».":
+    "I don't have that in my local knowledge base. Try: journey, projects, skills, contact, or type “help”.",
+  "Salut, je suis la version locale d'Adrien. Pose une question ou clique une suggestion. Tape « help » pour les commandes.":
+    "Hi, I'm the local version of Adrien. Ask a question or click a suggestion. Type “help” for the commands.",
+  "Commandes : help · clear · projets · competences · parcours · contact · linkedin · matrix · theme · whoami\nOu pose-moi une question en français. Il y a aussi quelques commandes secrètes…":
+    "Commands: help · clear · projects · skills · journey · contact · linkedin · matrix · theme · whoami\nOr just ask me a question in English. There are a few secret commands too…",
+  "visiteur@latent-space — bienvenue. Moi, c'est Adrien.": "visitor@latent-space — welcome. I'm Adrien.",
+  'about.txt  skills.json  projects/  parcours.log  contact.sh': 'about.txt  skills.json  projects/  journey.log  contact.sh',
+  'Data rain togglé. (Échap pour arrêter)': 'Data rain toggled. (Esc to stop)',
+  'Palette changée.': 'Palette changed.',
+  '[sudo] password for recruteur: ********': '[sudo] password for recruiter: ********',
+  "Bien tenté, mais tu n'as pas les droits. Essaie « sudo hire adrien » 😉": 'Nice try, but you don’t have the rights. Try “sudo hire adrien” 😉',
+  'Permission refusée. Ce portfolio est protégé par mon amour-propre.': 'Permission denied. This portfolio is protected by my pride.',
+  'Excellente décision. Écris-moi :': 'Excellent decision. Write to me:',
+  ' — ou ': ' — or ',
+
+  // ── Easter eggs
+  'Mode sobre actif : pluie de données désactivée.': 'Reduced-motion mode on: data rain disabled.',
+  '↑↑↓↓←→←→BA — data rain activée (Échap pour couper)': '↑↑↓↓←→←→BA — data rain on (Esc to stop)',
+  'Data rain coupée': 'Data rain off',
+  '404 : bug introuvable. Embauche-moi plutôt ;)': '404: bug not found. Hire me instead ;)',
+  'Easter egg #2 trouvé': 'Easter egg #2 found',
+
+  // ── Formulaire
+  'Merci de remplir les trois champs avec un email valide.': 'Please fill in all three fields with a valid email.',
+  'Formulaire non branché : ouverture de ton client mail.': 'Form not connected yet: opening your email app.',
+  'Message envoyé. Merci !': 'Message sent. Thank you!',
+  "Échec de l'envoi. Écris-moi directement :": 'Sending failed. Write to me directly:',
+  'PDF bientôt disponible': 'PDF coming soon',
+  'Contact via portfolio — ': 'Contact via portfolio — ',
+
+  // ── Terminal « Tester le jeu » (Mr Ybot)
+  'mr-ybot — projet-red · go (wasm)': 'mr-ybot — projet-red · go (wasm)',
+  'Redémarrer ↺': 'Restart ↺',
+  'Terminal : Mr Ybot': 'Terminal: Mr Ybot',
+  'Saisie du jeu (Entrée pour envoyer)': 'Game input (press Enter to send)',
+  '> chargement du module…': '> loading module…',
+  '[!] Impossible de charger le jeu dans ce navigateur.': '[!] Could not load the game in this browser.',
+  'Tu peux le lancer chez toi avec « go run . » depuis le dépôt GitHub.': 'You can run it at home with “go run .” from the GitHub repository.',
+  '[!] Erreur :': '[!] Error:',
+  '— session terminée —': '— session ended —',
+  '(« Redémarrer ↺ » pour rejouer)': '(“Restart ↺” to play again)',
+  'Jeu réalisé en équipe de 3 (Ynov, Ymmersion) · ma part : combat, actions, compétences, ennemis ·': 'Game built by a team of 3 (Ynov, Ymmersion) · my part: combat, actions, skills, enemies ·',
+  'code source ↗': 'source code ↗',
+};
+
+const EN_PROJECTS = {
+  recrutia: {
+    kicker: 'Narrative game · HTML / CSS / JS',
+    status: 'Live',
+    summary: 'A 15-page decision game where you play a data scientist training an AI that sorts CVs.',
+    context: "HTML/CSS project built at Ynov Campus. The idea of steering the game towards training a language model is mine, with the help of my mentor Firas.",
+    problem: 'How do you explain, without jargon, that a hiring AI can reproduce bias if its training data is biased?',
+    solution: "HTML/CSS pages linked like a “choose your own adventure” book: each player choice shapes the data, and therefore the behaviour of the fictional AI of the company RecrutIA. Three possible endings. Two themes: v1 light with a day/night button (small JS script), v2 dark “data console”.",
+    result: 'Game published on GitHub Pages. Next step considered: a Go port, playable in the terminal.',
+    links: ['Play', 'Source code'],
+    imageCaption: 'the “The dataset” step (night mode)',
+    imageAlt: 'RecrutIA screenshot: the dataset step, with a table of candidates and two choices',
+  },
+  shieldwall: {
+    title: 'Operation Shieldwall',
+    kicker: 'Infrastructure & cybersecurity · Ynov B1',
+    status: 'In progress',
+    summary: "Securing the infrastructure of a fictional SME (Azuria): directory, file server, network segmentation.",
+    context: 'Ynov B1 cybersecurity project, done solo. Track A — Windows (Active Directory + file server).',
+    problem: 'I started with no networking knowledge: I had to build a coherent infrastructure and defend it (Blue Team approach).',
+    solution: 'VMware Workstation hypervisor for the Windows side, Packet Tracer mock-up for segmentation (network core, firewall, one switch per zone, VLANs). Structured private GitHub repository (docs, configs, scripts, evidence) and a roadmap tracked item by item.',
+    result: "Project in progress: I'm currently working on the mock-up.",
+    links: ['Private repository — access on request'],
+  },
+  portfolio: {
+    title: 'This portfolio',
+    kicker: 'Creative dev · Vite · WebGL',
+    status: 'Live',
+    summary: 'The site you are browsing: a WebGL embedding field, an “Ask me anything” terminal and far too many easter eggs.',
+    context: 'Built to present my career change towards AI and data.',
+    problem: 'Standing out with a portfolio that tells the story of the job I am aiming for rather than just listing it.',
+    solution: 'Vite + vanilla JavaScript, GSAP and Lenis for motion, Three.js for the hero, 2D canvas for the skills graph. Built with the help of Claude.',
+    result: 'See the Contact section to tell me what you think.',
+    links: ['Source code'],
+  },
+  'projet-red-ybot': {
+    kicker: 'Terminal game · Go',
+    status: 'Completed',
+    summary: 'A command-line role-playing game with a cybersecurity theme: create your operator, equip them, craft gear and fight malware turn by turn.',
+    context: "Final project of the 3 weeks of Ymmersion at Ynov Sophia, in my first year: a development project built by a team of 3, Projet RED. My part: the combat system, the actions, the skills and the enemies. The code is hosted on a teammate's GitHub (ItsForTheVibes).",
+    problem: 'Designing, as a team and in three weeks, a complete game playable in the terminal, inspired by hacking and cyberpunk.',
+    solution: 'Operator creation with affiliation and hit points, inventory (capacity 10, expandable), Ethereum merchant, crafting lab (Neural Visor, Firewall Jacket, Proxy Boots), skills (Packet Punch, Zero-Day Blast), consumables and turn-based combat against malware. Code split into packages: character, combat, economy, items, utils. My scope: turn-based combat, player actions, skills (Packet Punch, Zero-Day Blast) and enemies (malware with their own behaviour).',
+    result: "Mr Ybot runs with “go run .” (about 1,500 lines of Go). An experience that let me put my programming basics into practice and discover teamwork on a real project.",
+    links: ['Source code'],
+    imageCaption: 'a fight in Mr Ybot',
+    imageAlt: 'Mr Ybot screenshot: a turn-based fight against a Training Malware, in the terminal',
+  },
+};
+
+const EN_SKILLS = {
+  categories: { tools: 'Tools' },
+  nodes: {
+    llm: { level: 'learning' },
+    biais: { label: 'Algorithmic bias', level: 'awareness (RecrutIA project)' },
+    algo: { label: 'Algorithms', level: 'beginner' },
+    excel: { level: 'intermediate' },
+    backtest: { level: 'personal practice' },
+    html: { level: 'beginner' },
+    js: { level: 'beginner' },
+    go: { level: 'beginner' },
+    git: { level: 'hands-on' },
+    ad: { level: 'in progress (Shieldwall)' },
+    vmware: { level: 'in progress (Shieldwall)' },
+    ptracer: { level: 'in progress (Shieldwall)' },
+    canva: { level: 'advanced' },
+    office: { level: 'intermediate' },
+    pix: { level: 'certified' },
+    claude: { label: 'Claude (AI assistant)', level: 'daily use' },
+  },
+};
+
+/** Même ordre que TIMELINE dans content.js. */
+const EN_TIMELINE = [
+  { date: 'Sep 2026 →', title: 'Bachelor 1 AI / Data', place: 'Ynov Campus Sophia — Sophia Antipolis', text: 'I join the Data Engineer / AI Development programme. Target Master’s: Expert in Artificial Intelligence.' },
+  { date: 'Oct 2025 – Sep 2026', title: 'Social Media Video Creator', place: 'El Nacho — Station du Val Joly', text: "The restaurant's media channel, to improve click-through rate; filming and editing videos for events." },
+  { date: 'Feb – Jun 2026', title: 'Sales Assistant (fixed-term)', place: 'MR.Bricolage / MY INVEST — Le Rouret', text: 'Restocking through the inter-franchise stock, selling across the whole shop floor, revenue targets.' },
+  { date: 'Sep 2025 – Jun 2026', title: 'Law degree, year 1', place: 'Paris 1 Panthéon-Sorbonne', text: 'One year of law, not continued, before changing path towards AI and data.' },
+  { date: 'Sep – Nov 2025', title: 'Oven operator (temp work)', place: 'Maison Menissez — Maubeuge', text: 'In charge of the main baking line on large orders (CROUS in particular), 5 rotary ovens.' },
+  { date: 'Jul – Aug 2025', title: 'Bartender / Cook', place: 'Station du Val Joly — Campsite', text: 'Taking orders, till, running the dining room; independent cook in a food truck.' },
+  { date: 'Feb 2024 – Jul 2025', title: 'General Baccalauréat (with honours)', place: 'CNED — Rennes', text: 'Specialities Mathematics and Economics & Social Sciences, Advanced Mathematics option.' },
+  { date: 'Jul 2023', title: 'Estate agency internship', place: 'HOME-IMMO — Antibes', text: 'Ran two appointments for a viewing.' },
+  { date: 'Jun 2023', title: 'Private wealth management internship', place: 'Olifan Group — Cannes', text: 'Supported a client meeting about a new structured product.' },
+  { date: 'Sep 2021 – Jun 2023', title: 'National UNSS / departmental FFBB referee', place: 'Basketball — Paris', text: 'Strict application of the rules, handling conflict situations during matches.' },
+];
+
+const EN_KB = {
+  about: { k: ['who', 'about', 'yourself', 'introduce', 'introduction', 'profile', 'you'], a: "Adrien Lavigne. Bachelor 1 AI / Data student at Ynov Campus Sophia since September 2026. I come from law (Paris 1 Panthéon-Sorbonne) and I'm changing career towards AI and data. Target Master's: Expert in Artificial Intelligence." },
+  path: { k: ['journey', 'background', 'law', 'career', 'change', 'why', 'story', 'baccalaureat', 'bac', 'cned'], a: "General baccalauréat through CNED (advanced maths, economics & social sciences, with honours), then a first year of law at Paris 1. This year I'm switching to AI and data, with the future in mind: I pictured myself in it and judged that this field matched my ideal." },
+  now: { k: ['currently', 'now', 'training', 'education', 'studies', 'study', 'school', 'ynov'], a: "Studying at Ynov Campus Sophia (B1 AI / Data). I'm looking for an internship or work-study position, and meanwhile learning Go, web development and the basics of secure infrastructure." },
+  skills: { k: ['skills', 'skill', 'tech', 'technologies', 'stack', 'language', 'know'], a: "I'm still early in my journey, so here is my real level: Canva (advanced), Word/Excel (intermediate), HTML/CSS, JavaScript, Go and algorithms (beginner), Active Directory and networking (in progress through Shieldwall). No fluff: I learn fast and I show it through projects." },
+  projects: { k: ['projects', 'project', 'built', 'portfolio', 'github', 'code', 'work'], a: "Four projects to see: RecrutIA (narrative game about the bias of a CV-sorting AI, live), Operation Shieldwall (infrastructure & cybersecurity, in progress), Projet RED – Mr Ybot (terminal game in Go) and this portfolio. Type “recrutia” or “shieldwall” for details." },
+  recrutia: { k: ['recrutia', 'game', 'bias', 'biases', 'hiring', 'recruitment'], a: "RecrutIA: a 15-page HTML/CSS/JS game where you're a data scientist training a CV-sorting AI. Three endings, two themes. Playable on GitHub Pages. The idea: show how biased data produces a biased AI." },
+  shieldwall: { k: ['shieldwall', 'cyber', 'cybersecurity', 'security', 'azuria', 'network', 'networking', 'infrastructure', 'active', 'directory'], a: "Operation Shieldwall: B1 cybersecurity project, done solo. Active Directory + file server on VMware Workstation, Packet Tracer mock-up with VLANs. I started from zero in networking. Still in progress." },
+  exp: { k: ['experience', 'experiences', 'jobs', 'job', 'internship', 'internships', 'work-study', 'alternance'], a: "Experience: video creation for the restaurant El Nacho, fixed-term sales assistant at MR.Bricolage, oven operator through temp work, bartender/cook, national UNSS referee, and two discovery internships (estate agency in Antibes, wealth management in Cannes)." },
+  lang: { k: ['languages', 'english', 'spanish', 'french', 'speak'], a: 'French (native), Spanish (B1+), English (B1-).' },
+  hobby: { k: ['hobbies', 'hobby', 'interests', 'interest', 'chess', 'sport', 'gym', 'trading', 'free'], a: 'Weight training, chess (1400 elo), trading back-testing on XAUUSD, perfumery and watchmaking.' },
+  linkedin: { k: ['linkedin', 'social'], a: 'My LinkedIn:' },
+  contact: { k: ['contact', 'email', 'mail', 'reach', 'hire', 'recruit'], a: 'Easiest way:' },
+};
+
+export const EN_DATA = {
+  projects: EN_PROJECTS,
+  skills: EN_SKILLS,
+  timeline: EN_TIMELINE,
+  kb: EN_KB,
+  suggestions: ['Who are you?', 'Your projects', 'Your skills', 'Journey', 'Contact'],
+  fallback: "I don't have that in my local knowledge base. Try: journey, projects, skills, contact, or type “help”.",
+};

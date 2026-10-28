@@ -2,8 +2,11 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { TIMELINE } from '../data/content.js';
 import { reduced } from '../utils/env.js';
+import { isEn } from '../utils/i18n.js';
 
-const KIND = { study: 'formation', work: 'expérience', intern: 'stage', project: 'projet' };
+const KIND = isEn
+  ? { study: 'education', work: 'work', intern: 'internship', project: 'project' }
+  : { study: 'formation', work: 'expérience', intern: 'stage', project: 'projet' };
 
 /** Timeline verticale : la ligne se remplit au scroll, chaque étape entre en cascade. */
 export function initTimeline() {

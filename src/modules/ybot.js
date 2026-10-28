@@ -5,6 +5,8 @@
  */
 const YB_COLORS = { 30: '#6b7280', 31: '#ff5c7a', 32: '#4ade80', 33: '#facc15', 34: '#60a5fa', 35: '#c084fc', 36: '#22d3ee', 37: '#e5e7eb' };
 
+import { tr } from '../utils/i18n.js';
+
 let ybRoot = null;
 let ybSession = 0;
 let ybRuntimePromise = null;
@@ -124,23 +126,23 @@ function ybBuild() {
   el.hidden = true;
   el.setAttribute('role', 'dialog');
   el.setAttribute('aria-modal', 'true');
-  el.setAttribute('aria-label', 'Terminal : Mr Ybot');
+  el.setAttribute('aria-label', tr('Terminal : Mr Ybot'));
   el.dataset.lenisPrevent = '';
   el.innerHTML = `
     <div class="ybot__win">
       <div class="ybot__bar mono">
         <span class="ybot__dots" aria-hidden="true"><i></i><i></i><i></i></span>
         <span class="ybot__title">mr-ybot — projet-red · go (wasm)</span>
-        <button class="ybot__btn" type="button" data-yb="restart">Redémarrer ↺</button>
-        <button class="ybot__btn" type="button" data-yb="close">Fermer ✕</button>
+        <button class="ybot__btn" type="button" data-yb="restart">${tr('Redémarrer ↺')}</button>
+        <button class="ybot__btn" type="button" data-yb="close">${tr('Fermer ✕')}</button>
       </div>
       <pre class="ybot__screen mono" id="ybot-screen" tabindex="-1" aria-live="off"></pre>
       <form class="ybot__form mono" autocomplete="off">
         <label for="ybot-in">›</label>
-        <input id="ybot-in" type="text" enterkeyhint="send" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Saisie du jeu (Entrée pour envoyer)" />
+        <input id="ybot-in" type="text" enterkeyhint="send" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="${tr('Saisie du jeu (Entrée pour envoyer)')}" />
         <button class="ybot__send" type="submit">Envoyer</button>
       </form>
-      <p class="ybot__foot mono">Jeu réalisé en équipe de 3 (Ynov, Ymmersion) · ma part : combat, actions, compétences, ennemis · <a href="https://github.com/ItsForTheVibes/Projet-Red-Mr-Ybot" target="_blank" rel="noopener">code source ↗</a></p>
+      <p class="ybot__foot mono">${tr('Jeu réalisé en équipe de 3 (Ynov, Ymmersion) · ma part : combat, actions, compétences, ennemis ·')} <a href="https://github.com/ItsForTheVibes/Projet-Red-Mr-Ybot" target="_blank" rel="noopener">${tr('code source ↗')}</a></p>
     </div>`;
   document.body.appendChild(el);
   return el;
@@ -155,11 +157,11 @@ async function ybStart() {
   const say = (t) => screen.write(new TextEncoder().encode(t));
   const toBottom = () => { pre.scrollTop = pre.scrollHeight; };
   pre.textContent = '';
-  say('\x1b[36m> chargement du module…\x1b[0m\n');
+  say('\x1b[36m' + tr('> chargement du module…') + '\x1b[0m\n');
   let mod;
   try { mod = await ybLoadRuntime(); }
   catch (err) {
-    say('\x1b[31m[!] Impossible de charger le jeu dans ce navigateur.\x1b[0m\nTu peux le lancer chez toi avec « go run . » depuis le dépôt GitHub.\n');
+    say('\x1b[31m' + tr('[!] Impossible de charger le jeu dans ce navigateur.') + '\x1b[0m\n' + tr('Tu peux le lancer chez toi avec « go run . » depuis le dépôt GitHub.') + '\n');
     return;
   }
   if (my !== ybSession) return;
@@ -176,10 +178,10 @@ async function ybStart() {
     const done = go.run(instance);
     done.then(() => {
       if (my !== ybSession) return;
-      say('\n\x1b[33m— session terminée —\x1b[0m  (« Redémarrer ↺ » pour rejouer)\n'); toBottom();
+      say('\n\x1b[33m' + tr('— session terminée —') + '\x1b[0m  ' + tr('(« Redémarrer ↺ » pour rejouer)') + '\n'); toBottom();
     });
   } catch (err) {
-    say('\n\x1b[31m[!] Erreur : ' + (err && err.message ? err.message : err) + '\x1b[0m\n');
+    say('\n\x1b[31m' + tr('[!] Erreur :') + ' ' + (err && err.message ? err.message : err) + '\x1b[0m\n');
   }
   form.onsubmit = (e) => {
     e.preventDefault();
@@ -221,62 +223,6 @@ export function closeYbot() {
   if (!ybRoot || ybRoot.hidden) return;
   ybSession++; // invalide la session en cours
   ybRoot.hidden = true;
-  const modal = document.getElementById('modal');
-  if (!modal || modal.hidden) { document.body.style.overflow = ''; ybLenis?.start(); }
-  ybLastFocus?.focus?.();
-}
-
-/* ─────────── Jeux web hébergés (RecrutIA) : fenêtre avec le jeu intégré ─────────── */
-const YB_FRAMES = {
-  recrutia: { title: 'recrutia — jeu narratif · html/css/js', url: 'https://adsansgluten.github.io/Jeu-LLM-Projet-HTML/', src: 'https://github.com/ADsansGluten/Jeu-LLM-Projet-HTML',
-    foot: 'Mon projet de TP web (Ynov) · idée du jeu : entraîner une IA de tri de CV · ' },
-};
-let ybFrameRoot = null;
-
-export function openGameFrame(key, lenis) {
-  const g = YB_FRAMES[key];
-  if (!g) return;
-  if (!ybFrameRoot) {
-    const el = document.createElement('div');
-    el.className = 'ybot ybot--frame';
-    el.hidden = true;
-    el.setAttribute('role', 'dialog');
-    el.setAttribute('aria-modal', 'true');
-    el.innerHTML = `
-      <div class="ybot__win">
-        <div class="ybot__bar mono">
-          <span class="ybot__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="ybot__title"></span>
-          <a class="ybot__btn" data-fr="open" target="_blank" rel="noopener">Nouvel onglet ↗</a>
-          <button class="ybot__btn" type="button" data-fr="close">Fermer ✕</button>
-        </div>
-        <iframe class="ybot__frame" title="Jeu intégré" loading="lazy" referrerpolicy="no-referrer"></iframe>
-        <p class="ybot__foot mono"></p>
-      </div>`;
-    document.body.appendChild(el);
-    el.addEventListener('click', (e) => { if (e.target.closest('[data-fr="close"]')) closeGameFrame(); });
-    document.addEventListener('keydown', (e) => {
-      if (!el.hidden && e.key === 'Escape') { e.stopImmediatePropagation(); closeGameFrame(); }
-    }, true);
-    ybFrameRoot = el;
-  }
-  if (lenis) ybLenis = lenis;
-  const r = ybFrameRoot;
-  r.querySelector('.ybot__title').textContent = g.title;
-  r.querySelector('[data-fr="open"]').href = g.url;
-  r.querySelector('.ybot__foot').innerHTML = `${g.foot}<a href="${g.src}" target="_blank" rel="noopener">code source ↗</a>`;
-  r.querySelector('iframe').src = g.url;
-  ybLastFocus = document.activeElement;
-  r.hidden = false;
-  document.body.style.overflow = 'hidden';
-  ybLenis?.stop();
-  r.querySelector('[data-fr="close"]').focus({ preventScroll: true });
-}
-
-export function closeGameFrame() {
-  if (!ybFrameRoot || ybFrameRoot.hidden) return;
-  ybFrameRoot.hidden = true;
-  ybFrameRoot.querySelector('iframe').src = 'about:blank';
   const modal = document.getElementById('modal');
   if (!modal || modal.hidden) { document.body.style.overflow = ''; ybLenis?.start(); }
   ybLastFocus?.focus?.();

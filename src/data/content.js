@@ -125,9 +125,9 @@ export const PROJECTS = [
     summary:
       "Un jeu de rôle en ligne de commande, thème cybersécurité : crée ton opérateur, équipe-le, fabrique du matériel et affronte des malwares au tour par tour.",
     context:
-      "Projet final des 3 semaines d'Ymmersion à Ynov Sophia, en 1re année : un projet de développement réalisé en équipe, le Projet RED. Ma part : le système de combat, les actions, les compétences et les ennemis. Le code est hébergé sur le GitHub d'un coéquipier (ItsForTheVibes).",
+      "Projet final des 3 semaines d'Ymmersion à Ynov Sophia, en 1re année : un projet de développement réalisé en équipe de 3, le Projet RED. Ma part : le système de combat, les actions, les compétences et les ennemis. Le code est hébergé sur le GitHub d'un coéquipier (ItsForTheVibes).",
     problem:
-      "Concevoir en équipe, en trois semaines, un jeu complet jouable dans le terminal, inspiré du hacking et du cyberpunk.",
+      "Concevoir à trois, en trois semaines, un jeu complet jouable dans le terminal, inspiré du hacking et du cyberpunk.",
     solution:
       "Création d'opérateur avec affiliation et points de vie, inventaire (capacité 10, extensible), marchand en Ethereum, atelier de craft (Neural Visor, Firewall Jacket, Proxy Boots), compétences (Packet Punch, Zero-Day Blast), consommables et combat au tour par tour contre des malwares. Code découpé en packages : character, combat, economy, items, utils. Mon périmètre : le combat au tour par tour, les actions du joueur, les compétences (Packet Punch, Zero-Day Blast) et les ennemis (malwares avec leur propre comportement).",
     result: "Mr Ybot est jouable avec « go run . » (environ 1 500 lignes de Go). Une expérience qui m'a permis de mettre en pratique mes bases en programmation et de découvrir le travail en équipe sur un projet concret.",

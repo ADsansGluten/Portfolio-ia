@@ -34,12 +34,7 @@ Sans endpoint Formspree, le formulaire ouvre ton client mail (rien n'est perdu).
 
 **Vercel** : `npm i -g vercel && vercel --prod` (ou importe le dépôt GitHub sur vercel.com).
 **Netlify** : `npm run build`, puis glisse le dossier `dist` sur app.netlify.com/drop (ou connecte le dépôt : build `npm run build`, publish `dist`).
-**GitHub Pages** : `base: './'` est déjà configuré.
-```bash
-npm run build
-npx gh-pages -d dist      # publie sur la branche gh-pages
-```
-Puis Settings → Pages → branche `gh-pages`.
+**GitHub Pages (ce qu'on utilise)** : le site est construit et publié par un workflow GitHub Actions (`.github/workflows/main.yml`), à chaque push sur `main`, chaque jour et à la demande (onglet *Actions → Run workflow*). Réglage unique : *Settings → Pages → Source : GitHub Actions*. Il n'y a plus de dossier `docs/` à mettre à jour à la main.
 
 ## Easter eggs
 
@@ -59,16 +54,25 @@ Bascule FR/EN · vraies captures/vidéos de projets · self-host des polices · 
 
 ## Version « un seul fichier »
 
-`node scripts/build-single.mjs` génère `dist-single/index.html`, une page autonome (photo incrustée ; GSAP, Lenis et Three.js chargés depuis des CDN) qu'on peut ouvrir d'un double-clic ou publier telle quelle. La version publiée sur GitHub Pages est construite par le workflow GitHub Actions (anciennement `docs/`) : `node scripts/build-single.mjs --web` génère une page plus légère (`dist-web/`, le jeu Mr Ybot n'est téléchargé qu'au clic) à copier dans `docs/`. Si [esbuild](https://esbuild.github.io/) est installé (`npm i esbuild`), le JS et le CSS sont minifiés, sans aucun changement visuel.
+`node scripts/build-single.mjs` génère `dist-single/index.html`, une page autonome (photo incrustée ; GSAP, Lenis et Three.js chargés depuis des CDN) qu'on peut ouvrir d'un double-clic ou publier telle quelle. La version publiée sur GitHub Pages est construite par le workflow GitHub Actions : `node scripts/build-single.mjs --web` génère une page plus légère (`dist-web/`, le jeu Mr Ybot n'est téléchargé qu'au clic), que le workflow publie. Si [esbuild](https://esbuild.github.io/) est installé (`npm i esbuild`), le JS et le CSS sont minifiés, sans aucun changement visuel.
 
 ## Compétences depuis Supabase (au build)
 
 Les compétences du graphe peuvent venir d'une table Supabase (`Portfolio` : `id`, `label`, `cat`, `level`, `projects`), lue **pendant le build** par `scripts/fetch-skills.mjs` : aucune clé n'est dans le navigateur ni dans le dépôt.
 
 - **En local** : copie `.env.example` en `.env.local` (ignoré par Git), remplis `SUPABASE_URL` et `SUPABASE_ANON_KEY`, puis `node scripts/fetch-skills.mjs` avant `npm run build`.
-- **Sur GitHub** : ajoute les deux secrets dans *Settings → Secrets and variables → Actions*. Le workflow `.github/workflows/deploy.yml` reconstruit et publie le site à chaque push, chaque jour et à la demande (onglet Actions → *Run workflow*).
+- **Sur GitHub** : ajoute les deux secrets dans *Settings → Secrets and variables → Actions*. Le workflow `.github/workflows/main.yml` reconstruit et publie le site à chaque push, chaque jour et à la demande (onglet Actions → *Run workflow*).
 - **Plan B** : si les variables manquent ou si Supabase ne répond pas, le site garde les compétences de `src/data/content.js`.
 - **Sécurité** : la table doit avoir le RLS activé avec une seule règle, `SELECT` pour tous. Utilise la clé `anon`, jamais `service_role`.
+
+### Pourquoi lire Supabase au build plutôt que dans le navigateur ?
+
+Une autre méthode courante consiste à générer un `config.js` avec la clé à partir des secrets GitHub, puis à faire un `fetch` depuis la page. Elle marche bien avec une clé publique, mais **la clé est alors visible par tous les visiteurs**. J'ai préféré lire la base pendant le build :
+
+- **Rien n'arrive jamais dans la page.** Si un jour je dois utiliser une clé secrète, elle restera dans le workflow, jamais dans le navigateur.
+- **C'est un plan B intégré.** Si Supabase est en pause ou ne répond pas, le site garde les compétences de `src/data/content.js`.
+- **Le site se reconstruit chaque jour** (workflow planifié), donc les compétences restent à jour sans que je touche à quoi que ce soit.
+- Contrepartie : un changement dans Supabase n'apparaît qu'au prochain build (au plus 24 h, ou tout de suite avec *Actions → Run workflow*).
 
 ## Collaboration
 

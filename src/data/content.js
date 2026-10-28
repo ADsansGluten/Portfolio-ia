@@ -75,7 +75,6 @@ export const PROJECTS = [
       { label: 'Jouer', href: 'https://adsansgluten.github.io/Jeu-LLM-Projet-HTML/' },
       { label: 'Code source', href: 'https://github.com/ADsansGluten/Jeu-LLM-Projet-HTML' },
     ],
-    play: 'recrutia',
     image: 'ybot/recrutia-shot.webp',
     imageCaption: "l'étape « Le jeu de données » (mode nuit)",
     imageAlt: "Capture de RecrutIA : l'étape Le jeu de données, avec un tableau de candidats et deux choix",

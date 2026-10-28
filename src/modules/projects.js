@@ -1,3 +1,4 @@
+import { openYbot } from './ybot.js';
 import gsap from 'gsap';
 import { PROJECTS } from '../data/content.js';
 import { reduced, finePointer } from '../utils/env.js';
@@ -116,7 +117,8 @@ export function syncFromHash() {
 }
 
 function fill(p) {
-  const links = p.links.map((l) => l.href
+  const play = p.play ? `<button class="btn btn--primary" type="button" data-play="${p.play}" data-cursor="link">▶ Tester le jeu ici <b>↘</b></button>` : '';
+  const links = play + p.links.map((l) => l.href
     ? `<a class="btn btn--primary" href="${l.href}" target="_blank" rel="noopener">${l.label} <b>↗</b></a>`
     : `<span class="btn mono">${l.label}</span>`).join('');
   document.getElementById('modal-content').innerHTML = `
@@ -132,6 +134,11 @@ function fill(p) {
     <div><h3 class="mono label">// stack</h3><ul class="modal__stack">${p.stack.map((s) => `<li>${s}</li>`).join('')}</ul></div>
     <div class="modal__links">${links}</div>`;
 }
+
+document.addEventListener('click', (e) => {
+  const b = e.target.closest?.('[data-play]');
+  if (b) openYbot(lenisRef);
+});
 
 export function openProject(slug, push = true) {
   const p = PROJECTS.find((x) => x.slug === slug);

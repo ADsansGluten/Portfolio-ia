@@ -117,6 +117,7 @@ export const PROJECTS = [
   },
   {
     slug: 'projet-red-ybot',
+    play: 'ybot',
     index: '04',
     title: 'Projet RED — Mr Ybot',
     kicker: 'Jeu en terminal · Go',

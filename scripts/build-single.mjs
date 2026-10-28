@@ -3,10 +3,11 @@
 // GSAP, Lenis et Three.js sont chargés depuis des CDN au moment de l'ouverture de la page.
 import { readFileSync, writeFileSync, mkdirSync, existsSync, rmSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import { gzipSync } from 'node:zlib';
 
 const read = (p) => readFileSync(new URL('../' + p, import.meta.url), 'utf8');
 const ORDER = ['utils/env', 'utils/split', 'data/content', 'modules/preloader', 'modules/cursor', 'modules/kinetic',
-  'modules/interactions', 'modules/skills', 'modules/projects', 'modules/timeline', 'modules/terminal',
+  'modules/interactions', 'modules/skills', 'modules/ybot', 'modules/projects', 'modules/timeline', 'modules/terminal',
   'modules/easter', 'modules/contact', 'modules/linkedin', 'modules/hero', 'main'];
 
 const THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
@@ -44,6 +45,14 @@ html = html.replace(/src="((?:li\/)?[\w.-]+\.(?:jpg|webp|png))"/g, (m, f) => {
   if (!existsSync(u)) return m;
   return `src="data:${MIME[f.split('.').pop()]};base64,${readFileSync(u).toString('base64')}"`;
 });
+
+// Jeu Mr Ybot (Go → WebAssembly) incrusté, compressé, pour rester un seul fichier
+{
+  const rt = readFileSync(new URL('../public/ybot/wasm_exec.js', import.meta.url), 'utf8');
+  const wasm = gzipSync(readFileSync(new URL('../public/ybot/ybot.wasm', import.meta.url)), { level: 9 }).toString('base64');
+  if (rt.includes('</script')) throw new Error('wasm_exec.js contient </script');
+  html = html.replace('</body>', () => `<script type="text/plain" id="ybot-runtime">${rt}</script>\n<script type="application/octet-stream" id="ybot-wasm">${wasm}</script>\n</body>`);
+}
 
 mkdirSync(new URL('../dist-single/', import.meta.url), { recursive: true });
 writeFileSync(new URL('../dist-single/index.html', import.meta.url), html);

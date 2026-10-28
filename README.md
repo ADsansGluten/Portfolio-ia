@@ -59,7 +59,16 @@ Bascule FR/EN · vraies captures/vidéos de projets · self-host des polices · 
 
 ## Version « un seul fichier »
 
-`node scripts/build-single.mjs` génère `dist-single/index.html`, une page autonome (photo incrustée ; GSAP, Lenis et Three.js chargés depuis des CDN) qu'on peut ouvrir d'un double-clic ou publier telle quelle. La version publiée sur GitHub Pages est `docs/` : `node scripts/build-single.mjs --web` génère une page plus légère (`dist-web/`, le jeu Mr Ybot n'est téléchargé qu'au clic) à copier dans `docs/`. Si [esbuild](https://esbuild.github.io/) est installé (`npm i esbuild`), le JS et le CSS sont minifiés, sans aucun changement visuel.
+`node scripts/build-single.mjs` génère `dist-single/index.html`, une page autonome (photo incrustée ; GSAP, Lenis et Three.js chargés depuis des CDN) qu'on peut ouvrir d'un double-clic ou publier telle quelle. La version publiée sur GitHub Pages est construite par le workflow GitHub Actions (anciennement `docs/`) : `node scripts/build-single.mjs --web` génère une page plus légère (`dist-web/`, le jeu Mr Ybot n'est téléchargé qu'au clic) à copier dans `docs/`. Si [esbuild](https://esbuild.github.io/) est installé (`npm i esbuild`), le JS et le CSS sont minifiés, sans aucun changement visuel.
+
+## Compétences depuis Supabase (au build)
+
+Les compétences du graphe peuvent venir d'une table Supabase (`Portfolio` : `id`, `label`, `cat`, `level`, `projects`), lue **pendant le build** par `scripts/fetch-skills.mjs` : aucune clé n'est dans le navigateur ni dans le dépôt.
+
+- **En local** : copie `.env.example` en `.env.local` (ignoré par Git), remplis `SUPABASE_URL` et `SUPABASE_ANON_KEY`, puis `node scripts/fetch-skills.mjs` avant `npm run build`.
+- **Sur GitHub** : ajoute les deux secrets dans *Settings → Secrets and variables → Actions*. Le workflow `.github/workflows/deploy.yml` reconstruit et publie le site à chaque push, chaque jour et à la demande (onglet Actions → *Run workflow*).
+- **Plan B** : si les variables manquent ou si Supabase ne répond pas, le site garde les compétences de `src/data/content.js`.
+- **Sécurité** : la table doit avoir le RLS activé avec une seule règle, `SELECT` pour tous. Utilise la clé `anon`, jamais `service_role`.
 
 ## Collaboration
 

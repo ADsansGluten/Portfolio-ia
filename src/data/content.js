@@ -10,6 +10,7 @@
 
 import { isEn } from '../utils/i18n.js';
 import { EN_DATA } from './en.js';
+import { SKILLS_REMOTE } from './skills.generated.js';
 
 export const LINKS = {
   linkedin: 'https://www.linkedin.com/in/adrien-lavigne-93197a381/',
@@ -177,6 +178,7 @@ export const FALLBACK =
   "Je n'ai pas cette info dans ma base locale. Essaie : parcours, projets, compétences, contact, ou tape « help ».";
 
 /* ───── Version anglaise : on superpose les traductions (par clé stable) aux données françaises ───── */
+if (SKILLS_REMOTE && SKILLS_REMOTE.length) SKILLS.nodes = SKILLS_REMOTE.map((n) => ({ ...n })); // compétences lues dans Supabase au build
 SKILLS.nodes.forEach((n) => { n.levelFr = n.level; }); // le calcul des niveaux s'appuie sur le français
 PROJECTS.forEach((p) => { p.live = p.status === 'En ligne'; });
 

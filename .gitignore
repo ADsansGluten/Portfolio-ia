@@ -3,3 +3,10 @@ dist/
 dist-single/
 .DS_Store
 *.log
+
+# Secrets : ne jamais pousser
+.env
+.env.*
+!.env.example
+*.local
+sauvegardes/

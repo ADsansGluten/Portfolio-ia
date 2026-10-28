@@ -40,8 +40,8 @@ export const SKILLS = {
     { id: 'backtest', label: 'Back-testing (XAUUSD)', cat: 'data', level: 'pratique personnelle', projects: [] },
     { id: 'html', label: 'HTML / CSS', cat: 'dev', level: 'débutant', projects: ['recrutia', 'portfolio'] },
     { id: 'js', label: 'JavaScript', cat: 'dev', level: 'débutant', projects: ['recrutia', 'portfolio'] },
-    { id: 'go', label: 'Go', cat: 'dev', level: 'débutant', projects: [] },
-    { id: 'git', label: 'Git / GitHub', cat: 'dev', level: 'en pratique', projects: ['recrutia', 'shieldwall', 'portfolio'] },
+    { id: 'go', label: 'Go', cat: 'dev', level: 'débutant', projects: ['projet-red-ybot'] },
+    { id: 'git', label: 'Git / GitHub', cat: 'dev', level: 'en pratique', projects: ['recrutia', 'shieldwall', 'portfolio', 'projet-red-ybot'] },
     { id: 'ad', label: 'Active Directory', cat: 'infra', level: 'en cours (Shieldwall)', projects: ['shieldwall'] },
     { id: 'vmware', label: 'VMware Workstation', cat: 'infra', level: 'en cours (Shieldwall)', projects: ['shieldwall'] },
     { id: 'ptracer', label: 'Packet Tracer / VLAN', cat: 'infra', level: 'en cours (Shieldwall)', projects: ['shieldwall'] },
@@ -115,6 +115,26 @@ export const PROJECTS = [
     links: [{ label: 'Code source', href: 'https://github.com/ADsansGluten' }],
     hue: 285,
   },
+  {
+    slug: 'projet-red-ybot',
+    index: '04',
+    title: 'Projet RED — Mr Ybot',
+    kicker: 'Jeu en terminal · Go',
+    year: '2026',
+    status: 'Terminé',
+    summary:
+      "Un jeu de rôle en ligne de commande, thème cybersécurité : crée ton opérateur, équipe-le, fabrique du matériel et affronte des malwares au tour par tour.",
+    context:
+      "Réalisé dans le cadre du Projet RED, en Go. Le code est hébergé sur le GitHub ItsForTheVibes. [À COMPLÉTER : mon rôle / le binôme]",
+    problem:
+      "Structurer un vrai programme en Go (plusieurs packages, état du joueur, boucle de jeu) plutôt qu'un simple script.",
+    solution:
+      "Création d'opérateur avec affiliation et points de vie, inventaire (capacité 10, extensible), marchand en Ethereum, atelier de craft (Neural Visor, Firewall Jacket, Proxy Boots), compétences (Packet Punch, Zero-Day Blast), consommables et combat au tour par tour contre des malwares. Code découpé en packages : character, combat, economy, items, utils.",
+    result: "Jeu jouable avec « go run . » (environ 1 500 lignes de Go). [À COMPLÉTER : retour d'expérience]",
+    stack: ['Go', 'CLI', 'Git'],
+    links: [{ label: 'Code source', href: 'https://github.com/ItsForTheVibes/Projet-Red-Mr-Ybot' }],
+    hue: 150,
+  },
 ];
 
 /** Parcours, du plus récent au plus ancien. kind: study | work | intern | project */
@@ -137,7 +157,7 @@ export const KB = [
   { id: 'path', k: ['parcours', 'droit', 'reconversion', 'pourquoi', 'histoire', 'bac', 'cned'], a: "Bac général au CNED (maths expertes, SES, mention), puis une L1 de droit à Paris 1. Cette année, je me réoriente vers l'IA et la data, par vision d'avenir : je me suis projeté et j'ai estimé que c'était ce domaine qui correspondait à mon idéal." },
   { id: 'now', k: ['actuellement', 'currently', 'now', 'formation', 'etudes', 'ynov', 'ecole'], a: "En formation à Ynov Campus Sophia (B1 IA / Data). Je suis à la recherche d'un stage ou d'une alternance, et j'apprends en parallèle Go, le développement web et les bases de l'infrastructure sécurisée." },
   { id: 'skills', k: ['competences', 'skills', 'techno', 'stack', 'langage', 'savoir'], a: "Je suis encore en début de parcours, donc voici mon niveau réel : Canva (avancé), Word/Excel (intermédiaire), HTML/CSS, JavaScript, Go et algorithmique (débutant), Active Directory et réseau (en cours via Shieldwall). Pas de baratin : j'apprends vite et je le montre en projet." },
-  { id: 'projects', k: ['projet', 'projets', 'projects', 'realise', 'portfolio', 'github', 'code'], a: "Trois projets à voir : RecrutIA (jeu narratif sur les biais d'une IA de tri de CV, en ligne), Opération Shieldwall (infra & cybersécurité, en cours) et ce portfolio. Tape « recrutia » ou « shieldwall » pour le détail." },
+  { id: 'projects', k: ['projet', 'projets', 'projects', 'realise', 'portfolio', 'github', 'code'], a: "Quatre projets à voir : RecrutIA (jeu narratif sur les biais d'une IA de tri de CV, en ligne), Opération Shieldwall (infra & cybersécurité, en cours), Projet RED – Mr Ybot (jeu en terminal en Go) et ce portfolio. Tape « recrutia » ou « shieldwall » pour le détail." },
   { id: 'recrutia', k: ['recrutia', 'jeu', 'biais', 'game'], a: "RecrutIA : un jeu de 15 pages en HTML/CSS/JS où tu es data scientist et entraînes une IA de tri de CV. Trois fins, deux thèmes. Jouable sur GitHub Pages. Idée : montrer comment des données biaisées donnent une IA biaisée." },
   { id: 'shieldwall', k: ['shieldwall', 'cyber', 'cybersecurite', 'securite', 'azuria', 'reseau', 'infra', 'active', 'directory'], a: "Opération Shieldwall : projet B1 de cybersécurité, réalisé seul. Active Directory + serveur de fichiers sur VMware Workstation, maquette Packet Tracer avec VLAN. Je partais de zéro en réseau. Projet toujours en cours." },
   { id: 'exp', k: ['experience', 'experiences', 'travail', 'job', 'stage', 'stages', 'alternance'], a: "Expériences : création vidéo pour le restaurant El Nacho, vendeur CDD chez MR.Bricolage, défourneur en intérim, barman/cuisinier, arbitre national UNSS, et deux stages de découverte (immobilier à Antibes, gestion de patrimoine à Cannes)." },

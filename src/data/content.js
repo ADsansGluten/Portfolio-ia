@@ -17,7 +17,7 @@ export const LINKS = {
   email: 'adrien.lavigne@ynov.com',
   cv: 'cv-adrien-lavigne.pdf', // [À COMPLÉTER] dépose ton CV dans /public avec ce nom
   // [À COMPLÉTER] crée un formulaire sur formspree.io puis colle l'URL ici (ex: https://formspree.io/f/xxxxxxx)
-  formEndpoint: '',
+  formEndpoint: 'https://formspree.io/f/mzeegbbp',
 };
 
 /** Compétences : level = niveau annoncé dans ton CV / tes messages. Rien d'inventé. */

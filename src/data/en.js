@@ -170,6 +170,7 @@ export const EN_UI = {
   'Merci de remplir les trois champs avec un email valide.': 'Please fill in all three fields with a valid email.',
   'Formulaire non branché : ouverture de ton client mail.': 'Form not connected yet: opening your email app.',
   'Message envoyé. Merci !': 'Message sent. Thank you!',
+  'Envoi…': 'Sending…',
   "Échec de l'envoi. Écris-moi directement :": 'Sending failed. Write to me directly:',
   'PDF bientôt disponible': 'PDF coming soon',
   'Contact via portfolio — ': 'Contact via portfolio — ',

@@ -23,7 +23,7 @@ export function initContact() {
       status.textContent = tr('Formulaire non branché : ouverture de ton client mail.');
       return;
     }
-    status.textContent = 'Envoi…';
+    status.textContent = tr('Envoi…');
     try {
       const r = await fetch(LINKS.formEndpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
       if (!r.ok) throw new Error();

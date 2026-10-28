@@ -239,7 +239,7 @@ const EN_PROJECTS = {
 };
 
 const EN_SKILLS = {
-  categories: { tools: 'Tools' },
+  categories: { ai: 'AI / ML', tools: 'Tools' },
   nodes: {
     llm: { level: 'learning' },
     biais: { label: 'Algorithmic bias', level: 'awareness (RecrutIA project)' },

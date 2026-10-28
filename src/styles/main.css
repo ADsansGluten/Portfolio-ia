@@ -521,3 +521,7 @@ body.has-cursor .ybot, body.has-cursor .ybot * { cursor: auto; }
 body.has-cursor .ybot button, body.has-cursor .ybot a { cursor: pointer; }
 .modal__links .btn[data-play] { cursor: pointer; }
 @media (max-width: 560px) { .ybot__title { display: none; } .ybot__bar { justify-content: flex-end; } .ybot__send { padding: 8px 12px; } }
+
+.modal__shot { margin: 0; display: grid; gap: 10px; }
+.modal__shot img { width: 100%; height: auto; border-radius: 14px; border: 1px solid rgba(var(--accent-rgb), 0.4); box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 50px rgba(var(--accent-rgb), 0.15); }
+.modal__shot figcaption { font-size: 11px; color: var(--fg-dim); }

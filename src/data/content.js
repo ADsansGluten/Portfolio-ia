@@ -118,6 +118,8 @@ export const PROJECTS = [
   {
     slug: 'projet-red-ybot',
     play: 'ybot',
+    image: 'ybot/ybot-shot.webp',
+    imageAlt: 'Capture du jeu Mr Ybot : un combat au tour par tour contre un Training Malware, dans le terminal',
     index: '04',
     title: 'Projet RED — Mr Ybot',
     kicker: 'Jeu en terminal · Go',

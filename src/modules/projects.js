@@ -125,6 +125,7 @@ function fill(p) {
     <div><p class="label mono">${p.index} / ${p.kicker} <span class="dot"></span> ${p.year} · ${p.status}</p></div>
     <h2 class="modal__title" id="modal-title">${p.title}</h2>
     <p class="modal__lede">${p.summary}</p>
+    ${p.image ? `<figure class="modal__shot"><img src="${p.image}" alt="${p.imageAlt || ''}" loading="lazy" decoding="async" /><figcaption class="mono">// capture : un combat dans Mr Ybot (jouable ci-dessous)</figcaption></figure>` : ''}
     <div class="modal__grid">
       <div><h3>Contexte</h3><p>${p.context}</p></div>
       <div><h3>Problème</h3><p>${p.problem}</p></div>

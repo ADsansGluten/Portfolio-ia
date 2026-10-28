@@ -20,12 +20,6 @@ export const LINKS = {
   formEndpoint: '',
 };
 
-export const PROFILE = {
-  name: 'Adrien Lavigne',
-  school: 'Ynov Campus Sophia',
-  city: 'Sophia Antipolis',
-};
-
 /** Compétences : level = niveau annoncé dans ton CV / tes messages. Rien d'inventé. */
 export const SKILLS = {
   categories: {

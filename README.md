@@ -59,7 +59,7 @@ Bascule FR/EN · vraies captures/vidéos de projets · self-host des polices · 
 
 ## Version « un seul fichier »
 
-`node scripts/build-single.mjs` génère `dist-single/index.html`, une page autonome (photo incrustée ; GSAP, Lenis et Three.js chargés depuis des CDN) qu'on peut ouvrir d'un double-clic ou publier telle quelle. La copie publiée sur GitHub Pages est `docs/index.html` (à régénérer après chaque modification).
+`node scripts/build-single.mjs` génère `dist-single/index.html`, une page autonome (photo incrustée ; GSAP, Lenis et Three.js chargés depuis des CDN) qu'on peut ouvrir d'un double-clic ou publier telle quelle. La version publiée sur GitHub Pages est `docs/` : `node scripts/build-single.mjs --web` génère une page plus légère (`dist-web/`, le jeu Mr Ybot n'est téléchargé qu'au clic) à copier dans `docs/`. Si [esbuild](https://esbuild.github.io/) est installé (`npm i esbuild`), le JS et le CSS sont minifiés, sans aucun changement visuel.
 
 ## Collaboration
 

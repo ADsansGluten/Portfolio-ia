@@ -25,15 +25,12 @@ async function ybLoadRuntime() {
     const emb = document.getElementById('ybot-runtime');
     const src = emb ? emb.textContent : await (await fetch('ybot/wasm_exec.js')).text();
     (0, eval)(src); // définit globalThis.Go
-    let bytes;
+    // .wasm.gz : décompressé dans le navigateur (embarqué en base64 dans la version « un seul fichier »)
+    let gz;
     const wasmEl = document.getElementById('ybot-wasm');
-    if (wasmEl) {
-      const gz = ybB64ToBytes(wasmEl.textContent);
-      const ds = new Response(new Blob([gz]).stream().pipeThrough(new DecompressionStream('gzip')));
-      bytes = await ds.arrayBuffer();
-    } else {
-      bytes = await (await fetch('ybot/ybot.wasm')).arrayBuffer();
-    }
+    if (wasmEl) gz = ybB64ToBytes(wasmEl.textContent);
+    else gz = await (await fetch('ybot/ybot.wasm.gz')).arrayBuffer();
+    const bytes = await new Response(new Blob([gz]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
     return WebAssembly.compile(bytes);
   })();
   ybRuntimePromise.catch(() => { ybRuntimePromise = null; });

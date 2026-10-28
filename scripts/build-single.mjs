@@ -22,8 +22,10 @@ let js = ORDER.map((f) => {
   return `/* ───── ${f} ───── */\n${s}`;
 }).join('\n');
 
-const shot = readFileSync(new URL('../public/ybot/ybot-shot.webp', import.meta.url)).toString('base64');
-js = js.replace("'ybot/ybot-shot.webp'", `'data:image/webp;base64,${shot}'`);
+for (const n of ['ybot-shot', 'recrutia-shot']) {
+  const shot = readFileSync(new URL(`../public/ybot/${n}.webp`, import.meta.url)).toString('base64');
+  js = js.replace(`'ybot/${n}.webp'`, `'data:image/webp;base64,${shot}'`);
+}
 
 const css = read('src/styles/main.css');
 const fav = 'data:image/svg+xml,' + encodeURIComponent(read('public/favicon.svg').trim());

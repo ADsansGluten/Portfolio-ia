@@ -225,3 +225,59 @@ export function closeYbot() {
   if (!modal || modal.hidden) { document.body.style.overflow = ''; ybLenis?.start(); }
   ybLastFocus?.focus?.();
 }
+
+/* ─────────── Jeux web hébergés (RecrutIA) : fenêtre avec le jeu intégré ─────────── */
+const YB_FRAMES = {
+  recrutia: { title: 'recrutia — jeu narratif · html/css/js', url: 'https://adsansgluten.github.io/Jeu-LLM-Projet-HTML/', src: 'https://github.com/ADsansGluten/Jeu-LLM-Projet-HTML',
+    foot: 'Mon projet de TP web (Ynov) · idée du jeu : entraîner une IA de tri de CV · ' },
+};
+let ybFrameRoot = null;
+
+export function openGameFrame(key, lenis) {
+  const g = YB_FRAMES[key];
+  if (!g) return;
+  if (!ybFrameRoot) {
+    const el = document.createElement('div');
+    el.className = 'ybot ybot--frame';
+    el.hidden = true;
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-modal', 'true');
+    el.innerHTML = `
+      <div class="ybot__win">
+        <div class="ybot__bar mono">
+          <span class="ybot__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="ybot__title"></span>
+          <a class="ybot__btn" data-fr="open" target="_blank" rel="noopener">Nouvel onglet ↗</a>
+          <button class="ybot__btn" type="button" data-fr="close">Fermer ✕</button>
+        </div>
+        <iframe class="ybot__frame" title="Jeu intégré" loading="lazy" referrerpolicy="no-referrer"></iframe>
+        <p class="ybot__foot mono"></p>
+      </div>`;
+    document.body.appendChild(el);
+    el.addEventListener('click', (e) => { if (e.target.closest('[data-fr="close"]')) closeGameFrame(); });
+    document.addEventListener('keydown', (e) => {
+      if (!el.hidden && e.key === 'Escape') { e.stopImmediatePropagation(); closeGameFrame(); }
+    }, true);
+    ybFrameRoot = el;
+  }
+  if (lenis) ybLenis = lenis;
+  const r = ybFrameRoot;
+  r.querySelector('.ybot__title').textContent = g.title;
+  r.querySelector('[data-fr="open"]').href = g.url;
+  r.querySelector('.ybot__foot').innerHTML = `${g.foot}<a href="${g.src}" target="_blank" rel="noopener">code source ↗</a>`;
+  r.querySelector('iframe').src = g.url;
+  ybLastFocus = document.activeElement;
+  r.hidden = false;
+  document.body.style.overflow = 'hidden';
+  ybLenis?.stop();
+  r.querySelector('[data-fr="close"]').focus({ preventScroll: true });
+}
+
+export function closeGameFrame() {
+  if (!ybFrameRoot || ybFrameRoot.hidden) return;
+  ybFrameRoot.hidden = true;
+  ybFrameRoot.querySelector('iframe').src = 'about:blank';
+  const modal = document.getElementById('modal');
+  if (!modal || modal.hidden) { document.body.style.overflow = ''; ybLenis?.start(); }
+  ybLastFocus?.focus?.();
+}

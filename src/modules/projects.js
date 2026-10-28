@@ -1,4 +1,4 @@
-import { openYbot } from './ybot.js';
+import { openYbot, openGameFrame } from './ybot.js';
 import gsap from 'gsap';
 import { PROJECTS } from '../data/content.js';
 import { reduced, finePointer } from '../utils/env.js';
@@ -125,7 +125,7 @@ function fill(p) {
     <div><p class="label mono">${p.index} / ${p.kicker} <span class="dot"></span> ${p.year} · ${p.status}</p></div>
     <h2 class="modal__title" id="modal-title">${p.title}</h2>
     <p class="modal__lede">${p.summary}</p>
-    ${p.image ? `<figure class="modal__shot"><img src="${p.image}" alt="${p.imageAlt || ''}" loading="lazy" decoding="async" /><figcaption class="mono">// capture : un combat dans Mr Ybot (jouable ci-dessous)</figcaption></figure>` : ''}
+    ${p.image ? `<figure class="modal__shot"><img src="${p.image}" alt="${p.imageAlt || ''}" loading="lazy" decoding="async" /><figcaption class="mono">// capture : ${p.imageCaption || 'le jeu'}</figcaption></figure>` : ''}
     <div class="modal__grid">
       <div><h3>Contexte</h3><p>${p.context}</p></div>
       <div><h3>Problème</h3><p>${p.problem}</p></div>
@@ -138,7 +138,7 @@ function fill(p) {
 
 document.addEventListener('click', (e) => {
   const b = e.target.closest?.('[data-play]');
-  if (b) openYbot(lenisRef);
+  if (b) (b.dataset.play === 'ybot' ? openYbot(lenisRef) : openGameFrame(b.dataset.play, lenisRef));
 });
 
 export function openProject(slug, push = true) {

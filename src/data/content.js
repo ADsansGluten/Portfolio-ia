@@ -75,6 +75,10 @@ export const PROJECTS = [
       { label: 'Jouer', href: 'https://adsansgluten.github.io/Jeu-LLM-Projet-HTML/' },
       { label: 'Code source', href: 'https://github.com/ADsansGluten/Jeu-LLM-Projet-HTML' },
     ],
+    play: 'recrutia',
+    image: 'ybot/recrutia-shot.webp',
+    imageCaption: "l'étape « Le jeu de données » (mode nuit)",
+    imageAlt: "Capture de RecrutIA : l'étape Le jeu de données, avec un tableau de candidats et deux choix",
     hue: 268,
   },
   {
@@ -119,6 +123,7 @@ export const PROJECTS = [
     slug: 'projet-red-ybot',
     play: 'ybot',
     image: 'ybot/ybot-shot.webp',
+    imageCaption: 'un combat dans Mr Ybot',
     imageAlt: 'Capture du jeu Mr Ybot : un combat au tour par tour contre un Training Malware, dans le terminal',
     index: '04',
     title: 'Projet RED — Mr Ybot',

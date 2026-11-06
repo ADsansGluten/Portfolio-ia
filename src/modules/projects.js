@@ -127,6 +127,7 @@ function fill(p) {
     <h2 class="modal__title" id="modal-title">${p.title}</h2>
     <p class="modal__lede">${p.summary}</p>
     ${p.image ? `<figure class="modal__shot"><img src="${p.image}" alt="${p.imageAlt || ''}" loading="lazy" decoding="async" /><figcaption class="mono">// ${tr('capture :')} ${p.imageCaption || ''}</figcaption></figure>` : ''}
+    ${p.image2 ? `<figure class="modal__shot"><img src="${p.image2}" alt="${p.image2Alt || ''}" loading="lazy" decoding="async" /><figcaption class="mono">// ${p.image2Caption || ''}</figcaption></figure>` : ''}
     <div class="modal__grid">
       <div><h3>${tr('Contexte')}</h3><p>${p.context}</p></div>
       <div><h3>${tr('Problème')}</h3><p>${p.problem}</p></div>

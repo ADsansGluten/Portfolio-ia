@@ -31,7 +31,7 @@ let js = ORDER.map((f) => {
   return `/* ───── ${f} ───── */\n${s}`;
 }).join('\n');
 
-for (const n of ['ybot-shot', 'recrutia-shot', 'aws-briefing-architecture']) {
+for (const n of ['ybot-shot', 'recrutia-shot', 'aws-briefing-architecture', 'aws-badge-cloud-101']) {
   const shot = readFileSync(new URL(`../public/ybot/${n}.webp`, import.meta.url)).toString('base64');
   js = js.replace(`'ybot/${n}.webp'`, `'data:image/webp;base64,${shot}'`);
 }

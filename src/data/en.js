@@ -203,6 +203,8 @@ const EN_PROJECTS = {
     links: ['Code, guide and screenshots'],
     imageCaption: 'the serverless architecture of the briefing (AWS, Ireland)',
     imageAlt: 'AWS architecture diagram: RSS feeds, EventBridge Scheduler, Lambda, Amazon Bedrock, SES, S3, SNS and CloudWatch',
+    image2Caption: 'my AWS Educate “Introduction to Cloud 101” badge, issued on 4 November 2026',
+    image2Alt: 'AWS Educate Introduction to Cloud 101 badge awarded to Adrien Lavigne on 4 November 2026',
   },
   recrutia: {
     kicker: 'Narrative game · HTML / CSS / JS',

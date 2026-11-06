@@ -75,6 +75,9 @@ export const PROJECTS = [
     image: 'ybot/aws-briefing-architecture.webp',
     imageCaption: "l'architecture serverless du briefing (AWS, Irlande)",
     imageAlt: "Schéma d'architecture AWS : flux RSS, EventBridge Scheduler, Lambda, Amazon Bedrock, SES, S3, SNS et CloudWatch",
+    image2: 'ybot/aws-badge-cloud-101.webp',
+    image2Caption: 'mon badge AWS Educate « Introduction to Cloud 101 », délivré le 4 novembre 2026',
+    image2Alt: 'Badge AWS Educate Introduction to Cloud 101 décerné à Adrien Lavigne le 4 novembre 2026',
     hue: 35,
   },
   {

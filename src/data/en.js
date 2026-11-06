@@ -191,6 +191,19 @@ export const EN_UI = {
 };
 
 const EN_PROJECTS = {
+  'briefing-aws': {
+    title: 'Daily finance briefing',
+    kicker: 'AWS cloud · serverless · generative AI',
+    status: 'Live',
+    summary: 'Every weekday morning, an e-mail sums up the financial news: public RSS feeds, a French summary by Amazon Bedrock, sources cited.',
+    context: 'Personal project started after my AWS Educate badge (Introduction to Cloud 101), to move from theory to a real deployment. I set up the AWS console myself, step by step, in the Europe (Ireland) region.',
+    problem: 'Following financial news takes time. How do you get a reliable summary with its sources every morning, with nothing to launch by hand, for a few cents a month?',
+    solution: 'EventBridge Scheduler triggers a Lambda function at 7 a.m. that reads the RSS feeds, drops articles with no real information, then asks Amazon Bedrock (Nova 2 Lite) for a summary with sources. The page is written to S3 and the e-mail goes out through SES. A second Lambda (Function URL, read-only IAM role) serves the latest version on a public web page. A CloudWatch alarm warns through SNS if the function fails, and AWS Budgets watches the costs.',
+    result: 'Automatic briefing on weekdays at 7 a.m., a public page, an alert on failure. A code filter before the AI and a tightly framed prompt clearly improved quality (before / after comparison in the repository). Full 11-step guide with screenshots in the README.',
+    links: ['Code, guide and screenshots'],
+    imageCaption: 'the serverless architecture of the briefing (AWS, Ireland)',
+    imageAlt: 'AWS architecture diagram: RSS feeds, EventBridge Scheduler, Lambda, Amazon Bedrock, SES, S3, SNS and CloudWatch',
+  },
   recrutia: {
     kicker: 'Narrative game · HTML / CSS / JS',
     status: 'Live',
@@ -251,6 +264,8 @@ const EN_SKILLS = {
     js: { level: 'beginner' },
     go: { level: 'beginner' },
     git: { level: 'hands-on' },
+    aws: { level: 'hands-on (finance briefing)' },
+    bedrock: { level: 'learning' },
     ad: { level: 'in progress (Shieldwall)' },
     vmware: { level: 'in progress (Shieldwall)' },
     ptracer: { level: 'in progress (Shieldwall)' },
@@ -263,6 +278,7 @@ const EN_SKILLS = {
 
 /** Même ordre que TIMELINE dans content.js. */
 const EN_TIMELINE = [
+  { date: 'Nov 2026', title: 'AWS Educate badge — Introduction to Cloud 101', place: 'Amazon Web Services — Training Badge', text: 'AWS cloud fundamentals validated (4 November 2026), applied in the Daily finance briefing project.' },
   { date: 'Sep 2026 →', title: 'Bachelor 1 AI / Data', place: 'Ynov Campus Sophia — Sophia Antipolis', text: 'I join the Data Engineer / AI Development programme. Target Master’s: Expert in Artificial Intelligence.' },
   { date: 'Oct 2025 – Sep 2026', title: 'Social Media Video Creator', place: 'El Nacho — Station du Val Joly', text: "The restaurant's media channel, to improve click-through rate; filming and editing videos for events." },
   { date: 'Feb – Jun 2026', title: 'Sales Assistant (fixed-term)', place: 'MR.Bricolage / MY INVEST — Le Rouret', text: 'Restocking through the inter-franchise stock, selling across the whole shop floor, revenue targets.' },
@@ -280,7 +296,8 @@ const EN_KB = {
   path: { k: ['journey', 'background', 'law', 'career', 'change', 'why', 'story', 'baccalaureat', 'bac', 'cned'], a: "General baccalauréat through CNED (advanced maths, economics & social sciences, with honours), then a first year of law at Paris 1. This year I'm switching to AI and data, with the future in mind: I pictured myself in it and judged that this field matched my ideal." },
   now: { k: ['currently', 'now', 'training', 'education', 'studies', 'study', 'school', 'ynov'], a: "Studying at Ynov Campus Sophia (B1 AI / Data). I'm looking for an internship or work-study position, and meanwhile learning Go, web development and the basics of secure infrastructure." },
   skills: { k: ['skills', 'skill', 'tech', 'technologies', 'stack', 'language', 'know'], a: "I'm still early in my journey, so here is my real level: Canva (advanced), Word/Excel (intermediate), HTML/CSS, JavaScript, Go and algorithms (beginner), Active Directory and networking (in progress through Shieldwall). No fluff: I learn fast and I show it through projects." },
-  projects: { k: ['projects', 'project', 'built', 'portfolio', 'github', 'code', 'work'], a: "Four projects to see: RecrutIA (narrative game about the bias of a CV-sorting AI, live), Operation Shieldwall (infrastructure & cybersecurity, in progress), Projet RED – Mr Ybot (terminal game in Go) and this portfolio. Type “recrutia” or “shieldwall” for details." },
+  projects: { k: ['projects', 'project', 'built', 'portfolio', 'github', 'code', 'work'], a: "Five projects to see: Daily finance briefing (AWS cloud, automatic e-mail every morning), RecrutIA (narrative game about the bias of a CV-sorting AI, live), Operation Shieldwall (infrastructure & cybersecurity, in progress), Projet RED – Mr Ybot (terminal game in Go) and this portfolio. Type “aws”, “recrutia” or “shieldwall” for details." },
+  aws: { k: ['aws', 'cloud', 'briefing', 'finance', 'bedrock', 'lambda', 'badge', 'educate', 'serverless'], a: "AWS Educate “Introduction to Cloud 101” badge earned on 4 November 2026, then the Daily finance briefing project: every weekday morning a Lambda reads RSS feeds, Amazon Bedrock summarises, and the e-mail goes out through SES (EventBridge, S3, SNS and CloudWatch around it). Code and guide on my GitHub." },
   recrutia: { k: ['recrutia', 'game', 'bias', 'biases', 'hiring', 'recruitment'], a: "RecrutIA: a 15-page HTML/CSS/JS game where you're a data scientist training a CV-sorting AI. Three endings, two themes. Playable on GitHub Pages. The idea: show how biased data produces a biased AI." },
   shieldwall: { k: ['shieldwall', 'cyber', 'cybersecurity', 'security', 'azuria', 'network', 'networking', 'infrastructure', 'active', 'directory'], a: "Operation Shieldwall: B1 cybersecurity project, done solo. Active Directory + file server on VMware Workstation, Packet Tracer mock-up with VLANs. I started from zero in networking. Still in progress." },
   exp: { k: ['experience', 'experiences', 'jobs', 'job', 'internship', 'internships', 'work-study', 'alternance'], a: "Experience: video creation for the restaurant El Nacho, fixed-term sales assistant at MR.Bricolage, oven operator through temp work, bartender/cook, national UNSS referee, and two discovery internships (estate agency in Antibes, wealth management in Cannes)." },

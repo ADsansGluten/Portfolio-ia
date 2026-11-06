@@ -39,7 +39,9 @@ export const SKILLS = {
     { id: 'html', label: 'HTML / CSS', cat: 'dev', level: 'débutant', projects: ['recrutia', 'portfolio'] },
     { id: 'js', label: 'JavaScript', cat: 'dev', level: 'débutant', projects: ['recrutia', 'portfolio'] },
     { id: 'go', label: 'Go', cat: 'dev', level: 'débutant', projects: ['projet-red-ybot'] },
-    { id: 'git', label: 'Git / GitHub', cat: 'dev', level: 'en pratique', projects: ['recrutia', 'shieldwall', 'portfolio', 'projet-red-ybot'] },
+    { id: 'git', label: 'Git / GitHub', cat: 'dev', level: 'en pratique', projects: ['recrutia', 'shieldwall', 'portfolio', 'projet-red-ybot', 'briefing-aws'] },
+    { id: 'aws', label: 'AWS (Lambda, S3, SES)', cat: 'infra', level: 'en pratique (briefing finance)', projects: ['briefing-aws'] },
+    { id: 'bedrock', label: 'Amazon Bedrock', cat: 'ai', level: 'en apprentissage', projects: ['briefing-aws'] },
     { id: 'ad', label: 'Active Directory', cat: 'infra', level: 'en cours (Shieldwall)', projects: ['shieldwall'] },
     { id: 'vmware', label: 'VMware Workstation', cat: 'infra', level: 'en cours (Shieldwall)', projects: ['shieldwall'] },
     { id: 'ptracer', label: 'Packet Tracer / VLAN', cat: 'infra', level: 'en cours (Shieldwall)', projects: ['shieldwall'] },
@@ -52,8 +54,32 @@ export const SKILLS = {
 
 export const PROJECTS = [
   {
-    slug: 'recrutia',
+    slug: 'briefing-aws',
     index: '01',
+    title: 'Briefing finance quotidien',
+    kicker: 'Cloud AWS · serverless · IA générative',
+    year: '2026',
+    status: 'En ligne',
+    summary:
+      "Chaque matin en semaine, un e-mail résume l'actualité financière : flux RSS publics, résumé en français par Amazon Bedrock, sources citées.",
+    context:
+      "Projet personnel lancé après mon badge AWS Educate (Introduction to Cloud 101), pour passer de la théorie à un vrai déploiement. J'ai configuré moi-même la console AWS, étape par étape, dans la région Europe (Irlande).",
+    problem:
+      "Suivre l'actualité financière prend du temps. Comment obtenir chaque matin un résumé fiable, avec ses sources, sans rien lancer à la main, pour des centimes par mois ?",
+    solution:
+      "EventBridge Scheduler déclenche à 7 h une fonction Lambda qui lit les flux RSS, écarte les articles sans information, puis demande à Amazon Bedrock (Nova 2 Lite) un résumé avec sources. La page est écrite dans S3 et l'e-mail part via SES. Une seconde Lambda (Function URL, rôle IAM limité à la lecture) sert la dernière version sur une page web publique. Une alarme CloudWatch prévient par SNS si la fonction échoue, et AWS Budgets surveille les coûts.",
+    result:
+      "Briefing automatique en semaine à 7 h, page publique, alerte en cas d'échec. Un filtre en code avant l'IA et un prompt cadré ont nettement amélioré la qualité (comparaison avant / après dans le dépôt). Guide complet en 11 étapes, avec captures, dans le README.",
+    stack: ['AWS Lambda', 'Amazon Bedrock', 'EventBridge', 'S3', 'SES', 'SNS', 'CloudWatch', 'IAM', 'Python'],
+    links: [{ label: 'Code, guide et captures', href: 'https://github.com/ADsansGluten/daily-finance-briefing-aws' }],
+    image: 'ybot/aws-briefing-architecture.webp',
+    imageCaption: "l'architecture serverless du briefing (AWS, Irlande)",
+    imageAlt: "Schéma d'architecture AWS : flux RSS, EventBridge Scheduler, Lambda, Amazon Bedrock, SES, S3, SNS et CloudWatch",
+    hue: 35,
+  },
+  {
+    slug: 'recrutia',
+    index: '02',
     title: 'RecrutIA',
     kicker: 'Jeu narratif · HTML / CSS / JS',
     year: '2026',
@@ -80,7 +106,7 @@ export const PROJECTS = [
   },
   {
     slug: 'shieldwall',
-    index: '02',
+    index: '03',
     title: 'Opération Shieldwall',
     kicker: 'Infra & cybersécurité · Ynov B1',
     year: '2026',
@@ -100,7 +126,7 @@ export const PROJECTS = [
   },
   {
     slug: 'portfolio',
-    index: '03',
+    index: '04',
     title: 'Ce portfolio',
     kicker: 'Creative dev · Vite · WebGL',
     year: '2026',
@@ -122,7 +148,7 @@ export const PROJECTS = [
     image: 'ybot/ybot-shot.webp',
     imageCaption: 'un combat dans Mr Ybot',
     imageAlt: 'Capture du jeu Mr Ybot : un combat au tour par tour contre un Training Malware, dans le terminal',
-    index: '04',
+    index: '05',
     title: 'Projet RED — Mr Ybot',
     kicker: 'Jeu en terminal · Go',
     year: '2026',
@@ -144,6 +170,7 @@ export const PROJECTS = [
 
 /** Parcours, du plus récent au plus ancien. kind: study | work | intern | project */
 export const TIMELINE = [
+  { date: 'Nov 2026', kind: 'study', title: 'Badge AWS Educate — Introduction to Cloud 101', place: 'Amazon Web Services — Training Badge', text: "Bases du cloud AWS validées (4 novembre 2026), mises en pratique dans le projet Briefing finance quotidien." },
   { date: 'Sep 2026 →', kind: 'study', title: 'Bachelor 1 IA / Data', place: 'Ynov Campus Sophia — Sophia Antipolis', text: "Je rejoins le cursus Data Ingénieur / Développement IA. Mastère visé : Expert en intelligence artificielle." },
   { date: 'Oct 2025 – Sep 2026', kind: 'work', title: 'Social Media Video Creator', place: 'El Nacho — Station du Val Joly', text: "Média du restaurant pour optimiser le CTR ; prises de vue et montage vidéo pour les événements." },
   { date: 'Fév – Juin 2026', kind: 'work', title: 'Vendeur polyvalent (CDD)', place: 'MR.Bricolage / MY INVEST — Le Rouret', text: "Réapprovisionnement via le stock inter-franchisé, vente sur toute la surface, objectifs de CA." },
@@ -162,7 +189,8 @@ export const KB = [
   { id: 'path', k: ['parcours', 'droit', 'reconversion', 'pourquoi', 'histoire', 'bac', 'cned'], a: "Bac général au CNED (maths expertes, SES, mention), puis une L1 de droit à Paris 1. Cette année, je me réoriente vers l'IA et la data, par vision d'avenir : je me suis projeté et j'ai estimé que c'était ce domaine qui correspondait à mon idéal." },
   { id: 'now', k: ['actuellement', 'currently', 'now', 'formation', 'etudes', 'ynov', 'ecole'], a: "En formation à Ynov Campus Sophia (B1 IA / Data). Je suis à la recherche d'un stage ou d'une alternance, et j'apprends en parallèle Go, le développement web et les bases de l'infrastructure sécurisée." },
   { id: 'skills', k: ['competences', 'skills', 'techno', 'stack', 'langage', 'savoir'], a: "Je suis encore en début de parcours, donc voici mon niveau réel : Canva (avancé), Word/Excel (intermédiaire), HTML/CSS, JavaScript, Go et algorithmique (débutant), Active Directory et réseau (en cours via Shieldwall). Pas de baratin : j'apprends vite et je le montre en projet." },
-  { id: 'projects', k: ['projet', 'projets', 'projects', 'realise', 'portfolio', 'github', 'code'], a: "Quatre projets à voir : RecrutIA (jeu narratif sur les biais d'une IA de tri de CV, en ligne), Opération Shieldwall (infra & cybersécurité, en cours), Projet RED – Mr Ybot (jeu en terminal en Go) et ce portfolio. Tape « recrutia » ou « shieldwall » pour le détail." },
+  { id: 'projects', k: ['projet', 'projets', 'projects', 'realise', 'portfolio', 'github', 'code'], a: "Cinq projets à voir : Briefing finance quotidien (cloud AWS, e-mail automatique chaque matin), RecrutIA (jeu narratif sur les biais d'une IA de tri de CV, en ligne), Opération Shieldwall (infra & cybersécurité, en cours), Projet RED – Mr Ybot (jeu en terminal en Go) et ce portfolio. Tape « aws », « recrutia » ou « shieldwall » pour le détail." },
+  { id: 'aws', k: ['aws', 'cloud', 'briefing', 'finance', 'bedrock', 'lambda', 'badge', 'educate', 'serverless'], a: "Badge AWS Educate « Introduction to Cloud 101 » obtenu le 4 novembre 2026, puis projet Briefing finance quotidien : chaque matin en semaine, une Lambda lit des flux RSS, Amazon Bedrock résume, et l'e-mail part via SES (EventBridge, S3, SNS et CloudWatch autour). Code et guide sur mon GitHub." },
   { id: 'recrutia', k: ['recrutia', 'jeu', 'biais', 'game'], a: "RecrutIA : un jeu de 15 pages en HTML/CSS/JS où tu es data scientist et entraînes une IA de tri de CV. Trois fins, deux thèmes. Jouable sur GitHub Pages. Idée : montrer comment des données biaisées donnent une IA biaisée." },
   { id: 'shieldwall', k: ['shieldwall', 'cyber', 'cybersecurite', 'securite', 'azuria', 'reseau', 'infra', 'active', 'directory'], a: "Opération Shieldwall : projet B1 de cybersécurité, réalisé seul. Active Directory + serveur de fichiers sur VMware Workstation, maquette Packet Tracer avec VLAN. Je partais de zéro en réseau. Projet toujours en cours." },
   { id: 'exp', k: ['experience', 'experiences', 'travail', 'job', 'stage', 'stages', 'alternance'], a: "Expériences : création vidéo pour le restaurant El Nacho, vendeur CDD chez MR.Bricolage, défourneur en intérim, barman/cuisinier, arbitre national UNSS, et deux stages de découverte (immobilier à Antibes, gestion de patrimoine à Cannes)." },
